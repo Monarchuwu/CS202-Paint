@@ -1,24 +1,33 @@
 #pragma once
+#include "ResourceHolder.h"
+#include "ResourceIdentifiers.h"
+#include "StateStack.h"
+
 #include <SFML/Graphics.hpp>
-#include <vector>
-#include "DrawingCanvas.h"
-#include "Navigation.h"
-#include "EventHandler.h"
 
 class Application {
 public:
     Application();
-    ~Application();
     void run();
 
 private:
-    void processEvents();
-    void update();
+    void processInput();
+    void update(sf::Time deltaTime);
     void render();
 
+    void updateStatistics(sf::Time elapsedTime);
+    void registerStates();
+
 private:
+    static const sf::Time TimePerFrame;
+
     sf::RenderWindow mWindow;
-    DrawingCanvas mDrawingCanvas;
-    Navigation mNavigation;
-    std::vector<EventHandler*> mEventHandlers;
+    TextureHolder* mTextures;
+    FontHolder* mFonts;
+
+    StateStack mStateStack;
+
+    sf::Text mStatisticsText;
+    sf::Time mStatisticsUpdateTime;
+    std::size_t mStatisticsNumFrames;
 };

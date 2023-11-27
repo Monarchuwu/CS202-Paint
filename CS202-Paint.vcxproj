@@ -140,30 +140,33 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
-    <ClCompile Include="src\Components\Box.cpp" />
-    <ClCompile Include="src\Components\Button.cpp" />
-    <ClCompile Include="src\Components\ButtonSprite.cpp" />
-    <ClCompile Include="src\Components\ContainMethod.cpp" />
-    <ClCompile Include="src\Components\HideMethod.cpp" />
-    <ClCompile Include="src\Components\LineEdit.cpp" />
-    <ClCompile Include="src\Components\PressMethod.cpp" />
     <ClCompile Include="src\DrawingCanvas.cpp" />
-    <ClCompile Include="src\EventHandler.cpp" />
+    <ClCompile Include="src\DrawingShape.cpp" />
+    <ClCompile Include="src\DrawingShapeLinesStrip.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Navigation.cpp" />
+    <ClCompile Include="src\MainState.cpp" />
+    <ClCompile Include="src\Pen.cpp" />
+    <ClCompile Include="src\State.cpp" />
+    <ClCompile Include="src\StateStack.cpp" />
+    <ClCompile Include="src\Utility.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
-    <ClInclude Include="src\Components\Box.h" />
-    <ClInclude Include="src\Components\Button.h" />
-    <ClInclude Include="src\Components\ButtonSprite.h" />
-    <ClInclude Include="src\Components\ContainMethod.h" />
-    <ClInclude Include="src\Components\HideMethod.h" />
-    <ClInclude Include="src\Components\LineEdit.h" />
-    <ClInclude Include="src\Components\PressMethod.h" />
     <ClInclude Include="src\DrawingCanvas.h" />
-    <ClInclude Include="src\EventHandler.h" />
-    <ClInclude Include="src\Navigation.h" />
+    <ClInclude Include="src\DrawingShape.h" />
+    <ClInclude Include="src\DrawingShapeLinesStrip.h" />
+    <ClInclude Include="src\MainState.h" />
+    <ClInclude Include="src\Pen.h" />
+    <ClInclude Include="src\ResourceHolder.h" />
+    <ClInclude Include="src\ResourceIdentifiers.h" />
+    <ClInclude Include="src\State.h" />
+    <ClInclude Include="src\StateIdentifiers.h" />
+    <ClInclude Include="src\StateStack.h" />
+    <ClInclude Include="src\Utility.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\ResourceHolder.inl" />
+    <None Include="src\Utility.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

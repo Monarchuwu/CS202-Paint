@@ -1,109 +1,66 @@
 #include "DrawingCanvas.h"
-#include <iostream>
-#include <cmath>
 
-DrawingCanvas::DrawingCanvas(const sf::FloatRect& rect)
-    : mCanvasRect(rect),
-	  mCanvasTexture(),
-	  mChanged(false),
-	  mIsDrawing(false),
-	  mLastMousePosition(0, 0),
-      mBrushSize() {
-    mCanvasTexture.create(mCanvasRect.width, mCanvasRect.height);
-    setBrushSize(4.f);
-	setBrushColor(sf::Color::Black);
-    display();
+DrawingCanvas::DrawingCanvas(sf::RenderWindow& window,
+                             const sf::FloatRect& objectArea,
+                             const sf::Vector2f& renderArea)
+    : mWindow(window),
+      mObjectArea(objectArea),
+      mRenderTexture(),
+      mSprite(),
+      mPen(new Pen(*this, Pen::Context(sf::Color::Black, 4))) {
+    mRenderTexture.create(renderArea.x, renderArea.y);
+    clear();
+
+    mSprite.setTexture(mRenderTexture.getTexture());
+    mSprite.setPosition(mObjectArea.left + mObjectArea.width / 2.f,
+                        mObjectArea.top + mObjectArea.height / 2.f);
+    adaptRenderArea(renderArea);
 }
 
-bool DrawingCanvas::eventKeyPressed(const sf::Event::KeyEvent& key) {
-    if (key.code == sf::Keyboard::Space) {
-        clear();
-        return true;
+DrawingCanvas::~DrawingCanvas() {}
+
+void DrawingCanvas::handleEvent(const sf::Event& event) {
+    if (event.type == sf::Event::MouseButtonPressed) {
+        if (event.mouseButton.button == sf::Mouse::Left) {
+            mPen->startDrawing(sf::Vector2f(event.mouseButton.x, event.mouseButton.y) - getPositionCanvas());
+        }
     }
-    return false;
-}
-bool DrawingCanvas::eventMouseButtonPressed(const sf::Event::MouseButtonEvent& mouse) {
-	if (!mIsDrawing) {
-        if (mouse.button == sf::Mouse::Left) {
-            mIsDrawing         = true;
-            mLastMousePosition = sf::Vector2f(mouse.x, mouse.y);
-            mLastMousePosition -= mCanvasRect.getPosition();
-            return true;
+    else if (event.type == sf::Event::MouseButtonReleased) {
+        if (event.mouseButton.button == sf::Mouse::Left) {
+            mPen->stopDrawing();
         }
+    }
+    else if (event.type == sf::Event::MouseMoved) {
+        mPen->move(sf::Vector2f(event.mouseMove.x, event.mouseMove.y) - getPositionCanvas());
+    }
+	else if (event.type == sf::Event::KeyPressed) {
+		if (event.key.code == sf::Keyboard::Space) {
+			clear();
+		}
 	}
-	return false;
-}
-bool DrawingCanvas::eventMouseButtonReleased(const sf::Event::MouseButtonEvent& mouse) {
-	if (mIsDrawing) {
-        if (mouse.button == sf::Mouse::Left) {
-            mIsDrawing = false;
-            return true;
-        }
-	}
-	return false;
-}
-bool DrawingCanvas::eventMouseMoved(const sf::Event::MouseMoveEvent& mouse) {
-	if (mIsDrawing) {
-        sf::Vector2f mousePosition(mouse.x, mouse.y);
-        mousePosition -= mCanvasRect.getPosition();
-
-        drawLine(mLastMousePosition, mousePosition);
-
-        mLastMousePosition = mousePosition;
-        return true;
-	}
-	return false;
 }
 
-void DrawingCanvas::setBrushSize(float size) {
-	mBrushSize = size;
-	mRectangleShape.setOrigin(0, mBrushSize / 2.f);
-	mCircleShape.setRadius(mBrushSize / 2.f);
-	mCircleShape.setOrigin(mBrushSize / 2.f, mBrushSize / 2.f);
-}
-void DrawingCanvas::setBrushColor(const sf::Color& color) {
-	mBrushColor = color;
-	mRectangleShape.setFillColor(sf::Color::Black);
-	mCircleShape.setFillColor(sf::Color::Black);
-}
-float DrawingCanvas::getBrushSize() const {
-	return mBrushSize;
-}
-const sf::Color& DrawingCanvas::getBrushColor() const {
-	return mBrushColor;
+void DrawingCanvas::update() {
+    //mRenderTexture.display();
 }
 
-sf::Sprite DrawingCanvas::getSprite() {
-    if (mChanged) display();
-	sf::Sprite sprite;
-	sprite.setTexture(mCanvasTexture.getTexture());
-	sprite.setPosition(mCanvasRect.getPosition());
-	return sprite;
+void DrawingCanvas::draw() {
+	mRenderTexture.display();
+	mWindow.draw(mSprite);
 }
 
 void DrawingCanvas::clear(const sf::Color& color) {
-	mCanvasTexture.clear(color);
+	mRenderTexture.clear(color);
 }
 
-void DrawingCanvas::display() {
-	mCanvasTexture.display();
+Pen& DrawingCanvas::getPen() {
+	return *mPen;
 }
 
-void DrawingCanvas::drawLine(const sf::Vector2f& from, const sf::Vector2f& to) {
-	sf::Vector2f delta = to - from;
-	float length = std::sqrt(delta.x * delta.x + delta.y * delta.y);
-	float angle = std::atan2(delta.y, delta.x) * 180.f / 3.14159265f;
+sf::Vector2f DrawingCanvas::getPositionCanvas() const {
+    return mSprite.getPosition() - (sf::Vector2f)mRenderTexture.getSize() / 2.f;
+}
 
-	mRectangleShape.setSize(sf::Vector2f(length, mBrushSize));
-	mRectangleShape.setRotation(angle);
-	mRectangleShape.setPosition(from);
-	mCanvasTexture.draw(mRectangleShape);
-
-	mCircleShape.setPosition(from);
-	mCanvasTexture.draw(mCircleShape);
-
-	mCircleShape.setPosition(to);
-	mCanvasTexture.draw(mCircleShape);
-
-	mChanged = true;
+void DrawingCanvas::adaptRenderArea(const sf::Vector2f& renderArea) {
+    mSprite.setOrigin(renderArea / 2.f);
 }

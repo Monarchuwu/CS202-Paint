@@ -1,40 +1,34 @@
-// https://www.sfml-dev.org/documentation/2.6.0/classsf_1_1RenderTexture.php
 #pragma once
+#include "Pen.h"
+
 #include <SFML/Graphics.hpp>
-#include "EventHandler.h"
 
-class DrawingCanvas : public EventHandler {
-private:
-    sf::FloatRect mCanvasRect;
-    sf::RenderTexture mCanvasTexture;
-
-    bool mChanged;
-    bool mIsDrawing;
-    sf::Vector2f mLastMousePosition;
-
-    float mBrushSize;
-    sf::Color mBrushColor;
-    sf::CircleShape mCircleShape;
-    sf::RectangleShape mRectangleShape;
+class DrawingCanvas {
+    friend class Pen;
 
 public:
-    DrawingCanvas(const sf::FloatRect& rect);
+    DrawingCanvas(sf::RenderWindow& window,
+				  const sf::FloatRect& objectArea,
+				  const sf::Vector2f& renderArea);
+	~DrawingCanvas();
 
-    /* handle event */
-    bool eventKeyPressed(const sf::Event::KeyEvent& key) override;
-    bool eventMouseButtonPressed(const sf::Event::MouseButtonEvent& mouse) override;
-    bool eventMouseButtonReleased(const sf::Event::MouseButtonEvent& mouse) override;
-    bool eventMouseMoved(const sf::Event::MouseMoveEvent& mouse) override;
+    void handleEvent(const sf::Event& event);
+	void update();
+	void draw();
+	void clear(const sf::Color& color = sf::Color(255, 255, 255, 255));
 
-    void setBrushSize(float size);
-    void setBrushColor(const sf::Color& color);
-    float getBrushSize() const;
-    const sf::Color& getBrushColor() const;
-
-    sf::Sprite getSprite();
-    void clear(const sf::Color& color = sf::Color(255, 255, 255, 255));
+	Pen& getPen();
 
 private:
-    void display();
-    void drawLine(const sf::Vector2f& from, const sf::Vector2f& to);
+	sf::Vector2f getPositionCanvas() const;
+	void adaptRenderArea(const sf::Vector2f& renderArea);
+
+private:
+	sf::RenderWindow& mWindow;
+	sf::FloatRect mObjectArea;
+
+	sf::RenderTexture mRenderTexture;
+	sf::Sprite mSprite;
+
+	Pen* mPen;
 };

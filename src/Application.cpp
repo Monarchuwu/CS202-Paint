@@ -1,60 +1,95 @@
 #include "Application.h"
-#include <iostream>
+#include "Utility.h"
+#include "State.h"
+#include "StateIdentifiers.h"
+#include "MainState.h"
 
-const sf::Time TimePerFrame = sf::seconds(1.f / 15.f);
+const sf::Time Application::TimePerFrame = sf::seconds(1.f / 60.f);
 
 Application::Application()
-    : mWindow(),
-      mDrawingCanvas(sf::FloatRect(480, 290, 640, 480)),
-      mNavigation(sf::FloatRect(0, 50, 1600, 160)) {
-    sf::ContextSettings settings;
-    settings.antialiasingLevel = 16; // Default is 0
-    mWindow.create(sf::VideoMode(1600, 900), "Paint Project", sf::Style::Close, settings);
+    : mWindow(sf::VideoMode(1600, 900), "My Paint", sf::Style::Close),
+      mTextures(TextureHolder::getInstance()),
+      mFonts(FontHolder::getInstance()),
+      mStateStack(State::Context(mWindow, *mTextures, *mFonts)),
+      mStatisticsText(),
+      mStatisticsUpdateTime(),
+      mStatisticsNumFrames(0) {
+    mWindow.setKeyRepeatEnabled(false);
     mWindow.setPosition(sf::Vector2i(10, 10));
-    mWindow.setFramerateLimit(120);
-    mDrawingCanvas.clear();
 
-    mEventHandlers.push_back(&mNavigation);
-    mEventHandlers.push_back(&mDrawingCanvas);
+    mFonts->load(Fonts::Sansation, "data/Fonts/Sansation.ttf");
+    //mTextures->load(Textures::ButtonNormal, "Media/Textures/ButtonNormal.png");
+
+    mStatisticsText.setFont(mFonts->get(Fonts::Sansation));
+    mStatisticsText.setPosition(5.f, 5.f);
+    mStatisticsText.setCharacterSize(10u);
+
+    registerStates();
+    mStateStack.pushState(States::Main);
 }
 
-Application::~Application() {}
-
 void Application::run() {
+    sf::Clock clock;
+    sf::Time timeSinceLastUpdate = sf::Time::Zero;
+
     while (mWindow.isOpen()) {
-        processEvents();
-        update();
+        sf::Time elapsedTime = clock.restart();
+        timeSinceLastUpdate += elapsedTime;
+
+        while (timeSinceLastUpdate > TimePerFrame) {
+            timeSinceLastUpdate -= TimePerFrame;
+
+            processInput();
+            update(TimePerFrame);
+
+            // Check inside this loop, because stack might be empty after update() call
+            if (mStateStack.isEmpty())
+                mWindow.close();
+        }
+
+        updateStatistics(elapsedTime);
         render();
     }
 }
 
-void Application::processEvents() {
+void Application::processInput() {
     sf::Event event;
     while (mWindow.pollEvent(event)) {
-        bool handled = false;
-        for (auto& object : mEventHandlers) {
-            if (object->handleEvent(event)) {
-                handled = true;
-                break;
-            }
-		}
-        if (handled) continue;
+        mStateStack.handleEvent(event);
 
-        switch (event.type) {
-            case sf::Event::Closed:
-                mWindow.close();
-                break;
-        }
+        if (event.type == sf::Event::Closed)
+            mWindow.close();
     }
 }
 
-void Application::update() {}
+void Application::update(sf::Time deltaTime) {
+    mStateStack.update(deltaTime);
+}
 
 void Application::render() {
-    mWindow.clear(sf::Color(26, 32, 49));
+    mWindow.clear();
 
-    mWindow.draw(mDrawingCanvas.getSprite());
-    mWindow.draw(mNavigation);
+    mStateStack.draw();
+
+    mWindow.setView(mWindow.getDefaultView());
+    mWindow.draw(mStatisticsText);
 
     mWindow.display();
+}
+
+void Application::updateStatistics(sf::Time elapsedTime) {
+    mStatisticsUpdateTime += elapsedTime;
+    mStatisticsNumFrames += 1;
+
+    if (mStatisticsUpdateTime >= sf::seconds(1.0f)) {
+        mStatisticsText.setString(
+            "Frames / Second = " + toString(mStatisticsNumFrames) + "\n" + "Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us");
+
+        mStatisticsUpdateTime -= sf::seconds(1.0f);
+        mStatisticsNumFrames = 0;
+    }
+}
+
+void Application::registerStates() {
+    mStateStack.registerState<MainState>(States::Main);
 }

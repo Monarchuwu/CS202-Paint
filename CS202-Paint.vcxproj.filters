@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Components">
-      <UniqueIdentifier>{5a95ad88-b9c2-4307-abe7-f276277ba833}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -24,70 +21,75 @@
     <ClCompile Include="src\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\StateStack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\State.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Utility.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MainState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="src\DrawingCanvas.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Navigation.cpp">
+    <ClCompile Include="src\Pen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\EventHandler.cpp">
+    <ClCompile Include="src\DrawingShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Components\Box.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Components\Button.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Components\ButtonSprite.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Components\ContainMethod.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Components\HideMethod.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Components\LineEdit.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Components\PressMethod.cpp">
-      <Filter>Components</Filter>
+    <ClCompile Include="src\DrawingShapeLinesStrip.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ResourceIdentifiers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\Application.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ResourceHolder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StateStack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\State.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StateIdentifiers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MainState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DrawingCanvas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Navigation.h">
+    <ClInclude Include="src\Pen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\EventHandler.h">
+    <ClInclude Include="src\DrawingShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\Box.h">
-      <Filter>Components</Filter>
+    <ClInclude Include="src\DrawingShapeLinesStrip.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Components\Button.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Components\ButtonSprite.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Components\ContainMethod.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Components\HideMethod.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Components\LineEdit.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Components\PressMethod.h">
-      <Filter>Components</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\ResourceHolder.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="src\Utility.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
