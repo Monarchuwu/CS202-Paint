@@ -6,12 +6,15 @@ Pen::Context::Context(const sf::Color& color, int width)
 	  width(width) {
 }
 
-Pen::Pen(DrawingCanvas& canvas,
-	     const Context& context)
-	: mCanvas(&canvas),
+Pen::Pen(const Context& context)
+	: mCanvas(nullptr),
 	  mContext(context),
 	  mDrawingShape(nullptr),
 	  mIsDrawing(false) {
+}
+
+void Pen::setCanvas(DrawingCanvas& canvas) {
+	mCanvas = &canvas;
 }
 
 void Pen::startDrawing(const sf::Vector2f& position) {
@@ -28,6 +31,14 @@ void Pen::move(const sf::Vector2f& position) {
 		drawLine(mLastPosition, position);
 		mLastPosition = position;
 	}
+}
+
+void Pen::setWidth(int width) {
+	mContext.width = width;
+}
+
+int Pen::getWidth() const {
+	return mContext.width;
 }
 
 void Pen::drawLine(const sf::Vector2f& from, const sf::Vector2f& to) {

@@ -2,6 +2,7 @@
 #include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
 #include "StateIdentifiers.h"
+#include "Pen.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -11,11 +12,12 @@ class State {
 public:
     typedef std::unique_ptr<State> Ptr;
     struct Context {
-        Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts);
+        Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Pen& pen);
 
         sf::RenderWindow* window;
         TextureHolder* textures;
         FontHolder* fonts;
+        Pen* pen;
     };
 
 public:

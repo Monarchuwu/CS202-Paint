@@ -1,13 +1,13 @@
 #include "DrawingCanvas.h"
 
-DrawingCanvas::DrawingCanvas(sf::RenderWindow& window,
+DrawingCanvas::DrawingCanvas(sf::RenderWindow& window, Pen& pen,
                              const sf::FloatRect& objectArea,
                              const sf::Vector2f& renderArea)
     : mWindow(window),
       mObjectArea(objectArea),
       mRenderTexture(),
       mSprite(),
-      mPen(new Pen(*this, Pen::Context(sf::Color::Black, 4))) {
+      mPen(pen) {
     mRenderTexture.create(renderArea.x, renderArea.y);
     clear();
 
@@ -17,21 +17,19 @@ DrawingCanvas::DrawingCanvas(sf::RenderWindow& window,
     adaptRenderArea(renderArea);
 }
 
-DrawingCanvas::~DrawingCanvas() {}
-
 void DrawingCanvas::handleEvent(const sf::Event& event) {
     if (event.type == sf::Event::MouseButtonPressed) {
         if (event.mouseButton.button == sf::Mouse::Left) {
-            mPen->startDrawing(sf::Vector2f(event.mouseButton.x, event.mouseButton.y) - getPositionCanvas());
+            mPen.startDrawing(sf::Vector2f(event.mouseButton.x, event.mouseButton.y) - getPositionCanvas());
         }
     }
     else if (event.type == sf::Event::MouseButtonReleased) {
         if (event.mouseButton.button == sf::Mouse::Left) {
-            mPen->stopDrawing();
+            mPen.stopDrawing();
         }
     }
     else if (event.type == sf::Event::MouseMoved) {
-        mPen->move(sf::Vector2f(event.mouseMove.x, event.mouseMove.y) - getPositionCanvas());
+        mPen.move(sf::Vector2f(event.mouseMove.x, event.mouseMove.y) - getPositionCanvas());
     }
 	else if (event.type == sf::Event::KeyPressed) {
 		if (event.key.code == sf::Keyboard::Space) {
@@ -54,7 +52,7 @@ void DrawingCanvas::clear(const sf::Color& color) {
 }
 
 Pen& DrawingCanvas::getPen() {
-	return *mPen;
+	return mPen;
 }
 
 sf::Vector2f DrawingCanvas::getPositionCanvas() const {

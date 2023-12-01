@@ -2,6 +2,7 @@
 #include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
 #include "StateStack.h"
+#include "Pen.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -18,12 +19,15 @@ private:
     void updateStatistics(sf::Time elapsedTime);
     void registerStates();
 
+    void loadTextures();
+
 private:
     static const sf::Time TimePerFrame;
 
     sf::RenderWindow mWindow;
     TextureHolder* mTextures;
     FontHolder* mFonts;
+    Pen mPen;
 
     StateStack mStateStack;
 

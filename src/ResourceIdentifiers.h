@@ -4,6 +4,21 @@
 
 namespace Textures {
     enum ID {
+        ButtonSizeNormal,
+        ButtonSizeSelected = ButtonSizeNormal,
+        ButtonSizePressed  = ButtonSizeNormal,
+        ButtonSize1pxNormal,
+        ButtonSize1pxSelected,
+        ButtonSize1pxPressed = ButtonSize1pxSelected,
+        ButtonSize3pxNormal,
+        ButtonSize3pxSelected,
+        ButtonSize3pxPressed = ButtonSize3pxSelected,
+        ButtonSize5pxNormal,
+        ButtonSize5pxSelected,
+        ButtonSize5pxPressed = ButtonSize5pxSelected,
+        ButtonSize8pxNormal,
+        ButtonSize8pxSelected,
+        ButtonSize8pxPressed = ButtonSize8pxSelected,
         TextureCount
     };
 }

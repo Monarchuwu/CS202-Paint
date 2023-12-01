@@ -3,10 +3,14 @@
 #include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
 #include "DrawingCanvas.h"
+#include "Pen.h"
+#include "ControlTable.h"
 
 #include <SFML/Graphics.hpp>
 
 class MainState : public State {
+    friend class ControlTable;
+
 public:
     MainState(StateStack& stack, Context context);
 
@@ -29,7 +33,11 @@ private:
     FontHolder* mFonts;
 
     sf::RectangleShape mBackground;
-    DrawingCanvas* mDrawingCanvas;
+
+    Pen& mPen;
+    DrawingCanvas mDrawingCanvas;
+    ControlTable mControlTable;
+
     //QLabel *shapeLabel;
     //QLabel *penWidthLabel;
     //QLabel *penStyleLabel;

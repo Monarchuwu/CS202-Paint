@@ -7,10 +7,9 @@ class DrawingCanvas {
     friend class Pen;
 
 public:
-    DrawingCanvas(sf::RenderWindow& window,
+    DrawingCanvas(sf::RenderWindow& window, Pen& pen,
 				  const sf::FloatRect& objectArea,
 				  const sf::Vector2f& renderArea);
-	~DrawingCanvas();
 
     void handleEvent(const sf::Event& event);
 	void update();
@@ -30,5 +29,5 @@ private:
 	sf::RenderTexture mRenderTexture;
 	sf::Sprite mSprite;
 
-	Pen* mPen;
+	Pen& mPen;
 };
