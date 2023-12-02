@@ -45,6 +45,9 @@ void DrawingCanvas::update() {
 void DrawingCanvas::draw() {
 	mRenderTexture.display();
 	mWindow.draw(mSprite);
+    if (mPen.isDrawing()) {
+		mPen.draw();
+	}
 }
 
 void DrawingCanvas::clear(const sf::Color& color) {
@@ -61,4 +64,9 @@ sf::Vector2f DrawingCanvas::getPositionCanvas() const {
 
 void DrawingCanvas::adaptRenderArea(const sf::Vector2f& renderArea) {
     mSprite.setOrigin(renderArea / 2.f);
+}
+
+const sf::FloatRect& DrawingCanvas::getRenderArea() const {
+    sf::Vector2f size = (sf::Vector2f)mRenderTexture.getSize();
+    return sf::FloatRect(mSprite.getPosition() - mSprite.getOrigin(), size);
 }

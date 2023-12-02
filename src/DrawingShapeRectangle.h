@@ -2,9 +2,9 @@
 #include "DrawingShape.h"
 #include "Pen.h"
 
-class DrawingShapeLinesStrip : public DrawingShape {
+class DrawingShapeRectangle : public DrawingShape {
 public:
-    DrawingShapeLinesStrip(sf::RenderWindow& window, Pen& pen,
+    DrawingShapeRectangle(sf::RenderWindow& window, Pen& pen,
                            const sf::FloatRect& renderArea);
 
     virtual void startDrawing(const sf::Vector2f& position);
@@ -12,12 +12,12 @@ public:
     virtual void move(const sf::Vector2f& position);
 
 private:
-	void drawLine(const sf::Vector2f& from, const sf::Vector2f& to);
+    void drawRectangle(int minX, int minY, int maxX, int maxY);
 
 private:
     Pen& mPen;
-	sf::Vector2f mCurrentPosition;
+    sf::Vector2f mStartPosition;
 
-	sf::RectangleShape mRectangleShape;
-	sf::CircleShape mCircleShape;
+    sf::RectangleShape mRectangleShape;
+    sf::CircleShape mCircleShape;
 };

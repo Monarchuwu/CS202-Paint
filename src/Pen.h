@@ -1,9 +1,8 @@
 #pragma once
-#include "DrawingShape.h"
-
 #include <SFML/Graphics.hpp>
 
 class DrawingCanvas;
+class DrawingShape;
 
 class Pen {
 public:
@@ -19,6 +18,8 @@ public:
 
     void setCanvas(DrawingCanvas& canvas);
 
+    bool isDrawing() const;
+    void draw();
     void startDrawing(const sf::Vector2f& position);
     void stopDrawing();
     void move(const sf::Vector2f& position);
@@ -26,8 +27,10 @@ public:
     void setWidth(int width);
     int getWidth() const;
 
-private:
-    void drawLine(const sf::Vector2f& from, const sf::Vector2f& to);
+    void setColor(const sf::Color& color);
+    const sf::Color& getColor() const;
+
+    void setShape();
 
 private:
     DrawingCanvas* mCanvas;

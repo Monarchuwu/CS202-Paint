@@ -3,26 +3,26 @@
 #include <cmath>
 
 DrawingShapeLinesStrip::DrawingShapeLinesStrip(
-    const sf::Vector2f& size,
-    const sf::Vector2f& startingPosition,
-    const Pen::Context& context)
-    : DrawingShape(size),
-      mCurrentPosition(startingPosition),
-      mContext(context) {
+    sf::RenderWindow& window, Pen& pen,
+    const sf::FloatRect& renderArea)
+    : DrawingShape(window, pen, renderArea),
+      mPen(pen) {
 }
 
-void DrawingShapeLinesStrip::draw() {
-    //states.transform *= getTransform();
-    //target.draw(mVertexArray, states);
+void DrawingShapeLinesStrip::startDrawing(const sf::Vector2f& position) {
+	mCurrentPosition = position;
+    clear();
 }
 
-void DrawingShapeLinesStrip::mouseMove(const sf::Vector2f& move) {
-    sf::Vector2f newPosition = mCurrentPosition + move;
+void DrawingShapeLinesStrip::stopDrawing() {
+	// nothing to do
+}
 
-    // draw a line from the current position to the new position WITHOUT clear
-    drawLine(mCurrentPosition, newPosition);
+void DrawingShapeLinesStrip::move(const sf::Vector2f& position) {
+	// draw a line from the current position to the new position WITHOUT clear
+	drawLine(mCurrentPosition, position);
 
-    mCurrentPosition = newPosition;
+	mCurrentPosition = position;
 }
 
 void DrawingShapeLinesStrip::drawLine(const sf::Vector2f& from, const sf::Vector2f& to) {
@@ -30,17 +30,24 @@ void DrawingShapeLinesStrip::drawLine(const sf::Vector2f& from, const sf::Vector
     float length       = std::sqrt(delta.x * delta.x + delta.y * delta.y);
     float angle        = std::atan2(delta.y, delta.x) * 180.f / 3.14159265f;
 
-    mRectangleShape.setFillColor(mContext.color);
-    mCircleShape.setFillColor(mContext.color);
+    int penWidth = mPen.getWidth();
+    const sf::Color& penColor = mPen.getColor();
 
-    mRectangleShape.setSize(sf::Vector2f(length, mContext.width));
+    mRectangleShape.setFillColor(penColor);
+    mRectangleShape.setOrigin(0, penWidth / 2.f);
+
+    mCircleShape.setFillColor(penColor);
+    mCircleShape.setOrigin(penWidth / 2.f, penWidth / 2.f);
+    mCircleShape.setRadius(penWidth / 2.f);
+
+    mRectangleShape.setSize(sf::Vector2f(length, penWidth));
     mRectangleShape.setRotation(angle);
     mRectangleShape.setPosition(from);
-    getRenderTexture()->draw(mRectangleShape);
+    mRenderTexture.draw(mRectangleShape);
 
     mCircleShape.setPosition(from);
-    getRenderTexture()->draw(mCircleShape);
+    mRenderTexture.draw(mCircleShape);
 
     mCircleShape.setPosition(to);
-    getRenderTexture()->draw(mCircleShape);
+    mRenderTexture.draw(mCircleShape);
 }

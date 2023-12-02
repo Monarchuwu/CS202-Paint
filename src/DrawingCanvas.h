@@ -21,6 +21,7 @@ public:
 private:
 	sf::Vector2f getPositionCanvas() const;
 	void adaptRenderArea(const sf::Vector2f& renderArea);
+	const sf::FloatRect& getRenderArea() const;
 
 private:
 	sf::RenderWindow& mWindow;

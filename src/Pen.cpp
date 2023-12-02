@@ -1,5 +1,8 @@
 #include "Pen.h"
 #include "DrawingCanvas.h"
+#include "DrawingShape.h"
+#include "DrawingShapeLinesStrip.h"
+#include "DrawingShapeRectangle.h"
 
 Pen::Context::Context(const sf::Color& color, int width)
 	: color(color),
@@ -17,19 +20,31 @@ void Pen::setCanvas(DrawingCanvas& canvas) {
 	mCanvas = &canvas;
 }
 
+bool Pen::isDrawing() const {
+	return mIsDrawing;
+}
+
+void Pen::draw() {
+	if (mDrawingShape != nullptr) {
+		mDrawingShape->draw();
+	}
+}
+
 void Pen::startDrawing(const sf::Vector2f& position) {
 	mIsDrawing = true;
-	mLastPosition = position;
+	mDrawingShape->startDrawing(position);
 }
 
 void Pen::stopDrawing() {
 	mIsDrawing = false;
+	mDrawingShape->stopDrawing();
+
+	mCanvas->mRenderTexture.draw(sf::Sprite(mDrawingShape->getCanvas()));
 }
 
 void Pen::move(const sf::Vector2f& position) {
 	if (mIsDrawing) {
-		drawLine(mLastPosition, position);
-		mLastPosition = position;
+	    mDrawingShape->move(position);
 	}
 }
 
@@ -41,25 +56,20 @@ int Pen::getWidth() const {
 	return mContext.width;
 }
 
-void Pen::drawLine(const sf::Vector2f& from, const sf::Vector2f& to) {
-	sf::Vector2f delta = to - from;
-	float length       = std::sqrt(delta.x * delta.x + delta.y * delta.y);
-	float angle        = std::atan2(delta.y, delta.x) * 180.f / 3.14159265f;
+void Pen::setColor(const sf::Color& color) {
+	mContext.color = color;
+}
 
-	mRectangleShape.setFillColor(mContext.color);
-	mCircleShape.setFillColor(mContext.color);
+const sf::Color& Pen::getColor() const {
+	return mContext.color;
+}
 
-	mRectangleShape.setOrigin(0, mContext.width / 2.f);
-	mRectangleShape.setSize(sf::Vector2f(length, mContext.width));
-	mRectangleShape.setRotation(angle);
-	mRectangleShape.setPosition(from);
-	(mCanvas->mRenderTexture).draw(mRectangleShape);
-
-	mCircleShape.setOrigin(mContext.width / 2.f, mContext.width / 2.f);
-	mCircleShape.setRadius(mContext.width / 2.f);
-	mCircleShape.setPosition(from);
-	(mCanvas->mRenderTexture).draw(mCircleShape);
-
-	mCircleShape.setPosition(to);
-	(mCanvas->mRenderTexture).draw(mCircleShape);
+void Pen::setShape() {
+	if (mDrawingShape != nullptr) {
+		delete mDrawingShape;
+	}
+	mDrawingShape = mDrawingShape = new DrawingShapeRectangle(mCanvas->mWindow, *this,
+	                                                          mCanvas->getRenderArea());
+	//mDrawingShape = mDrawingShape = new DrawingShapeLinesStrip(mCanvas->mWindow, *this,
+	//                                                           mCanvas->getRenderArea());
 }

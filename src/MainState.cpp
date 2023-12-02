@@ -13,6 +13,8 @@ MainState::MainState(StateStack& stack, Context context)
       mControlTable(this, context, mPen, sf::FloatRect(0, 50, 1600, 160)) {
     mBackground.setFillColor(sf::Color(26, 32, 49));
     mPen.setCanvas(mDrawingCanvas);
+
+    mPen.setShape();
 }
 
 void MainState::draw() {

@@ -1,23 +1,34 @@
 #pragma once
+#include "Pen.h"
+
 #include <SFML/Graphics.hpp>
 
 // This is a temporary canvas
 class DrawingShape {
 protected:
-    DrawingShape(const sf::Vector2f& size);
+    DrawingShape(sf::RenderWindow& window, Pen& pen,
+                 const sf::FloatRect& renderArea);
 
 public:
     virtual ~DrawingShape();
 
-    virtual void draw()                              = 0;
-    virtual void mouseMove(const sf::Vector2f& move) = 0;
+    virtual void startDrawing(const sf::Vector2f& position) = 0;
+    virtual void stopDrawing()                              = 0;
+    virtual void move(const sf::Vector2f& position)         = 0;
 
+    virtual void draw();
     void clear(const sf::Color& color = sf::Color::Transparent);
 
-protected:
-    sf::RenderTexture* getRenderTexture();
+    const sf::Texture& getCanvas() const;
 
 private:
+    sf::RenderWindow& mWindow;
+
+protected:
     sf::RenderTexture mRenderTexture;
+
+private:
     sf::Sprite mSprite;
+
+    Pen& mPen;
 };
