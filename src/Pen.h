@@ -19,7 +19,7 @@ public:
     };
 
 public:
-    Pen(const Context& context);
+    Pen(sf::RenderWindow& window, const Context& context);
 
     void setCanvas(DrawingCanvas& canvas);
 
@@ -43,6 +43,8 @@ private:
     DrawingShape* createShape(DrawingShapes::ID shapeID);
 
 private:
+    sf::RenderWindow& mWindow;
+
     DrawingCanvas* mCanvas;
     Context mContext;
     DrawingShape* mDrawingShape;

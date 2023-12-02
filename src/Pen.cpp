@@ -15,8 +15,9 @@ Pen::Context::Context(const sf::Color& color, int width)
 	  width(width) {
 }
 
-Pen::Pen(const Context& context)
-	: mCanvas(nullptr),
+Pen::Pen(sf::RenderWindow& window, const Context& context)
+	: mWindow(window),
+	  mCanvas(nullptr),
 	  mContext(context),
 	  mDrawingShape(nullptr),
 	  mIsDrawing(false) {
@@ -39,7 +40,7 @@ bool Pen::isDrawing() const {
 
 void Pen::draw() {
 	if (mDrawingShape != nullptr) {
-		mDrawingShape->draw(mCanvas->mWindow);
+		mDrawingShape->draw(mWindow);
 	}
 }
 
@@ -49,10 +50,12 @@ void Pen::startDrawing(const sf::Vector2f& position) {
 }
 
 void Pen::stopDrawing() {
+	if (!mIsDrawing) return;
+
 	mIsDrawing = false;
 	mDrawingShape->stopDrawing();
 
-	mCanvas->mRenderTexture.draw(sf::Sprite(mDrawingShape->getCanvas()));
+	mCanvas->addTexture(mDrawingShape->getCanvas());
 }
 
 void Pen::move(const sf::Vector2f& position) {

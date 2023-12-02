@@ -16,6 +16,7 @@ public:
     virtual void stopDrawing()                              = 0;
     virtual void move(const sf::Vector2f& position)         = 0;
 
+
     virtual void draw(sf::RenderTarget& target);
     void clear(const sf::Color& color = sf::Color::Transparent);
 

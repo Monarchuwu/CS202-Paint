@@ -1,11 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+#include <vector>
+
 class Pen;
 
 class DrawingCanvas {
-    friend class Pen;
-
 public:
     DrawingCanvas(sf::RenderWindow& window, Pen& pen,
 				  const sf::FloatRect& objectArea,
@@ -14,14 +14,17 @@ public:
     void handleEvent(const sf::Event& event);
 	void update();
 	void draw();
-	void clear(const sf::Color& color = sf::Color(255, 255, 255, 255));
+	void clear(const sf::Color& color = sf::Color::White);
+
+	void addTexture(const sf::Texture& texture);
 
 	Pen& getPen();
 
-private:
 	sf::Vector2f getPositionCanvas() const;
-	void adaptRenderArea(const sf::Vector2f& renderArea);
 	const sf::FloatRect& getRenderArea() const;
+
+private:
+	void adaptRenderArea(const sf::Vector2f& renderArea);
 
 private:
 	sf::RenderWindow& mWindow;
@@ -29,6 +32,8 @@ private:
 
 	sf::RenderTexture mRenderTexture;
 	sf::Sprite mSprite;
+
+	std::vector<sf::Texture> mTexturesHistory;
 
 	Pen& mPen;
 };

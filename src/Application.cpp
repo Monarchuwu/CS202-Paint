@@ -11,7 +11,7 @@ Application::Application()
     : mWindow(sf::VideoMode(1600, 900), "My Paint", sf::Style::Close),
       mTextures(TextureHolder::getInstance()),
       mFonts(FontHolder::getInstance()),
-      mPen(Pen::Context(sf::Color::Black, 3)),
+      mPen(mWindow, Pen::Context(sf::Color::Black, 3)),
       mStateStack(State::Context(mWindow, *mTextures, *mFonts, mPen)),
       mStatisticsText(),
       mStatisticsUpdateTime(),
