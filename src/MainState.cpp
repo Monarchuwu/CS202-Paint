@@ -1,4 +1,5 @@
 #include "MainState.h"
+#include "DrawingShapeIdentifiers.h"
 
 MainState::MainState(StateStack& stack, Context context)
     : State(stack, context),
@@ -12,9 +13,6 @@ MainState::MainState(StateStack& stack, Context context)
                      sf::Vector2f(640, 480)),
       mControlTable(this, context, mPen, sf::FloatRect(0, 50, 1600, 160)) {
     mBackground.setFillColor(sf::Color(26, 32, 49));
-    mPen.setCanvas(mDrawingCanvas);
-
-    mPen.setShape();
 }
 
 void MainState::draw() {

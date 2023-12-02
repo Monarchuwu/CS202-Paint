@@ -2,6 +2,7 @@
 #include "State.h"
 #include "Pen.h"
 #include "Container.h"
+#include "DrawingShapeIdentifiers.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -20,6 +21,10 @@ public:
     void draw();
 
 	//CommandQueue& getCommandQueue();
+
+private:
+    void addSizeCategory(State::Context& context);
+    void addShapeCategory(State::Context& context);
 
 private:
     MainState* mMainState;

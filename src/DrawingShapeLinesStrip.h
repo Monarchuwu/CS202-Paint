@@ -4,7 +4,7 @@
 
 class DrawingShapeLinesStrip : public DrawingShape {
 public:
-    DrawingShapeLinesStrip(sf::RenderWindow& window, Pen& pen,
+    DrawingShapeLinesStrip(Pen& pen,
                            const sf::FloatRect& renderArea);
 
     virtual void startDrawing(const sf::Vector2f& position);

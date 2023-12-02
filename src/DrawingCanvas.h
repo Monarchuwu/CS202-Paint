@@ -1,7 +1,7 @@
 #pragma once
-#include "Pen.h"
-
 #include <SFML/Graphics.hpp>
+
+class Pen;
 
 class DrawingCanvas {
     friend class Pen;

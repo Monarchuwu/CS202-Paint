@@ -1,4 +1,5 @@
 #include "DrawingCanvas.h"
+#include "Pen.h"
 
 DrawingCanvas::DrawingCanvas(sf::RenderWindow& window, Pen& pen,
                              const sf::FloatRect& objectArea,

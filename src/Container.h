@@ -6,6 +6,8 @@
 namespace GUI {
 
     class Container : public Component {
+        friend class ContainerOneActivate;
+
     public:
         typedef std::shared_ptr<Container> Ptr;
 

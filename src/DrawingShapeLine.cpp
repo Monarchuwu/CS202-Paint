@@ -1,35 +1,35 @@
-#include "DrawingShapeLinesStrip.h"
+#include "DrawingShapeLine.h"
 
 #include <cmath>
 
-DrawingShapeLinesStrip::DrawingShapeLinesStrip(Pen& pen,
-                                               const sf::FloatRect& renderArea)
+DrawingShapeLine::DrawingShapeLine(Pen& pen,
+                                   const sf::FloatRect& renderArea)
     : DrawingShape(pen, renderArea),
       mPen(pen) {
 }
 
-void DrawingShapeLinesStrip::startDrawing(const sf::Vector2f& position) {
-	mCurrentPosition = position;
+void DrawingShapeLine::startDrawing(const sf::Vector2f& position) {
+    mStartPosition = position;
     clear();
 }
 
-void DrawingShapeLinesStrip::stopDrawing() {
-	// nothing to do
+void DrawingShapeLine::stopDrawing() {
+    // nothing to do
 }
 
-void DrawingShapeLinesStrip::move(const sf::Vector2f& position) {
-	// draw a line from the current position to the new position WITHOUT clear
-	drawLine(mCurrentPosition, position);
+void DrawingShapeLine::move(const sf::Vector2f& position) {
+    // clear the render texture to draw a new shape
+    clear();
 
-	mCurrentPosition = position;
+    drawLine(mStartPosition, position);
 }
 
-void DrawingShapeLinesStrip::drawLine(const sf::Vector2f& from, const sf::Vector2f& to) {
+void DrawingShapeLine::drawLine(const sf::Vector2f& from, const sf::Vector2f& to) {
     sf::Vector2f delta = to - from;
     float length       = std::sqrt(delta.x * delta.x + delta.y * delta.y);
     float angle        = std::atan2(delta.y, delta.x) * 180.f / 3.14159265f;
 
-    int penWidth = mPen.getWidth();
+    int penWidth              = mPen.getWidth();
     const sf::Color& penColor = mPen.getColor();
 
     mRectangleShape.setFillColor(penColor);

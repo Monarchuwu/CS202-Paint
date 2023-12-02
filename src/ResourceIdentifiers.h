@@ -7,6 +7,7 @@ namespace Textures {
         ButtonSizeNormal,
         ButtonSizeSelected = ButtonSizeNormal,
         ButtonSizePressed  = ButtonSizeNormal,
+
         ButtonSize1pxNormal,
         ButtonSize1pxSelected,
         ButtonSize1pxPressed = ButtonSize1pxSelected,
@@ -19,6 +20,29 @@ namespace Textures {
         ButtonSize8pxNormal,
         ButtonSize8pxSelected,
         ButtonSize8pxPressed = ButtonSize8pxSelected,
+
+        ButtonShapeLinesStripNormal,
+        ButtonShapeLinesStripSelected,
+        ButtonShapeLinesStripPressed = ButtonShapeLinesStripSelected,
+        ButtonShapeLineNormal,
+        ButtonShapeLineSelected,
+        ButtonShapeLinePressed = ButtonShapeLineSelected,
+        ButtonShapeRectangleNormal,
+        ButtonShapeRectangleSelected,
+        ButtonShapeRectanglePressed = ButtonShapeRectangleSelected,
+        ButtonShapeOvalNormal,
+        ButtonShapeOvalSelected,
+        ButtonShapeOvalPressed = ButtonShapeOvalSelected,
+        ButtonShapeTriangleNormal,
+        ButtonShapeTriangleSelected,
+        ButtonShapeTrianglePressed = ButtonShapeTriangleSelected,
+        ButtonShapeRightTriangleNormal,
+        ButtonShapeRightTriangleSelected,
+        ButtonShapeRightTrianglePressed = ButtonShapeRightTriangleSelected,
+        ButtonShapeDiamondNormal,
+        ButtonShapeDiamondSelected,
+        ButtonShapeDiamondPressed = ButtonShapeDiamondSelected,
+
         TextureCount
     };
 }

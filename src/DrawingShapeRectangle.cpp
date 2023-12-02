@@ -2,10 +2,9 @@
 
 #include <cmath>
 
-DrawingShapeRectangle::DrawingShapeRectangle(
-    sf::RenderWindow& window, Pen& pen,
-    const sf::FloatRect& renderArea)
-    : DrawingShape(window, pen, renderArea),
+DrawingShapeRectangle::DrawingShapeRectangle(Pen& pen,
+                                             const sf::FloatRect& renderArea)
+    : DrawingShape(pen, renderArea),
       mPen(pen) {
 }
 

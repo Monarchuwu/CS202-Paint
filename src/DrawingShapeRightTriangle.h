@@ -2,22 +2,24 @@
 #include "DrawingShape.h"
 #include "Pen.h"
 
-class DrawingShapeRectangle : public DrawingShape {
+class DrawingShapeRightTriangle : public DrawingShape {
 public:
-    DrawingShapeRectangle(Pen& pen,
-                           const sf::FloatRect& renderArea);
+    DrawingShapeRightTriangle(Pen& pen,
+                              const sf::FloatRect& renderArea);
 
     virtual void startDrawing(const sf::Vector2f& position);
     virtual void stopDrawing();
     virtual void move(const sf::Vector2f& position);
 
 private:
-    void drawRectangle(int minX, int minY, int maxX, int maxY);
+    void drawTriangle(int minX, int minY, int maxX, int maxY);
+    void drawLine(const sf::Vector2f& from, const sf::Vector2f& to);
 
 private:
     Pen& mPen;
     sf::Vector2f mStartPosition;
 
     sf::RectangleShape mRectangleShape;
+    sf::RectangleShape mRectangleShapeLine;
     sf::CircleShape mCircleShape;
 };

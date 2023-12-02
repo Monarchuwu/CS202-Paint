@@ -1,9 +1,8 @@
 #include "DrawingShape.h"
 
-DrawingShape::DrawingShape(sf::RenderWindow& window, Pen& pen,
+DrawingShape::DrawingShape(Pen& pen,
                            const sf::FloatRect& renderArea)
-    : mWindow(window),
-      mRenderTexture(),
+    : mRenderTexture(),
       mSprite(),
       mPen(pen) {
     mRenderTexture.create(renderArea.width, renderArea.height);
@@ -15,9 +14,9 @@ DrawingShape::DrawingShape(sf::RenderWindow& window, Pen& pen,
 
 DrawingShape::~DrawingShape() {}
 
-void DrawingShape::draw() {
+void DrawingShape::draw(sf::RenderTarget& target) {
 	mRenderTexture.display();
-	mWindow.draw(mSprite);
+    target.draw(mSprite);
 }
 
 void DrawingShape::clear(const sf::Color& color) {

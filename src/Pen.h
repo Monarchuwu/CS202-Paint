@@ -1,7 +1,12 @@
 #pragma once
+#include "DrawingShapeIdentifiers.h"
+#include "DrawingCanvas.h"
+
 #include <SFML/Graphics.hpp>
 
-class DrawingCanvas;
+#include <map>
+#include <functional>
+
 class DrawingShape;
 
 class Pen {
@@ -10,7 +15,7 @@ public:
         Context(const sf::Color& color, int width);
 
         sf::Color color;
-		int width;
+        int width;
     };
 
 public:
@@ -30,7 +35,12 @@ public:
     void setColor(const sf::Color& color);
     const sf::Color& getColor() const;
 
-    void setShape();
+    template<typename T>
+    void registerShape(DrawingShapes::ID shapeID);
+    void setShape(DrawingShapes::ID shapeID);
+
+private:
+    DrawingShape* createShape(DrawingShapes::ID shapeID);
 
 private:
     DrawingCanvas* mCanvas;
@@ -41,4 +51,13 @@ private:
     sf::Vector2f mLastPosition;
     sf::RectangleShape mRectangleShape;
     sf::CircleShape mCircleShape;
+
+    std::map<DrawingShapes::ID, std::function<DrawingShape*()>> mShapeFactories;
 };
+
+template<typename T>
+void Pen::registerShape(DrawingShapes::ID shapeID) {
+    mShapeFactories[shapeID] = [this]() {
+        return new T(*this, mCanvas->getRenderArea());
+    };
+}

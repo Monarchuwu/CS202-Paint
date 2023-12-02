@@ -1,8 +1,14 @@
 #include "Pen.h"
-#include "DrawingCanvas.h"
 #include "DrawingShape.h"
 #include "DrawingShapeLinesStrip.h"
+#include "DrawingShapeLine.h"
 #include "DrawingShapeRectangle.h"
+#include "DrawingShapeOval.h"
+#include "DrawingShapeTriangle.h"
+#include "DrawingShapeRightTriangle.h"
+#include "DrawingShapeDiamond.h"
+
+#include <cassert>
 
 Pen::Context::Context(const sf::Color& color, int width)
 	: color(color),
@@ -14,6 +20,13 @@ Pen::Pen(const Context& context)
 	  mContext(context),
 	  mDrawingShape(nullptr),
 	  mIsDrawing(false) {
+	registerShape<DrawingShapeLinesStrip>(DrawingShapes::LinesStrip);
+    registerShape<DrawingShapeLine>(DrawingShapes::Line);
+    registerShape<DrawingShapeRectangle>(DrawingShapes::Rectangle);
+    registerShape<DrawingShapeOval>(DrawingShapes::Oval);
+    registerShape<DrawingShapeTriangle>(DrawingShapes::Triangle);
+    registerShape<DrawingShapeRightTriangle>(DrawingShapes::RightTriangle);
+    registerShape<DrawingShapeDiamond>(DrawingShapes::Diamond);
 }
 
 void Pen::setCanvas(DrawingCanvas& canvas) {
@@ -26,7 +39,7 @@ bool Pen::isDrawing() const {
 
 void Pen::draw() {
 	if (mDrawingShape != nullptr) {
-		mDrawingShape->draw();
+		mDrawingShape->draw(mCanvas->mWindow);
 	}
 }
 
@@ -64,12 +77,15 @@ const sf::Color& Pen::getColor() const {
 	return mContext.color;
 }
 
-void Pen::setShape() {
+void Pen::setShape(DrawingShapes::ID shapeID) {
 	if (mDrawingShape != nullptr) {
-		delete mDrawingShape;
+	    delete mDrawingShape;
 	}
-	mDrawingShape = mDrawingShape = new DrawingShapeRectangle(mCanvas->mWindow, *this,
-	                                                          mCanvas->getRenderArea());
-	//mDrawingShape = mDrawingShape = new DrawingShapeLinesStrip(mCanvas->mWindow, *this,
-	//                                                           mCanvas->getRenderArea());
+	mDrawingShape = createShape(shapeID);
+}
+
+DrawingShape* Pen::createShape(DrawingShapes::ID shapeID) {
+	auto found = mShapeFactories.find(shapeID);
+	assert(found != mShapeFactories.end());
+	return found->second();
 }

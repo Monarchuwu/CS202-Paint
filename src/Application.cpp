@@ -99,6 +99,7 @@ void Application::registerStates() {
 
 void Application::loadTextures() {
     mTextures->load(Textures::ButtonSizeNormal, "data/Textures/button-size-40x60.png");
+
     mTextures->load(Textures::ButtonSize1pxNormal, "data/Textures/button-size-1px-normal.png");
     mTextures->load(Textures::ButtonSize1pxSelected, "data/Textures/button-size-1px-selected.png");
     mTextures->load(Textures::ButtonSize3pxNormal, "data/Textures/button-size-3px-normal.png");
@@ -107,4 +108,19 @@ void Application::loadTextures() {
     mTextures->load(Textures::ButtonSize5pxSelected, "data/Textures/button-size-5px-selected.png");
     mTextures->load(Textures::ButtonSize8pxNormal, "data/Textures/button-size-8px-normal.png");
     mTextures->load(Textures::ButtonSize8pxSelected, "data/Textures/button-size-8px-selected.png");
+
+    mTextures->load(Textures::ButtonShapeLinesStripNormal, "data/Textures/button-shape-lines_strip-normal.png");
+    mTextures->load(Textures::ButtonShapeLinesStripSelected, "data/Textures/button-shape-lines_strip-selected.png");
+    mTextures->load(Textures::ButtonShapeLineNormal, "data/Textures/button-shape-line-normal.png");
+    mTextures->load(Textures::ButtonShapeLineSelected, "data/Textures/button-shape-line-selected.png");
+    mTextures->load(Textures::ButtonShapeRectangleNormal, "data/Textures/button-shape-rectangle-normal.png");
+    mTextures->load(Textures::ButtonShapeRectangleSelected, "data/Textures/button-shape-rectangle-selected.png");
+    mTextures->load(Textures::ButtonShapeOvalNormal, "data/Textures/button-shape-oval-normal.png");
+    mTextures->load(Textures::ButtonShapeOvalSelected, "data/Textures/button-shape-oval-selected.png");
+    mTextures->load(Textures::ButtonShapeTriangleNormal, "data/Textures/button-shape-triangle-normal.png");
+    mTextures->load(Textures::ButtonShapeTriangleSelected, "data/Textures/button-shape-triangle-selected.png");
+    mTextures->load(Textures::ButtonShapeRightTriangleNormal, "data/Textures/button-shape-right_triangle-normal.png");
+    mTextures->load(Textures::ButtonShapeRightTriangleSelected, "data/Textures/button-shape-right_triangle-selected.png");
+    mTextures->load(Textures::ButtonShapeDiamondNormal, "data/Textures/button-shape-diamond-normal.png");
+    mTextures->load(Textures::ButtonShapeDiamondSelected, "data/Textures/button-shape-diamond-selected.png");
 }
