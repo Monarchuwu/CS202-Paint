@@ -66,17 +66,17 @@
     <ClCompile Include="src\DrawingShapeRectangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\DrawingShapeOval.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\DrawingShapeLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\DrawingShapeDiamond.cpp">
+    <ClCompile Include="src\ContainerOneActivate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\DrawingShapeOvalTemplate.inl">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="src\DrawingShapeRightTriangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HistoryPanel.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -152,12 +152,27 @@
     <ClInclude Include="src\DrawingShapeOvalTemplate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ContainerOneActivate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DrawingShapeRightTriangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DrawingShapeTriangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HistoryPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\ResourceHolder.inl">
       <Filter>Header Files</Filter>
     </None>
     <None Include="src\Utility.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="src\DrawingShapeOvalTemplate.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

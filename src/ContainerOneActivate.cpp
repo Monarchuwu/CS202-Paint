@@ -15,12 +15,7 @@ namespace GUI {
                     if (child->handleEvent(event)) {
                         // If the child has just been activated
                         if (!childActive && child->isActive()) {
-                            // Deactivate all other children
-                            for (auto& otherChild : mChildren) {
-                                if (&otherChild != &child) {
-									otherChild->deactivate();
-								}
-							}
+                            deactivateAllExcept(child);
 						}
                         return true;
                     }
@@ -28,6 +23,21 @@ namespace GUI {
             }
         }
         return false;
+	}
+
+    void ContainerOneActivate::activate(std::size_t index) {
+        if (index < mChildren.size()) {
+			deactivateAllExcept(mChildren[index]);
+            mChildren[index]->activate();
+        }
+    }
+
+    void ContainerOneActivate::deactivateAllExcept(Component::Ptr child) {
+        for (auto& c : mChildren) {
+            if (c != child) {
+				c->deactivate();
+			}
+		}
 	}
 
 } // namespace GUI

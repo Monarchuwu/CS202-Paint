@@ -8,7 +8,7 @@ MainState::MainState(StateStack& stack, Context context)
       mFonts((context.fonts)->getInstance()),
       mBackground(sf::Vector2f(1600, 900)),
       mPen(*(context.pen)),
-      mDrawingCanvas(mWindow, mPen,
+      mDrawingCanvas(context,
                      sf::FloatRect(0, 210, 1600, 640),
                      sf::Vector2f(640, 480)),
       mControlTable(this, context, mPen, sf::FloatRect(0, 50, 1600, 160)) {

@@ -1,4 +1,7 @@
 #pragma once
+#include "State.h"
+#include "HistoryPanel.h"
+
 #include <SFML/Graphics.hpp>
 
 #include <vector>
@@ -7,7 +10,7 @@ class Pen;
 
 class DrawingCanvas {
 public:
-    DrawingCanvas(sf::RenderWindow& window, Pen& pen,
+    DrawingCanvas(State::Context context,
 				  const sf::FloatRect& objectArea,
 				  const sf::Vector2f& renderArea);
 
@@ -23,6 +26,8 @@ public:
 	sf::Vector2f getPositionCanvas() const;
 	const sf::FloatRect& getRenderArea() const;
 
+	friend void HistoryPanel::drawDirectedToCanvas(const sf::Texture& texture);
+
 private:
 	void adaptRenderArea(const sf::Vector2f& renderArea);
 
@@ -30,10 +35,11 @@ private:
 	sf::RenderWindow& mWindow;
 	sf::FloatRect mObjectArea;
 
+	sf::RenderTexture mRenderTexturePermanently;
 	sf::RenderTexture mRenderTexture;
 	sf::Sprite mSprite;
 
-	std::vector<sf::Texture> mTexturesHistory;
+	HistoryPanel mHistoryPanel;
 
 	Pen& mPen;
 };

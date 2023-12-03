@@ -2,11 +2,11 @@
 #include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
 #include "StateIdentifiers.h"
-#include "Pen.h"
 
 #include <SFML/Graphics.hpp>
 
 class StateStack;
+class Pen;
 
 class State {
 public:

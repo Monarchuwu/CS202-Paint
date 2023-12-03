@@ -1,14 +1,19 @@
 #include "DrawingCanvas.h"
 #include "Pen.h"
 
-DrawingCanvas::DrawingCanvas(sf::RenderWindow& window, Pen& pen,
+DrawingCanvas::DrawingCanvas(State::Context context,
                              const sf::FloatRect& objectArea,
                              const sf::Vector2f& renderArea)
-    : mWindow(window),
+    : mWindow(*(context.window)),
       mObjectArea(objectArea),
+      mRenderTexturePermanently(),
       mRenderTexture(),
       mSprite(),
-      mPen(pen) {
+      mHistoryPanel(this, context, sf::FloatRect(1400, objectArea.top, 190, objectArea.height)),
+      mPen(*(context.pen)) {
+    mRenderTexturePermanently.create(renderArea.x, renderArea.y);
+    mRenderTexturePermanently.clear(sf::Color::Transparent);
+
     mRenderTexture.create(renderArea.x, renderArea.y);
     clear();
     addTexture(mRenderTexture.getTexture());
@@ -20,14 +25,6 @@ DrawingCanvas::DrawingCanvas(sf::RenderWindow& window, Pen& pen,
 }
 
 void DrawingCanvas::handleEvent(const sf::Event& event) {
-    if (event.type == sf::Event::KeyReleased) {
-        if (event.key.code == sf::Keyboard::Backspace) {
-            if (mTexturesHistory.size() > 1) {
-				mTexturesHistory.pop_back();
-			}
-		}
-    }
-
     if (event.type == sf::Event::MouseButtonPressed) {
 		if (event.mouseButton.button == sf::Mouse::Left) {
 			sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
@@ -45,11 +42,8 @@ void DrawingCanvas::handleEvent(const sf::Event& event) {
     else if (event.type == sf::Event::MouseMoved) {
         mPen.move(sf::Vector2f(event.mouseMove.x, event.mouseMove.y) - getPositionCanvas());
     }
-	else if (event.type == sf::Event::KeyPressed) {
-		if (event.key.code == sf::Keyboard::Space) {
-			clear();
-		}
-	}
+
+    mHistoryPanel.handleEvent(event);
 }
 
 void DrawingCanvas::update() {
@@ -57,16 +51,18 @@ void DrawingCanvas::update() {
 }
 
 void DrawingCanvas::draw() {
-	mRenderTexture.clear();
-    for (const sf::Texture& texture : mTexturesHistory) {
-		mRenderTexture.draw(sf::Sprite(texture));
-	}
+	mRenderTexture.clear(sf::Color::Transparent);
+    mRenderTexture.draw(sf::Sprite(mRenderTexturePermanently.getTexture()));
+
+    mHistoryPanel.drawTextures(mRenderTexture);
 	mRenderTexture.display();
 
     mWindow.draw(mSprite);
     if (mPen.isDrawing()) {
 		mPen.draw();
 	}
+
+    mHistoryPanel.draw();
 }
 
 void DrawingCanvas::clear(const sf::Color& color) {
@@ -74,7 +70,7 @@ void DrawingCanvas::clear(const sf::Color& color) {
 }
 
 void DrawingCanvas::addTexture(const sf::Texture& texture) {
-	mTexturesHistory.push_back(texture);
+    mHistoryPanel.addTexture(texture);
 }
 
 Pen& DrawingCanvas::getPen() {

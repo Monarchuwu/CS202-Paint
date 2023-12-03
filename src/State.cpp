@@ -1,5 +1,6 @@
 #include "State.h"
 #include "StateStack.h"
+#include "Pen.h"
 
 State::Context::Context(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts, Pen& pen)
     : window(&window), textures(&textures), fonts(&fonts), pen(&pen) {

@@ -16,6 +16,9 @@ namespace GUI {
           mText("", fonts->get(Fonts::Sansation), 16),
           mIsToggle(false) {
         mSprite.setTexture(mNormalTexture);
+
+        sf::FloatRect bounds = mSprite.getLocalBounds();
+        mText.setPosition(bounds.width / 2.f, bounds.height / 2.f);
     }
 
     void Button::setCallback(Callback callback) {
@@ -75,6 +78,8 @@ namespace GUI {
     }
 
     bool Button::handleEvent(const sf::Event& event) {
+        if (!isVisible()) return false;
+
         if (event.type == sf::Event::MouseButtonReleased) {
             auto bounds = getWorldTransform().transformRect(mSprite.getGlobalBounds());
             if (bounds.contains(event.mouseButton.x, event.mouseButton.y)) {
@@ -86,6 +91,8 @@ namespace GUI {
     }
 
     void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+        if (!isVisible()) return;
+
         states.transform *= getTransform();
         target.draw(mSprite, states);
         target.draw(mText, states);

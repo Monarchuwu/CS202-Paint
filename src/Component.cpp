@@ -2,7 +2,10 @@
 
 namespace GUI {
     Component::Component()
-        : mIsSelected(false), mIsActive(false), mParent(nullptr) {
+        : mIsSelected(false),
+          mIsActive(false),
+          mIsVisible(true),
+          mParent(nullptr) {
     }
 
     Component::~Component() {
@@ -30,6 +33,14 @@ namespace GUI {
 
     void Component::deactivate() {
         mIsActive = false;
+    }
+
+    bool Component::isVisible() const {
+		return mIsVisible;
+	}
+
+    void Component::setVisible(bool flag) {
+        mIsVisible = flag;
     }
 
     sf::Vector2f Component::getWorldPosition() const {

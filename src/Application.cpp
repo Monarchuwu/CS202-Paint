@@ -123,4 +123,7 @@ void Application::loadTextures() {
     mTextures->load(Textures::ButtonShapeRightTriangleSelected, "data/Textures/button-shape-right_triangle-selected.png");
     mTextures->load(Textures::ButtonShapeDiamondNormal, "data/Textures/button-shape-diamond-normal.png");
     mTextures->load(Textures::ButtonShapeDiamondSelected, "data/Textures/button-shape-diamond-selected.png");
+
+    mTextures->load(Textures::ButtonHistoryPanelNormal, "data/Textures/button-history_panel-normal.png");
+    mTextures->load(Textures::ButtonHistoryPanelSelected, "data/Textures/button-history_panel-selected.png");
 }

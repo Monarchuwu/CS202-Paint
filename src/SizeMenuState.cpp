@@ -2,7 +2,8 @@
 #include "Button.h"
 #include "Utility.h"
 #include "ResourceHolder.h"
-#include "Button.h"
+#include "ResourceIdentifiers.h"
+#include "Pen.h"
 
 #include <SFML/Graphics.hpp>
 

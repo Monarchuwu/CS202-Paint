@@ -43,6 +43,10 @@ namespace Textures {
         ButtonShapeDiamondSelected,
         ButtonShapeDiamondPressed = ButtonShapeDiamondSelected,
 
+        ButtonHistoryPanelNormal,
+        ButtonHistoryPanelSelected,
+        ButtonHistoryPanelPressed = ButtonHistoryPanelSelected,
+
         TextureCount
     };
 }

@@ -26,6 +26,9 @@ namespace GUI {
         virtual void activate();
         virtual void deactivate();
 
+        virtual bool isVisible() const;
+        virtual void setVisible(bool flag);
+
         virtual bool handleEvent(const sf::Event& event) = 0;
 
         sf::Vector2f getWorldPosition() const;
@@ -36,6 +39,7 @@ namespace GUI {
     private:
         bool mIsSelected;
         bool mIsActive;
+        bool mIsVisible;
 
         Component* mParent;
     };
