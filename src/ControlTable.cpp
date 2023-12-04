@@ -159,6 +159,17 @@ void ControlTable::addShapeCategory(State::Context& context) {
 	buttonShape->setPosition(3 + 28 + 28, 3);
 	buttonShape->setToggle(true);
 	containerShape->pack(buttonShape);
+	// shape: text writing
+	buttonShape = GUI::Button::Ptr(new GUI::Button(context.fonts, context.textures,
+	                                               Textures::ButtonShapeTextWritingNormal,
+	                                               Textures::ButtonShapeTextWritingSelected,
+	                                               Textures::ButtonShapeTextWritingPressed));
+	buttonShape->setCallback([this]() {
+		mPen.setShape(DrawingShapes::TextWriting);
+	});
+	buttonShape->setPosition(3 + 28 + 28, 3 + 28);
+	buttonShape->setToggle(true);
+	containerShape->pack(buttonShape);
 
 	/// add shape container to the main container
 	mGUIContainers.emplace_back(std::move(container));

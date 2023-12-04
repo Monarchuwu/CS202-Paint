@@ -1,6 +1,7 @@
 #pragma once
 #include "DrawingShapeIdentifiers.h"
 #include "DrawingCanvas.h"
+#include "ResourceHolder.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -25,7 +26,9 @@ public:
     };
 
 public:
-    Pen(sf::RenderWindow& window, const Context& context);
+    Pen(sf::RenderWindow& window,
+        FontHolder* fonts,
+        const Context& context);
 
     void setCanvas(DrawingCanvas& canvas);
 
@@ -42,6 +45,8 @@ public:
 
     template<typename T>
     void registerShape(DrawingShapes::ID shapeID);
+    template<typename T>
+    void registerShapeTextWriting(DrawingShapes::ID shapeID);
     void setShape(DrawingShapes::ID shapeID);
 
 private:
@@ -53,6 +58,7 @@ private:
 
 private:
     sf::RenderWindow& mWindow;
+    FontHolder* mFonts;
 
     DrawingCanvas* mCanvas;
     Context mContext;
@@ -67,5 +73,12 @@ template<typename T>
 void Pen::registerShape(DrawingShapes::ID shapeID) {
     mShapeFactories[shapeID] = [this]() {
         return new T(*this, mCanvas->getRenderArea());
+    };
+}
+
+template<typename T>
+void Pen::registerShapeTextWriting(DrawingShapes::ID shapeID) {
+    mShapeFactories[shapeID] = [this]() {
+        return new T(*this, mFonts, mCanvas->getRenderArea());
     };
 }

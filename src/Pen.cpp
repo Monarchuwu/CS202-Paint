@@ -7,6 +7,7 @@
 #include "DrawingShapeTriangle.h"
 #include "DrawingShapeRightTriangle.h"
 #include "DrawingShapeDiamond.h"
+#include "DrawingShapeTextWriting.h"
 
 #include <cassert>
 
@@ -15,8 +16,9 @@ Pen::Context::Context(const sf::Color& color, int width)
 	  width(width) {
 }
 
-Pen::Pen(sf::RenderWindow& window, const Context& context)
+Pen::Pen(sf::RenderWindow& window, FontHolder* fonts, const Context& context)
 	: mWindow(window),
+      mFonts(fonts),
 	  mCanvas(nullptr),
 	  mContext(context),
 	  mDrawingShape(nullptr) {
@@ -27,6 +29,7 @@ Pen::Pen(sf::RenderWindow& window, const Context& context)
     registerShape<DrawingShapeTriangle>(DrawingShapes::Triangle);
     registerShape<DrawingShapeRightTriangle>(DrawingShapes::RightTriangle);
     registerShape<DrawingShapeDiamond>(DrawingShapes::Diamond);
+    registerShapeTextWriting<DrawingShapeTextWriting>(DrawingShapes::TextWriting);
 }
 
 void Pen::setCanvas(DrawingCanvas& canvas) {
@@ -78,10 +81,12 @@ void Pen::handleEvent(const sf::Event& event) {
 						if (!boundingBox.contains(mousePosition)) {
 						    mCanvas->addTexture(mDrawingShape->getCanvas());
 						    mDrawingStatus = PenStatus::WAIT_TO_DRAW;
+						    break;
 	                    }
 	                }
 	            }
 	        }
+			mDrawingShape->handleEvent(event);
 	        break;
 		}
 	}

@@ -43,6 +43,10 @@ namespace Textures {
         ButtonShapeDiamondSelected,
         ButtonShapeDiamondPressed = ButtonShapeDiamondSelected,
 
+        ButtonShapeTextWritingNormal,
+        ButtonShapeTextWritingSelected,
+        ButtonShapeTextWritingPressed = ButtonShapeTextWritingSelected,
+
         ButtonHistoryPanelNormal,
         ButtonHistoryPanelSelected,
         ButtonHistoryPanelPressed = ButtonHistoryPanelSelected,

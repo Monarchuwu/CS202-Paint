@@ -11,7 +11,7 @@ Application::Application()
     : mWindow(sf::VideoMode(1600, 900), "My Paint", sf::Style::Close),
       mTextures(TextureHolder::getInstance()),
       mFonts(FontHolder::getInstance()),
-      mPen(mWindow, Pen::Context(sf::Color::Black, 3)),
+      mPen(mWindow, mFonts, Pen::Context(sf::Color::Black, 3)),
       mStateStack(State::Context(mWindow, *mTextures, *mFonts, mPen)),
       mStatisticsText(),
       mStatisticsUpdateTime(),
@@ -123,6 +123,9 @@ void Application::loadTextures() {
     mTextures->load(Textures::ButtonShapeRightTriangleSelected, "data/Textures/button-shape-right_triangle-selected.png");
     mTextures->load(Textures::ButtonShapeDiamondNormal, "data/Textures/button-shape-diamond-normal.png");
     mTextures->load(Textures::ButtonShapeDiamondSelected, "data/Textures/button-shape-diamond-selected.png");
+
+    mTextures->load(Textures::ButtonShapeTextWritingNormal, "data/Textures/button-shape-text_writing-normal.png");
+    mTextures->load(Textures::ButtonShapeTextWritingSelected, "data/Textures/button-shape-text_writing-selected.png");
 
     mTextures->load(Textures::ButtonHistoryPanelNormal, "data/Textures/button-history_panel-normal.png");
     mTextures->load(Textures::ButtonHistoryPanelSelected, "data/Textures/button-history_panel-selected.png");

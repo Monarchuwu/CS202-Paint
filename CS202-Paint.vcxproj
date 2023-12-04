@@ -152,6 +152,7 @@
     <ClCompile Include="src\DrawingShapeLineStrip.cpp" />
     <ClCompile Include="src\DrawingShapeRectangle.cpp" />
     <ClCompile Include="src\DrawingShapeRightTriangle.cpp" />
+    <ClCompile Include="src\DrawingShapeTextWriting.cpp" />
     <ClCompile Include="src\DrawingShapeTriangle.cpp" />
     <ClCompile Include="src\HistoryPanel.cpp" />
     <ClCompile Include="src\Label.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="src\DrawingShapeOvalTemplate.h" />
     <ClInclude Include="src\DrawingShapeRectangle.h" />
     <ClInclude Include="src\DrawingShapeRightTriangle.h" />
+    <ClInclude Include="src\DrawingShapeTextWriting.h" />
     <ClInclude Include="src\DrawingShapeTriangle.h" />
     <ClInclude Include="src\HistoryPanel.h" />
     <ClInclude Include="src\Label.h" />

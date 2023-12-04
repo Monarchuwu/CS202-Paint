@@ -16,6 +16,10 @@ DrawingShape::DrawingShape(Pen& pen,
 
 DrawingShape::~DrawingShape() {}
 
+void DrawingShape::handleEvent(const sf::Event& event) {
+    // do nothing
+}
+
 void DrawingShape::draw(sf::RenderTarget& target) {
 	mRenderTexture.display();
     target.draw(mSprite);
