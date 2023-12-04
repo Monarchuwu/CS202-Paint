@@ -17,6 +17,7 @@ private:
 private:
     Pen& mPen;
     sf::Vector2f mStartPosition;
+    sf::Vector2f mCurrentPosition;
 
     sf::RectangleShape mRectangleShape;
     sf::CircleShape mCircleShape;

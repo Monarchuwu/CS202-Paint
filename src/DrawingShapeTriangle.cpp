@@ -1,9 +1,9 @@
-#include "DrawingShapeLine.h"
+#include "DrawingShapeTriangle.h"
 
 #include <cmath>
 
-DrawingShapeLine::DrawingShapeLine(Pen& pen,
-                                   const sf::FloatRect& renderArea)
+DrawingShapeTriangle::DrawingShapeTriangle(Pen& pen,
+                                                     const sf::FloatRect& renderArea)
     : DrawingShape(pen, renderArea),
       mPen(pen),
       mStartPosition(),
@@ -12,25 +12,41 @@ DrawingShapeLine::DrawingShapeLine(Pen& pen,
       mCircleShape() {
 }
 
-void DrawingShapeLine::startDrawing(const sf::Vector2f& position) {
+void DrawingShapeTriangle::startDrawing(const sf::Vector2f& position) {
     resetBoundingBox(position);
-    mStartPosition = mCurrentPosition = position;
+    mStartPosition = position;
     clear();
 }
 
-void DrawingShapeLine::stopDrawing() {
+void DrawingShapeTriangle::stopDrawing() {
     updateBoundingBox(mCurrentPosition);
 }
 
-void DrawingShapeLine::move(const sf::Vector2f& position) {
+void DrawingShapeTriangle::move(const sf::Vector2f& position) {
     // clear the render texture to draw a new shape
     clear();
 
-    drawLine(mStartPosition, position);
+    int minX = std::min(mStartPosition.x, position.x);
+    int minY = std::min(mStartPosition.y, position.y);
+    int maxX = std::max(mStartPosition.x, position.x);
+    int maxY = std::max(mStartPosition.y, position.y);
+    drawTriangle(minX, minY, maxX, maxY);
+
     mCurrentPosition = position;
 }
 
-void DrawingShapeLine::drawLine(const sf::Vector2f& from, const sf::Vector2f& to) {
+void DrawingShapeTriangle::drawTriangle(int minX, int minY, int maxX, int maxY) {
+    sf::Vector2f point[3];
+    point[0] = sf::Vector2f(minX, maxY);
+    point[1] = sf::Vector2f(maxX, maxY);
+    point[2] = sf::Vector2f((minX + maxX) / 2, minY);
+
+    drawLine(point[0], point[1]);
+    drawLine(point[1], point[2]);
+    drawLine(point[2], point[0]);
+}
+
+void DrawingShapeTriangle::drawLine(const sf::Vector2f& from, const sf::Vector2f& to) {
     sf::Vector2f delta = to - from;
     float length       = std::sqrt(delta.x * delta.x + delta.y * delta.y);
     float angle        = std::atan2(delta.y, delta.x) * 180.f / 3.14159265f;

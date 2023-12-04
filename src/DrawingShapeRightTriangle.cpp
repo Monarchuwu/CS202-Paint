@@ -5,16 +5,22 @@
 DrawingShapeRightTriangle::DrawingShapeRightTriangle(Pen& pen,
                                                      const sf::FloatRect& renderArea)
     : DrawingShape(pen, renderArea),
-      mPen(pen) {
+      mPen(pen),
+      mStartPosition(),
+      mCurrentPosition(),
+      mRectangleShape(),
+      mRectangleShapeLine(),
+      mCircleShape() {
 }
 
 void DrawingShapeRightTriangle::startDrawing(const sf::Vector2f& position) {
+    resetBoundingBox(position);
     mStartPosition = position;
     clear();
 }
 
 void DrawingShapeRightTriangle::stopDrawing() {
-    // nothing to do
+    updateBoundingBox(mCurrentPosition);
 }
 
 void DrawingShapeRightTriangle::move(const sf::Vector2f& position) {
@@ -26,6 +32,8 @@ void DrawingShapeRightTriangle::move(const sf::Vector2f& position) {
     int maxX = std::max(mStartPosition.x, position.x);
     int maxY = std::max(mStartPosition.y, position.y);
     drawTriangle(minX, minY, maxX, maxY);
+
+    mCurrentPosition = position;
 }
 
 void DrawingShapeRightTriangle::drawTriangle(int minX, int minY, int maxX, int maxY) {

@@ -19,8 +19,7 @@ Pen::Pen(sf::RenderWindow& window, const Context& context)
 	: mWindow(window),
 	  mCanvas(nullptr),
 	  mContext(context),
-	  mDrawingShape(nullptr),
-	  mIsDrawing(false) {
+	  mDrawingShape(nullptr) {
 	registerShape<DrawingShapeLinesStrip>(DrawingShapes::LinesStrip);
     registerShape<DrawingShapeLine>(DrawingShapes::Line);
     registerShape<DrawingShapeRectangle>(DrawingShapes::Rectangle);
@@ -35,32 +34,77 @@ void Pen::setCanvas(DrawingCanvas& canvas) {
 }
 
 bool Pen::isDrawing() const {
-	return mIsDrawing;
+	return mDrawingStatus != PenStatus::WAIT_TO_DRAW;
 }
 
-void Pen::draw() {
-	if (mDrawingShape != nullptr) {
-		mDrawingShape->draw(mWindow);
+void Pen::handleEvent(const sf::Event& event) {
+	assert(mCanvas != nullptr);
+
+	switch (mDrawingStatus) {
+	    case PenStatus::WAIT_TO_DRAW: {
+	        if (event.type == sf::Event::MouseButtonPressed) {
+	            if (event.mouseButton.button == sf::Mouse::Left) {
+	                sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
+	                sf::FloatRect renderArea = mCanvas->getRenderArea();
+	                if (renderArea.contains(mousePosition)) {
+	                    startDrawing(mousePosition - renderArea.getPosition());
+	                    mDrawingStatus = PenStatus::DRAWING;
+	                }
+	            }
+	        }
+	        break;
+		}
+
+		case PenStatus::DRAWING: {
+	        if (event.type == sf::Event::MouseButtonReleased) {
+	            if (event.mouseButton.button == sf::Mouse::Left) {
+	                stopDrawing();
+	                mDrawingStatus = PenStatus::DRAWED;
+	            }
+	        }
+	        else if (event.type == sf::Event::MouseMoved) {
+	            move(sf::Vector2f(event.mouseMove.x, event.mouseMove.y) - mCanvas->getPositionCanvas());
+	        }
+	        break;
+		}
+
+		case PenStatus::DRAWED: {
+			if (event.type == sf::Event::MouseButtonPressed) {
+				if (event.mouseButton.button == sf::Mouse::Left) {
+	                sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
+	                sf::FloatRect renderArea = mCanvas->getRenderArea();
+					if (renderArea.contains(mousePosition)) {
+						sf::FloatRect boundingBox = mDrawingShape->getBoundingBox();
+						if (!boundingBox.contains(mousePosition)) {
+						    mCanvas->addTexture(mDrawingShape->getCanvas());
+						    mDrawingStatus = PenStatus::WAIT_TO_DRAW;
+	                    }
+	                }
+	            }
+	        }
+	        break;
+		}
 	}
 }
 
-void Pen::startDrawing(const sf::Vector2f& position) {
-	mIsDrawing = true;
-	mDrawingShape->startDrawing(position);
-}
+void Pen::draw() {
+	if (mDrawingShape == nullptr) return;
 
-void Pen::stopDrawing() {
-	if (!mIsDrawing) return;
+	switch (mDrawingStatus) {
+		case PenStatus::WAIT_TO_DRAW: {
+	        break;
+		}
 
-	mIsDrawing = false;
-	mDrawingShape->stopDrawing();
+		case PenStatus::DRAWING: {
+	        mDrawingShape->draw(mWindow);
+	        break;
+		}
 
-	mCanvas->addTexture(mDrawingShape->getCanvas());
-}
-
-void Pen::move(const sf::Vector2f& position) {
-	if (mIsDrawing) {
-	    mDrawingShape->move(position);
+		case PenStatus::DRAWED: {
+	        mDrawingShape->draw(mWindow);
+	        mDrawingShape->drawBoundingBox(mWindow);
+	        break;
+		}
 	}
 }
 
@@ -85,10 +129,24 @@ void Pen::setShape(DrawingShapes::ID shapeID) {
 	    delete mDrawingShape;
 	}
 	mDrawingShape = createShape(shapeID);
+
+	mDrawingStatus = PenStatus::WAIT_TO_DRAW;
 }
 
 DrawingShape* Pen::createShape(DrawingShapes::ID shapeID) {
 	auto found = mShapeFactories.find(shapeID);
 	assert(found != mShapeFactories.end());
 	return found->second();
+}
+
+void Pen::startDrawing(const sf::Vector2f& position) {
+	mDrawingShape->startDrawing(position);
+}
+
+void Pen::stopDrawing() {
+	mDrawingShape->stopDrawing();
+}
+
+void Pen::move(const sf::Vector2f& position) {
+	mDrawingShape->move(position);
 }

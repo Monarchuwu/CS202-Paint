@@ -10,6 +10,12 @@
 class DrawingShape;
 
 class Pen {
+    enum class PenStatus {
+        WAIT_TO_DRAW,
+        DRAWING,
+        DRAWED
+    };
+
 public:
     struct Context {
         Context(const sf::Color& color, int width);
@@ -24,10 +30,9 @@ public:
     void setCanvas(DrawingCanvas& canvas);
 
     bool isDrawing() const;
+
+    void handleEvent(const sf::Event& event);
     void draw();
-    void startDrawing(const sf::Vector2f& position);
-    void stopDrawing();
-    void move(const sf::Vector2f& position);
 
     void setWidth(int width);
     int getWidth() const;
@@ -42,6 +47,10 @@ public:
 private:
     DrawingShape* createShape(DrawingShapes::ID shapeID);
 
+    void startDrawing(const sf::Vector2f& position);
+    void stopDrawing();
+    void move(const sf::Vector2f& position);
+
 private:
     sf::RenderWindow& mWindow;
 
@@ -49,10 +58,7 @@ private:
     Context mContext;
     DrawingShape* mDrawingShape;
 
-    bool mIsDrawing;
-    sf::Vector2f mLastPosition;
-    sf::RectangleShape mRectangleShape;
-    sf::CircleShape mCircleShape;
+    PenStatus mDrawingStatus;
 
     std::map<DrawingShapes::ID, std::function<DrawingShape*()>> mShapeFactories;
 };

@@ -22,7 +22,19 @@ public:
 
     const sf::Texture& getCanvas() const;
 
+    // this method will only be called after stopDrawing() called
+    void drawBoundingBox(sf::RenderTarget& target);
+    // this method will only be called after stopDrawing() called
+    sf::FloatRect getBoundingBox() const;
+
 protected:
+    void updateBoundingBox(const sf::Vector2f& position);
+    void resetBoundingBox(const sf::Vector2f& position);
+
+protected:
+    // bounding box
+    int mTop, mBottom, mLeft, mRight;
+
     sf::RenderTexture mRenderTexture;
 
 private:

@@ -5,18 +5,23 @@ template<std::size_t N>
 DrawingShapeOvalTemplate<N>::DrawingShapeOvalTemplate<N>(Pen& pen,
                                                          const sf::FloatRect& renderArea)
     : DrawingShape(pen, renderArea),
-      mPen(pen) {
+      mPen(pen),
+      mStartPosition(),
+      mCurrentPosition(),
+      mRectangleShape(),
+      mCircleShape() {
 }
 
 template<std::size_t N>
 void DrawingShapeOvalTemplate<N>::startDrawing(const sf::Vector2f& position) {
+    resetBoundingBox(position);
     mStartPosition = position;
     clear();
 }
 
 template<std::size_t N>
 void DrawingShapeOvalTemplate<N>::stopDrawing() {
-    // nothing to do
+    updateBoundingBox(mCurrentPosition);
 }
 
 template<std::size_t N>
@@ -29,6 +34,8 @@ void DrawingShapeOvalTemplate<N>::move(const sf::Vector2f& position) {
     int maxX = std::max(mStartPosition.x, position.x);
     int maxY = std::max(mStartPosition.y, position.y);
     drawOval(minX, minY, maxX, maxY);
+
+    mCurrentPosition = position;
 }
 
 template<std::size_t N>

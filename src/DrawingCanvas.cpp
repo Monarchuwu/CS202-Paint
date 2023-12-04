@@ -25,24 +25,7 @@ DrawingCanvas::DrawingCanvas(State::Context context,
 }
 
 void DrawingCanvas::handleEvent(const sf::Event& event) {
-    if (event.type == sf::Event::MouseButtonPressed) {
-		if (event.mouseButton.button == sf::Mouse::Left) {
-			sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
-            sf::FloatRect renderArea = getRenderArea();
-			if (renderArea.contains(mousePosition)) {
-				mPen.startDrawing(mousePosition - renderArea.getPosition());
-			}
-		}
-    }
-    else if (event.type == sf::Event::MouseButtonReleased) {
-        if (event.mouseButton.button == sf::Mouse::Left) {
-            mPen.stopDrawing();
-        }
-    }
-    else if (event.type == sf::Event::MouseMoved) {
-        mPen.move(sf::Vector2f(event.mouseMove.x, event.mouseMove.y) - getPositionCanvas());
-    }
-
+    mPen.handleEvent(event);
     mHistoryPanel.handleEvent(event);
 }
 
@@ -58,9 +41,7 @@ void DrawingCanvas::draw() {
 	mRenderTexture.display();
 
     mWindow.draw(mSprite);
-    if (mPen.isDrawing()) {
-		mPen.draw();
-	}
+	mPen.draw();
 
     mHistoryPanel.draw();
 }

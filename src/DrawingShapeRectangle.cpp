@@ -5,16 +5,21 @@
 DrawingShapeRectangle::DrawingShapeRectangle(Pen& pen,
                                              const sf::FloatRect& renderArea)
     : DrawingShape(pen, renderArea),
-      mPen(pen) {
+      mPen(pen),
+      mStartPosition(),
+      mCurrentPosition(),
+      mRectangleShape(),
+      mCircleShape() {
 }
 
 void DrawingShapeRectangle::startDrawing(const sf::Vector2f& position) {
-    mStartPosition = position;
+    resetBoundingBox(position);
+    mStartPosition = mCurrentPosition = position;
     clear();
 }
 
 void DrawingShapeRectangle::stopDrawing() {
-    // nothing to do
+    updateBoundingBox(mCurrentPosition);
 }
 
 void DrawingShapeRectangle::move(const sf::Vector2f& position) {
@@ -26,6 +31,8 @@ void DrawingShapeRectangle::move(const sf::Vector2f& position) {
     int maxX = std::max(mStartPosition.x, position.x);
     int maxY = std::max(mStartPosition.y, position.y);
     drawRectangle(minX, minY, maxX, maxY);
+
+    mCurrentPosition = position;
 }
 
 void DrawingShapeRectangle::drawRectangle(int minX, int minY, int maxX, int maxY) {

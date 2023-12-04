@@ -5,10 +5,14 @@
 DrawingShapeLinesStrip::DrawingShapeLinesStrip(Pen& pen,
                                                const sf::FloatRect& renderArea)
     : DrawingShape(pen, renderArea),
-      mPen(pen) {
+      mPen(pen),
+      mCurrentPosition(),
+      mRectangleShape(),
+      mCircleShape() {
 }
 
 void DrawingShapeLinesStrip::startDrawing(const sf::Vector2f& position) {
+    resetBoundingBox(position);
 	mCurrentPosition = position;
     clear();
 }
@@ -22,6 +26,7 @@ void DrawingShapeLinesStrip::move(const sf::Vector2f& position) {
 	drawLine(mCurrentPosition, position);
 
 	mCurrentPosition = position;
+    updateBoundingBox(position);
 }
 
 void DrawingShapeLinesStrip::drawLine(const sf::Vector2f& from, const sf::Vector2f& to) {
