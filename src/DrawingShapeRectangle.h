@@ -1,8 +1,8 @@
 #pragma once
-#include "DrawingShape.h"
+#include "DrawingShapeLineStrip.h"
 #include "Pen.h"
 
-class DrawingShapeRectangle : public DrawingShape {
+class DrawingShapeRectangle : public DrawingShapeLineStrip {
 public:
     DrawingShapeRectangle(Pen& pen,
                            const sf::FloatRect& renderArea);
@@ -15,10 +15,6 @@ private:
     void drawRectangle(int minX, int minY, int maxX, int maxY);
 
 private:
-    Pen& mPen;
     sf::Vector2f mStartPosition;
     sf::Vector2f mCurrentPosition;
-
-    sf::RectangleShape mRectangleShape;
-    sf::CircleShape mCircleShape;
 };

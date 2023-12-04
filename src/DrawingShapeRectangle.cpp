@@ -4,12 +4,9 @@
 
 DrawingShapeRectangle::DrawingShapeRectangle(Pen& pen,
                                              const sf::FloatRect& renderArea)
-    : DrawingShape(pen, renderArea),
-      mPen(pen),
+    : DrawingShapeLineStrip(pen, renderArea),
       mStartPosition(),
-      mCurrentPosition(),
-      mRectangleShape(),
-      mCircleShape() {
+      mCurrentPosition() {
 }
 
 void DrawingShapeRectangle::startDrawing(const sf::Vector2f& position) {
@@ -36,44 +33,13 @@ void DrawingShapeRectangle::move(const sf::Vector2f& position) {
 }
 
 void DrawingShapeRectangle::drawRectangle(int minX, int minY, int maxX, int maxY) {
-    int penWidth              = mPen.getWidth();
-    const sf::Color& penColor = mPen.getColor();
+    std::vector<sf::Vector2f> points(5);
 
-    /// draw the four sides of the rectangle
-    mRectangleShape.setFillColor(penColor);
-    // top and bottom
-    mRectangleShape.setSize(sf::Vector2f(maxX - minX, penWidth));
-    mRectangleShape.setOrigin(0, penWidth / 2.f);
-    // top
-    mRectangleShape.setPosition(minX, minY);
-    mRenderTexture.draw(mRectangleShape);
-    // bottom
-    mRectangleShape.setPosition(minX, maxY);
-    mRenderTexture.draw(mRectangleShape);
-    // left and right
-    mRectangleShape.setSize(sf::Vector2f(penWidth, maxY - minY));
-    mRectangleShape.setOrigin(penWidth / 2.f, 0);
-    // left
-    mRectangleShape.setPosition(minX, minY);
-    mRenderTexture.draw(mRectangleShape);
-    // right
-    mRectangleShape.setPosition(maxX, minY);
-    mRenderTexture.draw(mRectangleShape);
+    points[0] = sf::Vector2f(minX, minY);
+    points[1] = sf::Vector2f(maxX, minY);
+    points[2] = sf::Vector2f(maxX, maxY);
+    points[3] = sf::Vector2f(minX, maxY);
+    points[4] = points[0];
 
-    /// draw the four corners of the rectangle
-    mCircleShape.setFillColor(penColor);
-    mCircleShape.setOrigin(penWidth / 2.f, penWidth / 2.f);
-    mCircleShape.setRadius(penWidth / 2.f);
-    // top left
-    mCircleShape.setPosition(minX, minY);
-    mRenderTexture.draw(mCircleShape);
-    // top right
-    mCircleShape.setPosition(maxX, minY);
-    mRenderTexture.draw(mCircleShape);
-    // bottom left
-    mCircleShape.setPosition(minX, maxY);
-    mRenderTexture.draw(mCircleShape);
-    // bottom right
-    mCircleShape.setPosition(maxX, maxY);
-    mRenderTexture.draw(mCircleShape);
+    drawLineStrip(points);
 }

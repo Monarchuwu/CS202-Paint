@@ -1,8 +1,8 @@
 #pragma once
-#include "DrawingShape.h"
+#include "DrawingShapeLineStrip.h"
 #include "Pen.h"
 
-class DrawingShapeTriangle : public DrawingShape {
+class DrawingShapeTriangle : public DrawingShapeLineStrip {
 public:
     DrawingShapeTriangle(Pen& pen,
                          const sf::FloatRect& renderArea);
@@ -13,13 +13,8 @@ public:
 
 private:
     void drawTriangle(int minX, int minY, int maxX, int maxY);
-    void drawLine(const sf::Vector2f& from, const sf::Vector2f& to);
 
 private:
-    Pen& mPen;
     sf::Vector2f mStartPosition;
     sf::Vector2f mCurrentPosition;
-
-    sf::RectangleShape mRectangleShape;
-    sf::CircleShape mCircleShape;
 };

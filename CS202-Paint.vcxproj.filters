@@ -42,7 +42,7 @@
     <ClCompile Include="src\DrawingShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\DrawingShapeLinesStrip.cpp">
+    <ClCompile Include="src\DrawingShapePencil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ControlTable.cpp">
@@ -81,6 +81,9 @@
     <ClCompile Include="src\DrawingShapeTriangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\DrawingShapeLineStrip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ResourceIdentifiers.h">
@@ -116,7 +119,7 @@
     <ClInclude Include="src\DrawingShape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\DrawingShapeLinesStrip.h">
+    <ClInclude Include="src\DrawingShapePencil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ControlTable.h">
@@ -165,6 +168,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\HistoryPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DrawingShapeLineStrip.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

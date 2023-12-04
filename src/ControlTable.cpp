@@ -87,7 +87,7 @@ void ControlTable::addShapeCategory(State::Context& context) {
 	                                               Textures::ButtonShapeLinesStripSelected,
 	                                               Textures::ButtonShapeLinesStripPressed));
 	buttonShape->setCallback([this]() {
-	    mPen.setShape(DrawingShapes::LinesStrip);
+	    mPen.setShape(DrawingShapes::Pencil);
 	});
 	buttonShape->setPosition(3, 3);
 	buttonShape->setToggle(true);

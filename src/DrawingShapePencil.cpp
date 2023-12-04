@@ -1,9 +1,9 @@
-#include "DrawingShapeLinesStrip.h"
+#include "DrawingShapePencil.h"
 
 #include <cmath>
 
-DrawingShapeLinesStrip::DrawingShapeLinesStrip(Pen& pen,
-                                               const sf::FloatRect& renderArea)
+DrawingShapePencil::DrawingShapePencil(Pen& pen,
+                                       const sf::FloatRect& renderArea)
     : DrawingShape(pen, renderArea),
       mPen(pen),
       mCurrentPosition(),
@@ -11,17 +11,17 @@ DrawingShapeLinesStrip::DrawingShapeLinesStrip(Pen& pen,
       mCircleShape() {
 }
 
-void DrawingShapeLinesStrip::startDrawing(const sf::Vector2f& position) {
+void DrawingShapePencil::startDrawing(const sf::Vector2f& position) {
     resetBoundingBox(position);
 	mCurrentPosition = position;
     clear();
 }
 
-void DrawingShapeLinesStrip::stopDrawing() {
+void DrawingShapePencil::stopDrawing() {
 	// nothing to do
 }
 
-void DrawingShapeLinesStrip::move(const sf::Vector2f& position) {
+void DrawingShapePencil::move(const sf::Vector2f& position) {
 	// draw a line from the current position to the new position WITHOUT clear
 	drawLine(mCurrentPosition, position);
 
@@ -29,7 +29,7 @@ void DrawingShapeLinesStrip::move(const sf::Vector2f& position) {
     updateBoundingBox(position);
 }
 
-void DrawingShapeLinesStrip::drawLine(const sf::Vector2f& from, const sf::Vector2f& to) {
+void DrawingShapePencil::drawLine(const sf::Vector2f& from, const sf::Vector2f& to) {
     sf::Vector2f delta = to - from;
     float length       = std::sqrt(delta.x * delta.x + delta.y * delta.y);
     float angle        = std::atan2(delta.y, delta.x) * 180.f / 3.14159265f;

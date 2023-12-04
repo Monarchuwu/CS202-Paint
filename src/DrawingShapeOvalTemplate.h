@@ -1,9 +1,9 @@
 #pragma once
-#include "DrawingShape.h"
+#include "DrawingShapeLineStrip.h"
 #include "Pen.h"
 
 template<std::size_t N>
-class DrawingShapeOvalTemplate : public DrawingShape {
+class DrawingShapeOvalTemplate : public DrawingShapeLineStrip {
 public:
     DrawingShapeOvalTemplate(Pen& pen,
                      const sf::FloatRect& renderArea);
@@ -16,12 +16,8 @@ private:
     void drawOval(int minX, int minY, int maxX, int maxY);
 
 private:
-    Pen& mPen;
     sf::Vector2f mStartPosition;
     sf::Vector2f mCurrentPosition;
-
-    sf::RectangleShape mRectangleShape;
-    sf::CircleShape mCircleShape;
 };
 
 #include "DrawingShapeOvalTemplate.inl"

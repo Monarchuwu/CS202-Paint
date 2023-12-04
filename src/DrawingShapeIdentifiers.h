@@ -3,7 +3,7 @@
 namespace DrawingShapes {
 	enum ID {
         None,
-        LinesStrip,
+        Pencil,
 		Line,
 		Rectangle,
 		Oval,

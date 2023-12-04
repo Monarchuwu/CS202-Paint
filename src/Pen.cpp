@@ -1,6 +1,6 @@
 #include "Pen.h"
 #include "DrawingShape.h"
-#include "DrawingShapeLinesStrip.h"
+#include "DrawingShapePencil.h"
 #include "DrawingShapeLine.h"
 #include "DrawingShapeRectangle.h"
 #include "DrawingShapeOval.h"
@@ -20,7 +20,7 @@ Pen::Pen(sf::RenderWindow& window, const Context& context)
 	  mCanvas(nullptr),
 	  mContext(context),
 	  mDrawingShape(nullptr) {
-	registerShape<DrawingShapeLinesStrip>(DrawingShapes::LinesStrip);
+	registerShape<DrawingShapePencil>(DrawingShapes::Pencil);
     registerShape<DrawingShapeLine>(DrawingShapes::Line);
     registerShape<DrawingShapeRectangle>(DrawingShapes::Rectangle);
     registerShape<DrawingShapeOval>(DrawingShapes::Oval);

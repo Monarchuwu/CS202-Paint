@@ -148,7 +148,8 @@
     <ClCompile Include="src\DrawingCanvas.cpp" />
     <ClCompile Include="src\DrawingShape.cpp" />
     <ClCompile Include="src\DrawingShapeLine.cpp" />
-    <ClCompile Include="src\DrawingShapeLinesStrip.cpp" />
+    <ClCompile Include="src\DrawingShapePencil.cpp" />
+    <ClCompile Include="src\DrawingShapeLineStrip.cpp" />
     <ClCompile Include="src\DrawingShapeRectangle.cpp" />
     <ClCompile Include="src\DrawingShapeRightTriangle.cpp" />
     <ClCompile Include="src\DrawingShapeTriangle.cpp" />
@@ -174,7 +175,8 @@
     <ClInclude Include="src\DrawingShapeDiamond.h" />
     <ClInclude Include="src\DrawingShapeIdentifiers.h" />
     <ClInclude Include="src\DrawingShapeLine.h" />
-    <ClInclude Include="src\DrawingShapeLinesStrip.h" />
+    <ClInclude Include="src\DrawingShapePencil.h" />
+    <ClInclude Include="src\DrawingShapeLineStrip.h" />
     <ClInclude Include="src\DrawingShapeOval.h" />
     <ClInclude Include="src\DrawingShapeOvalTemplate.h" />
     <ClInclude Include="src\DrawingShapeRectangle.h" />
