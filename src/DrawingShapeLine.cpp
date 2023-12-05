@@ -2,9 +2,9 @@
 
 #include <cmath>
 
-DrawingShapeLine::DrawingShapeLine(Pen& pen,
+DrawingShapeLine::DrawingShapeLine(Pen& pen, TextureHolder* textures,
                                    const sf::FloatRect& renderArea)
-    : DrawingShapeLineStrip(pen, renderArea),
+    : DrawingShapeLineStrip(pen, textures, renderArea),
       mStartPosition(),
       mCurrentPosition() {
 }

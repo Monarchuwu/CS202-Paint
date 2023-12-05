@@ -1,12 +1,13 @@
 #pragma once
 #include "Pen.h"
+#include "ResourceHolder.h"
 
 #include <SFML/Graphics.hpp>
 
 // This is a temporary canvas
 class DrawingShape {
 protected:
-    DrawingShape(Pen& pen,
+    DrawingShape(Pen& pen, TextureHolder* textures,
                  const sf::FloatRect& renderArea);
 
 public:
@@ -41,4 +42,6 @@ private:
     sf::Sprite mSprite;
 
     Pen& mPen;
+
+    sf::Sprite mSpriteBlackWhite2x2;
 };

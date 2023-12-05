@@ -7,7 +7,9 @@
 
 class DrawingShapeTextWriting : public DrawingShape {
 public:
-    DrawingShapeTextWriting(Pen& pen, FontHolder* fonts,
+    DrawingShapeTextWriting(Pen& pen,
+                            TextureHolder* textures,
+                            FontHolder* fonts,
                             const sf::FloatRect& renderArea);
 
     virtual void startDrawing(const sf::Vector2f& position);

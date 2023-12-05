@@ -51,6 +51,8 @@ namespace Textures {
         ButtonHistoryPanelSelected,
         ButtonHistoryPanelPressed = ButtonHistoryPanelSelected,
 
+        BlackWhite2x2,
+
         TextureCount
     };
 }

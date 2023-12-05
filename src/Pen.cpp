@@ -16,13 +16,17 @@ Pen::Context::Context(const sf::Color& color, int width)
 	  width(width) {
 }
 
-Pen::Pen(sf::RenderWindow& window, FontHolder* fonts, const Context& context)
-	: mWindow(window),
+Pen::Pen(sf::RenderWindow& window,
+         TextureHolder* textures,
+         FontHolder* fonts,
+         const Context& context)
+    : mWindow(window),
+      mTextures(textures),
       mFonts(fonts),
-	  mCanvas(nullptr),
-	  mContext(context),
-	  mDrawingShape(nullptr) {
-	registerShape<DrawingShapePencil>(DrawingShapes::Pencil);
+      mCanvas(nullptr),
+      mContext(context),
+      mDrawingShape(nullptr) {
+    registerShape<DrawingShapePencil>(DrawingShapes::Pencil);
     registerShape<DrawingShapeLine>(DrawingShapes::Line);
     registerShape<DrawingShapeRectangle>(DrawingShapes::Rectangle);
     registerShape<DrawingShapeOval>(DrawingShapes::Oval);

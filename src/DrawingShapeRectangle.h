@@ -4,7 +4,7 @@
 
 class DrawingShapeRectangle : public DrawingShapeLineStrip {
 public:
-    DrawingShapeRectangle(Pen& pen,
+    DrawingShapeRectangle(Pen& pen, TextureHolder* textures,
                            const sf::FloatRect& renderArea);
 
     virtual void startDrawing(const sf::Vector2f& position);

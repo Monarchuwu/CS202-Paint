@@ -27,6 +27,7 @@ public:
 
 public:
     Pen(sf::RenderWindow& window,
+        TextureHolder* textures,
         FontHolder* fonts,
         const Context& context);
 
@@ -58,6 +59,7 @@ private:
 
 private:
     sf::RenderWindow& mWindow;
+    TextureHolder* mTextures;
     FontHolder* mFonts;
 
     DrawingCanvas* mCanvas;
@@ -72,13 +74,13 @@ private:
 template<typename T>
 void Pen::registerShape(DrawingShapes::ID shapeID) {
     mShapeFactories[shapeID] = [this]() {
-        return new T(*this, mCanvas->getRenderArea());
+        return new T(*this, mTextures, mCanvas->getRenderArea());
     };
 }
 
 template<typename T>
 void Pen::registerShapeTextWriting(DrawingShapes::ID shapeID) {
     mShapeFactories[shapeID] = [this]() {
-        return new T(*this, mFonts, mCanvas->getRenderArea());
+        return new T(*this, mTextures, mFonts, mCanvas->getRenderArea());
     };
 }

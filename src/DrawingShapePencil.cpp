@@ -2,9 +2,9 @@
 
 #include <cmath>
 
-DrawingShapePencil::DrawingShapePencil(Pen& pen,
+DrawingShapePencil::DrawingShapePencil(Pen& pen, TextureHolder* textures,
                                        const sf::FloatRect& renderArea)
-    : DrawingShape(pen, renderArea),
+    : DrawingShape(pen, textures, renderArea),
       mPen(pen),
       mCurrentPosition(),
       mRectangleShape(),

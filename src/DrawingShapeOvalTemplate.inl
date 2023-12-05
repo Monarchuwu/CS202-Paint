@@ -2,9 +2,9 @@
 #include <cmath>
 
 template<std::size_t N>
-DrawingShapeOvalTemplate<N>::DrawingShapeOvalTemplate<N>(Pen& pen,
+DrawingShapeOvalTemplate<N>::DrawingShapeOvalTemplate<N>(Pen& pen, TextureHolder* textures,
                                                          const sf::FloatRect& renderArea)
-    : DrawingShapeLineStrip(pen, renderArea),
+    : DrawingShapeLineStrip(pen, textures, renderArea),
       mStartPosition(),
       mCurrentPosition() {
 }

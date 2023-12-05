@@ -1,11 +1,11 @@
 #include "DrawingShapeLineStrip.h"
 
-DrawingShapeLineStrip::DrawingShapeLineStrip(Pen& pen,
-	const sf::FloatRect& renderArea)
-    : DrawingShape(pen, renderArea),
-	  mPen(pen),
-	  mRectangleShape(),
-	  mCircleShape() {
+DrawingShapeLineStrip::DrawingShapeLineStrip(Pen& pen, TextureHolder* textures,
+                                             const sf::FloatRect& renderArea)
+    : DrawingShape(pen, textures, renderArea),
+      mPen(pen),
+      mRectangleShape(),
+      mCircleShape() {
 }
 
 void DrawingShapeLineStrip::drawLineStrip(const std::vector<sf::Vector2f>& vertices) {

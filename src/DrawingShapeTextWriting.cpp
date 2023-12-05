@@ -1,13 +1,15 @@
 #include "DrawingShapeTextWriting.h"
 
-DrawingShapeTextWriting::DrawingShapeTextWriting(Pen& pen, FontHolder* fonts,
+DrawingShapeTextWriting::DrawingShapeTextWriting(Pen& pen,
+                                                 TextureHolder* textures,
+                                                 FontHolder* fonts,
                                                  const sf::FloatRect& renderArea)
-    : DrawingShape(pen, renderArea),
+    : DrawingShape(pen, textures, renderArea),
       mPen(pen),
       mStartPosition(),
       mCurrentPosition(),
       mString(""),
-	  mText(),
+      mText(),
       mDrawingPosition(renderArea.getPosition()) {
     mText.setFont(fonts->get(Fonts::Sansation));
 }

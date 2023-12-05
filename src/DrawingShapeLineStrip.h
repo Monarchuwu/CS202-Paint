@@ -6,7 +6,7 @@
 
 class DrawingShapeLineStrip : public DrawingShape {
 protected:
-    DrawingShapeLineStrip(Pen& pen,
+    DrawingShapeLineStrip(Pen& pen, TextureHolder* textures,
                           const sf::FloatRect& renderArea);
 
 protected:

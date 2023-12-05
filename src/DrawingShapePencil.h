@@ -4,7 +4,7 @@
 
 class DrawingShapePencil : public DrawingShape {
 public:
-    DrawingShapePencil(Pen& pen,
+    DrawingShapePencil(Pen& pen, TextureHolder* textures,
                        const sf::FloatRect& renderArea);
 
     virtual void startDrawing(const sf::Vector2f& position);

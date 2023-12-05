@@ -5,7 +5,7 @@
 template<std::size_t N>
 class DrawingShapeOvalTemplate : public DrawingShapeLineStrip {
 public:
-    DrawingShapeOvalTemplate(Pen& pen,
+    DrawingShapeOvalTemplate(Pen& pen, TextureHolder* textures,
                      const sf::FloatRect& renderArea);
 
     virtual void startDrawing(const sf::Vector2f& position);

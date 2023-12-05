@@ -4,7 +4,7 @@
 
 class DrawingShapeLine : public DrawingShapeLineStrip {
 public:
-    DrawingShapeLine(Pen& pen,
+    DrawingShapeLine(Pen& pen, TextureHolder* textures,
                      const sf::FloatRect& renderArea);
 
     virtual void startDrawing(const sf::Vector2f& position);

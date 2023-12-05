@@ -11,7 +11,7 @@ Application::Application()
     : mWindow(sf::VideoMode(1600, 900), "My Paint", sf::Style::Close),
       mTextures(TextureHolder::getInstance()),
       mFonts(FontHolder::getInstance()),
-      mPen(mWindow, mFonts, Pen::Context(sf::Color::Black, 3)),
+      mPen(mWindow, mTextures, mFonts, Pen::Context(sf::Color::Black, 3)),
       mStateStack(State::Context(mWindow, *mTextures, *mFonts, mPen)),
       mStatisticsText(),
       mStatisticsUpdateTime(),
@@ -129,4 +129,7 @@ void Application::loadTextures() {
 
     mTextures->load(Textures::ButtonHistoryPanelNormal, "data/Textures/button-history_panel-normal.png");
     mTextures->load(Textures::ButtonHistoryPanelSelected, "data/Textures/button-history_panel-selected.png");
+
+    mTextures->load(Textures::BlackWhite2x2, "data/Textures/black-white-2x2.png");
+    mTextures->get(Textures::BlackWhite2x2).setRepeated(true);
 }

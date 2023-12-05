@@ -1,12 +1,15 @@
 #include "DrawingShape.h"
+#include "ResourceIdentifiers.h"
 
 #include <array>
 
-DrawingShape::DrawingShape(Pen& pen,
+DrawingShape::DrawingShape(Pen& pen, TextureHolder* textures,
                            const sf::FloatRect& renderArea)
-    : mRenderTexture(),
+    : mTop(0), mBottom(0), mLeft(0), mRight(0),
+      mRenderTexture(),
       mSprite(),
-      mPen(pen) {
+      mPen(pen),
+      mSpriteBlackWhite2x2(textures->get(Textures::BlackWhite2x2)) {
     mRenderTexture.create(renderArea.width, renderArea.height);
     clear();
 
@@ -34,45 +37,29 @@ const sf::Texture& DrawingShape::getCanvas() const {
 }
 
 void DrawingShape::drawBoundingBox(sf::RenderTarget& target) {
-    std::array<sf::RectangleShape, 2> pixel;
-    pixel[0].setSize(sf::Vector2f(1, 1));
-    pixel[1].setSize(sf::Vector2f(1, 1));
-    pixel[0].setFillColor(sf::Color::White);
-    pixel[1].setFillColor(sf::Color::Black);
+    mSpriteBlackWhite2x2.setOrigin(.5f, .5f);
 
     /// draw 4 sides of the bounding box
+    // top and bottom
+    mSpriteBlackWhite2x2.setTextureRect(sf::IntRect(0, 0, mRight - mLeft + 1, 1));
     // top
-    pixel[0].setPosition(mSprite.getPosition() + sf::Vector2f(mLeft, mTop));
-    pixel[1].setPosition(mSprite.getPosition() + sf::Vector2f(mLeft, mTop));
-    for (int i = mLeft; i <= mRight; ++i) {
-        pixel[0].move(1, 0);
-        pixel[1].move(1, 0);
-        target.draw(pixel[(i + mTop) & 1]);
-	}
+    mSpriteBlackWhite2x2.setPosition(mLeft, mTop);
+    mSpriteBlackWhite2x2.move(mSprite.getPosition());
+    target.draw(mSpriteBlackWhite2x2);
     // bottom
-    pixel[0].setPosition(mSprite.getPosition() + sf::Vector2f(mLeft, mBottom));
-    pixel[1].setPosition(mSprite.getPosition() + sf::Vector2f(mLeft, mBottom));
-    for (int i = mLeft; i <= mRight; ++i) {
-		pixel[0].move(1, 0);
-		pixel[1].move(1, 0);
-		target.draw(pixel[(i + mBottom) & 1]);
-    }
+    mSpriteBlackWhite2x2.setPosition(mLeft, mBottom);
+    mSpriteBlackWhite2x2.move(mSprite.getPosition());
+    target.draw(mSpriteBlackWhite2x2);
+    // left and right
+    mSpriteBlackWhite2x2.setTextureRect(sf::IntRect(0, 0, 1, mBottom - mTop + 1));
     // left
-    pixel[0].setPosition(mSprite.getPosition() + sf::Vector2f(mLeft, mTop));
-    pixel[1].setPosition(mSprite.getPosition() + sf::Vector2f(mLeft, mTop));
-    for (int i = mTop + 1; i < mBottom; ++i) {
-        pixel[0].move(0, 1);
-        pixel[1].move(0, 1);
-        target.draw(pixel[(i + mLeft) & 1]);
-    }
+    mSpriteBlackWhite2x2.setPosition(mLeft, mTop);
+    mSpriteBlackWhite2x2.move(mSprite.getPosition());
+    target.draw(mSpriteBlackWhite2x2);
     // right
-    pixel[0].setPosition(mSprite.getPosition() + sf::Vector2f(mRight, mTop));
-    pixel[1].setPosition(mSprite.getPosition() + sf::Vector2f(mRight, mTop));
-    for (int i = mTop + 1; i < mBottom; ++i) {
-		pixel[0].move(0, 1);
-		pixel[1].move(0, 1);
-		target.draw(pixel[(i + mRight) & 1]);
-	}
+    mSpriteBlackWhite2x2.setPosition(mRight, mTop);
+    mSpriteBlackWhite2x2.move(mSprite.getPosition());
+    target.draw(mSpriteBlackWhite2x2);
 }
 
 sf::FloatRect DrawingShape::getBoundingBox() const {

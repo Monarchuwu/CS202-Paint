@@ -2,9 +2,9 @@
 
 #include <cmath>
 
-DrawingShapeTriangle::DrawingShapeTriangle(Pen& pen,
+DrawingShapeTriangle::DrawingShapeTriangle(Pen& pen, TextureHolder* textures,
                                            const sf::FloatRect& renderArea)
-    : DrawingShapeLineStrip(pen, renderArea),
+    : DrawingShapeLineStrip(pen, textures, renderArea),
       mStartPosition(),
       mCurrentPosition() {
 }
