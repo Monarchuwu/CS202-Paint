@@ -1,6 +1,5 @@
 #include "SizeMenuState.h"
 #include "Button.h"
-#include "Utility.h"
 #include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
 #include "Pen.h"

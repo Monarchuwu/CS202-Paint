@@ -87,6 +87,9 @@
     <ClCompile Include="src\DrawingShapeTextWriting.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\HandleFileState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\ResourceIdentifiers.h">
@@ -177,6 +180,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\DrawingShapeTextWriting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HandleFileState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

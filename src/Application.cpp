@@ -4,6 +4,7 @@
 #include "StateIdentifiers.h"
 #include "MainState.h"
 #include "SizeMenuState.h"
+#include "HandleFileState.h"
 
 const sf::Time Application::TimePerFrame = sf::seconds(1.f / 60.f);
 
@@ -95,6 +96,7 @@ void Application::updateStatistics(sf::Time elapsedTime) {
 void Application::registerStates() {
     mStateStack.registerState<MainState>(States::Main);
     mStateStack.registerState<SizeMenuState>(States::SizeMenu);
+    mStateStack.registerState<HandleFileState>(States::HandleFile);
 }
 
 void Application::loadTextures() {
@@ -132,4 +134,6 @@ void Application::loadTextures() {
 
     mTextures->load(Textures::BlackWhite2x2, "data/Textures/black-white-2x2.png");
     mTextures->get(Textures::BlackWhite2x2).setRepeated(true);
+
+    mTextures->load(Textures::Transparent70x40, "data/Textures/transparent-70x40.png");
 }

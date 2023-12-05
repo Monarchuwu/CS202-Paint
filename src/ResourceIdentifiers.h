@@ -52,6 +52,7 @@ namespace Textures {
         ButtonHistoryPanelPressed = ButtonHistoryPanelSelected,
 
         BlackWhite2x2,
+        Transparent70x40,
 
         TextureCount
     };

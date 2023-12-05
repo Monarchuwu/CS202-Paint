@@ -11,8 +11,18 @@ MainState::MainState(StateStack& stack, Context context)
       mDrawingCanvas(context,
                      sf::FloatRect(0, 210, 1600, 640),
                      sf::Vector2f(640, 480)),
-      mControlTable(this, context, mPen, sf::FloatRect(0, 50, 1600, 160)) {
+      mControlTable(this, context, mPen, sf::FloatRect(0, 50, 1600, 160)),
+      mHandleFileButton(mFonts, mTextures, Textures::Transparent70x40,
+                                           Textures::Transparent70x40,
+                                           Textures::Transparent70x40) {
+
     mBackground.setFillColor(sf::Color(26, 32, 49));
+
+    mHandleFileButton.setPosition(10, 10);
+    mHandleFileButton.setText("File");
+    mHandleFileButton.setCallback([this] () {
+		requestStackPush(States::HandleFile);
+	});
 }
 
 void MainState::draw() {
@@ -20,6 +30,7 @@ void MainState::draw() {
 
     mDrawingCanvas.draw();
     mControlTable.draw();
+    mWindow.draw(mHandleFileButton);
 }
 
 bool MainState::update(sf::Time dt) {
@@ -39,6 +50,7 @@ bool MainState::handleEvent(const sf::Event& event) {
 
     mDrawingCanvas.handleEvent(event);
     mControlTable.handleEvent(event);
+    mHandleFileButton.handleEvent(event);
 
     // Game input handling
     //CommandQueue& commands = mWorld.getCommandQueue();

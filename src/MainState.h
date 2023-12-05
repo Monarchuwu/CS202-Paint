@@ -5,6 +5,7 @@
 #include "DrawingCanvas.h"
 #include "Pen.h"
 #include "ControlTable.h"
+#include "Button.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -37,6 +38,8 @@ private:
     Pen& mPen;
     DrawingCanvas mDrawingCanvas;
     ControlTable mControlTable;
+
+    GUI::Button mHandleFileButton;
 
     //QLabel *shapeLabel;
     //QLabel *penWidthLabel;

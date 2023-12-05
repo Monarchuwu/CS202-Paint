@@ -5,6 +5,7 @@ namespace States {
         None,
         Main,
         SizeMenu,
+        HandleFile,
         StateCount
     };
 }
