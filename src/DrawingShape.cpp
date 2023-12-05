@@ -67,6 +67,19 @@ sf::FloatRect DrawingShape::getBoundingBox() const {
     return sf::FloatRect(mLeft + position.x, mTop + position.y, mRight - mLeft, mBottom - mTop);
 }
 
+void DrawingShape::drawBoundingBox() {
+    const sf::Vector2f& position = mSprite.getPosition();
+    mLeft -= position.x;
+    mRight -= position.x;
+    mTop -= position.y;
+    mBottom -= position.y;
+	drawBoundingBox(mRenderTexture);
+    mLeft += position.x;
+	mRight += position.x;
+	mTop += position.y;
+	mBottom += position.y;
+}
+
 void DrawingShape::updateBoundingBox(const sf::Vector2f& position) {
     if (mLeft > position.x) {
         mLeft = position.x;

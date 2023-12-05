@@ -22,12 +22,18 @@ void DrawingShapeTextWriting::startDrawing(const sf::Vector2f& position) {
 }
 
 void DrawingShapeTextWriting::stopDrawing() {
+    clear();
+    resetBoundingBox(mStartPosition);
     updateBoundingBox(mCurrentPosition);
 }
 
 void DrawingShapeTextWriting::move(const sf::Vector2f& position) {
-    // nothing to draw before stopDrawing
-    // so we don't need to clear the render texture
+    // clear and draw the bounding box (text writing behavior)
+    clear();
+    resetBoundingBox(mStartPosition);
+    updateBoundingBox(position);
+    drawBoundingBox();
+
     mCurrentPosition = position;
 }
 
@@ -36,11 +42,12 @@ if (event.type == sf::Event::TextEntered) {
 		if (event.text.unicode == '\b') {
 			if (!mString.empty()) {
 				mString.pop_back();
+			    mText.setString(mString);
 			}
 		} else {
 			mString += char(event.text.unicode);
+     	    mText.setString(mString);
 		}
-		mText.setString(mString);
 
         drawText(getBoundingBox());
 	}

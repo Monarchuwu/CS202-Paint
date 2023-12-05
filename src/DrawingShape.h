@@ -29,6 +29,8 @@ public:
     sf::FloatRect getBoundingBox() const;
 
 protected:
+    // draw bounding box to mRenderTexture
+    void drawBoundingBox();
     void updateBoundingBox(const sf::Vector2f& position);
     void resetBoundingBox(const sf::Vector2f& position);
 
