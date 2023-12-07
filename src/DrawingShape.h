@@ -26,16 +26,18 @@ public:
     DrawingStatus getDrawingStatus() const;
 
     virtual void handleEvent(const sf::Event& event);
-    virtual void draw(sf::RenderTarget& target);
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);
     virtual void drawToWindow(sf::RenderWindow& window);
     void clear(const sf::Color& color = sf::Color::Transparent);
 
-    const sf::Texture& getCanvas() const;
+    const sf::Texture& getCanvas();
 
     // this method will only be called after stopDrawing() called
-    void drawBoundingBox(sf::RenderTarget& target);
+    void drawBoundingBox(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);
     // this method will only be called after stopDrawing() called
     sf::FloatRect getBoundingBox() const;
+
+    void drawRotatingHandle(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);
 
 protected:
     // draw bounding box to mRenderTexture
@@ -43,14 +45,22 @@ protected:
     void updateBoundingBox(const sf::Vector2f& position);
     void resetBoundingBox(const sf::Vector2f& position);
 
+private:
+    bool checkHoldRotating(const sf::Vector2f& position) const ;
+    float calculateAngle(sf::Vector2f position) const;
+
 protected:
     // bounding box
     int mTop, mBottom, mLeft, mRight;
 
     sf::RenderTexture mRenderTexture;
+    sf::RenderTexture mRenderTextureRotating;
 
 private:
     DrawingStatus mDrawingStatus;
+
+    float mAngle; // in degree
+    bool isRotating;
 
     sf::Sprite mSprite;
 
