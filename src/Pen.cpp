@@ -40,81 +40,29 @@ void Pen::setCanvas(DrawingCanvas& canvas) {
 	mCanvas = &canvas;
 }
 
-bool Pen::isDrawing() const {
-	return mDrawingStatus != PenStatus::WAIT_TO_DRAW;
+const sf::FloatRect& Pen::getDrawingArea() const {
+	assert(mCanvas != nullptr);
+
+	return mCanvas->getRenderArea();
+}
+
+void Pen::addTexture(const sf::Texture& texture) {
+	assert(mCanvas != nullptr);
+
+	mCanvas->addTexture(texture);
 }
 
 void Pen::handleEvent(const sf::Event& event) {
 	assert(mCanvas != nullptr);
+	assert(mDrawingShape != nullptr);
 
-	switch (mDrawingStatus) {
-	    case PenStatus::WAIT_TO_DRAW: {
-	        if (event.type == sf::Event::MouseButtonPressed) {
-	            if (event.mouseButton.button == sf::Mouse::Left) {
-	                sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
-	                sf::FloatRect renderArea = mCanvas->getRenderArea();
-	                if (renderArea.contains(mousePosition)) {
-	                    startDrawing(mousePosition - renderArea.getPosition());
-	                    mDrawingStatus = PenStatus::DRAWING;
-	                }
-	            }
-	        }
-	        break;
-		}
-
-		case PenStatus::DRAWING: {
-	        if (event.type == sf::Event::MouseButtonReleased) {
-	            if (event.mouseButton.button == sf::Mouse::Left) {
-	                stopDrawing();
-	                mDrawingStatus = PenStatus::DRAWED;
-	            }
-	        }
-	        else if (event.type == sf::Event::MouseMoved) {
-	            move(sf::Vector2f(event.mouseMove.x, event.mouseMove.y) - mCanvas->getPositionCanvas());
-	        }
-	        break;
-		}
-
-		case PenStatus::DRAWED: {
-			if (event.type == sf::Event::MouseButtonPressed) {
-				if (event.mouseButton.button == sf::Mouse::Left) {
-	                sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
-	                sf::FloatRect renderArea = mCanvas->getRenderArea();
-					if (renderArea.contains(mousePosition)) {
-						sf::FloatRect boundingBox = mDrawingShape->getBoundingBox();
-						if (!boundingBox.contains(mousePosition)) {
-						    mCanvas->addTexture(mDrawingShape->getCanvas());
-						    mDrawingStatus = PenStatus::WAIT_TO_DRAW;
-						    break;
-	                    }
-	                }
-	            }
-	        }
-			mDrawingShape->handleEvent(event);
-	        break;
-		}
-	}
+	mDrawingShape->handleEvent(event);
 }
 
 void Pen::draw() {
-	if (mDrawingShape == nullptr) return;
+	assert(mDrawingShape != nullptr);
 
-	switch (mDrawingStatus) {
-		case PenStatus::WAIT_TO_DRAW: {
-	        break;
-		}
-
-		case PenStatus::DRAWING: {
-	        mDrawingShape->draw(mWindow);
-	        break;
-		}
-
-		case PenStatus::DRAWED: {
-	        mDrawingShape->draw(mWindow);
-	        mDrawingShape->drawBoundingBox(mWindow);
-	        break;
-		}
-	}
+	mDrawingShape->drawToWindow(mWindow);
 }
 
 void Pen::setWidth(int width) {
@@ -138,8 +86,6 @@ void Pen::setShape(DrawingShapes::ID shapeID) {
 	    delete mDrawingShape;
 	}
 	mDrawingShape = createShape(shapeID);
-
-	mDrawingStatus = PenStatus::WAIT_TO_DRAW;
 }
 
 DrawingShape* Pen::createShape(DrawingShapes::ID shapeID) {

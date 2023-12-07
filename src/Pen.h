@@ -11,12 +11,6 @@
 class DrawingShape;
 
 class Pen {
-    enum class PenStatus {
-        WAIT_TO_DRAW,
-        DRAWING,
-        DRAWED
-    };
-
 public:
     struct Context {
         Context(const sf::Color& color, int width);
@@ -32,8 +26,10 @@ public:
         const Context& context);
 
     void setCanvas(DrawingCanvas& canvas);
-
-    bool isDrawing() const;
+    const sf::FloatRect& getDrawingArea() const;
+    // this method should not be here
+    // it should be in CommandQueue
+    void addTexture(const sf::Texture& texture);
 
     void handleEvent(const sf::Event& event);
     void draw();
@@ -65,8 +61,6 @@ private:
     DrawingCanvas* mCanvas;
     Context mContext;
     DrawingShape* mDrawingShape;
-
-    PenStatus mDrawingStatus;
 
     std::map<DrawingShapes::ID, std::function<DrawingShape*()>> mShapeFactories;
 };

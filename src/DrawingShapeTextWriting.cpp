@@ -38,7 +38,10 @@ void DrawingShapeTextWriting::move(const sf::Vector2f& position) {
 }
 
 void DrawingShapeTextWriting::handleEvent(const sf::Event& event) {
-if (event.type == sf::Event::TextEntered) {
+    DrawingShape::handleEvent(event);
+
+    if (getDrawingStatus() != DrawingStatus::DRAWED) return;
+    if (event.type == sf::Event::TextEntered) {
 		if (event.text.unicode == '\b') {
 			if (!mString.empty()) {
 				mString.pop_back();

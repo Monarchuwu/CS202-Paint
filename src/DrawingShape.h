@@ -6,6 +6,13 @@
 
 // This is a temporary canvas
 class DrawingShape {
+public:
+    enum class DrawingStatus {
+        WAIT_TO_DRAW,
+        DRAWING,
+        DRAWED
+    };
+
 protected:
     DrawingShape(Pen& pen, TextureHolder* textures,
                  const sf::FloatRect& renderArea);
@@ -16,9 +23,11 @@ public:
     virtual void startDrawing(const sf::Vector2f& position) = 0;
     virtual void stopDrawing()                              = 0;
     virtual void move(const sf::Vector2f& position)         = 0;
+    DrawingStatus getDrawingStatus() const;
 
     virtual void handleEvent(const sf::Event& event);
     virtual void draw(sf::RenderTarget& target);
+    virtual void drawToWindow(sf::RenderWindow& window);
     void clear(const sf::Color& color = sf::Color::Transparent);
 
     const sf::Texture& getCanvas() const;
@@ -41,6 +50,8 @@ protected:
     sf::RenderTexture mRenderTexture;
 
 private:
+    DrawingStatus mDrawingStatus;
+
     sf::Sprite mSprite;
 
     Pen& mPen;
