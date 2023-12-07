@@ -89,6 +89,20 @@ void DrawingShape::handleEvent(const sf::Event& event) {
 					isRotating = false;
 				}
 			}
+            else if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Left) {
+					mAngle -= 90;
+                    if (mAngle < -180) mAngle += 360;
+				}
+				else if (event.key.code == sf::Keyboard::Right) {
+					mAngle += 90;
+					if (mAngle > 180) mAngle -= 360;
+				}
+				else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Down) {
+                    mAngle += 180;
+                    if (mAngle > 180) mAngle -= 360;
+				}
+			}
             break;
         }
     }
