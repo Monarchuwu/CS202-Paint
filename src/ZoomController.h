@@ -3,6 +3,7 @@
 #include "ResourceIdentifiers.h"
 #include "Container.h"
 #include "Label.h"
+#include "HorizontalScrollBar.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -18,6 +19,8 @@ public:
 	bool handleEvent(const sf::Event& event);
 	void draw();
 
+	void updateZoomFactor(unsigned int zoomFactor);
+
 private:
 	void setZoomFactor(unsigned int zoomFactor);
 
@@ -30,4 +33,5 @@ private:
 	GUI::Container mDisplayZoomFactor;
 	GUI::Label::Ptr mZoomFactorLabel;
 	GUI::Container mZoomFactorButtons;
+	HorizontalScrollBar mZoomFactorScrollBar;
 };

@@ -12,7 +12,11 @@ ZoomController::ZoomController(DrawingCanvas& drawingCanvas,
       mTextures(textures),
       mFonts(fonts),
       mDisplayZoomFactor(sf::Vector2f(105, 36)),
-      mZoomFactorButtons(sf::Vector2f(85, 285)) {
+      mZoomFactorButtons(sf::Vector2f(85, 285)),
+      mZoomFactorScrollBar(this,
+                           sf::FloatRect(1365, 863, 200, 24), 5,
+                           sf::Color::Blue, sf::Color(128, 128, 128),
+                           25, 400) {
     { // set up display zoom factor
         mDisplayZoomFactor.setPosition(1215, 857);
 
@@ -58,15 +62,22 @@ ZoomController::ZoomController(DrawingCanvas& drawingCanvas,
 bool ZoomController::handleEvent(const sf::Event& event) {
     if (mDisplayZoomFactor.handleEvent(event)) return true;
     if (mZoomFactorButtons.handleEvent(event)) return true;
+    if (mZoomFactorScrollBar.handleEvent(event)) return true;
 	return false;
 }
 
 void ZoomController::draw() {
 	mWindow.draw(mDisplayZoomFactor);
     mWindow.draw(mZoomFactorButtons);
+    mWindow.draw(mZoomFactorScrollBar);
+}
+
+void ZoomController::updateZoomFactor(unsigned int zoomFactor) {
+	setZoomFactor(zoomFactor);
 }
 
 void ZoomController::setZoomFactor(unsigned int zoomFactor) {
     mDrawingCanvas->setZoom(zoomFactor);
     mZoomFactorLabel->setText(std::to_string(zoomFactor) + "%");
+    mZoomFactorScrollBar.updateValue(zoomFactor);
 }
