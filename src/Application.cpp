@@ -132,6 +132,10 @@ void Application::loadTextures() {
     mTextures->load(Textures::ButtonHistoryPanelNormal, "data/Textures/button-history_panel-normal.png");
     mTextures->load(Textures::ButtonHistoryPanelSelected, "data/Textures/button-history_panel-selected.png");
 
+    mTextures->load(Textures::ButtonZoomOption, "data/Textures/button-zoom-option-38x26.png");
+    mTextures->load(Textures::ButtonZoomNormal, "data/Textures/button-zoom-normal.png");
+    mTextures->load(Textures::ButtonZoomSelected, "data/Textures/button-zoom-selected.png");
+
     mTextures->load(Textures::BlackWhite2x2, "data/Textures/black-white-2x2.png");
     mTextures->get(Textures::BlackWhite2x2).setRepeated(true);
 

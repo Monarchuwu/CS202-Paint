@@ -38,6 +38,11 @@ void DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawi
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
+                    { // mousePosition must be in the object area of DrawingCanvas
+                        if (!mPen.getDisplayArea().contains(mousePosition)) {
+							break;
+						}
+                    }
                     mousePosition = convertPointToDefaultView(mousePosition, drawingCenter, zoomFactor);
                     sf::FloatRect drawingArea = mSprite.getGlobalBounds();
                     if (drawingArea.contains(mousePosition)) {

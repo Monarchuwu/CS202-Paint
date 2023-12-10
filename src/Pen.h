@@ -27,6 +27,7 @@ public:
 
     void setCanvas(DrawingCanvas& canvas);
     const sf::FloatRect& getDrawingArea() const;
+    const sf::FloatRect& getDisplayArea() const;
     // this method should not be here
     // it should be in CommandQueue
     void addTexture(const sf::Texture& texture);

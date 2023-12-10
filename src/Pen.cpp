@@ -46,6 +46,12 @@ const sf::FloatRect& Pen::getDrawingArea() const {
 	return mCanvas->getRenderArea();
 }
 
+const sf::FloatRect& Pen::getDisplayArea() const {
+	assert(mCanvas != nullptr);
+
+	return mCanvas->getObjectArea();
+}
+
 void Pen::addTexture(const sf::Texture& texture) {
 	assert(mCanvas != nullptr);
 

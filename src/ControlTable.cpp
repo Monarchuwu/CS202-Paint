@@ -25,10 +25,11 @@ ControlTable::ControlTable(MainState* mainState,
     addShapeCategory(context);
 }
 
-void ControlTable::handleEvent(const sf::Event& event) {
+bool ControlTable::handleEvent(const sf::Event& event) {
     for (auto& container : mGUIContainers) {
-		container->handleEvent(event);
+		if (container->handleEvent(event)) return true;
 	}
+    return false;
 }
 
 void ControlTable::update() {

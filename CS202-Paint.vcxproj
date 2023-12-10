@@ -164,6 +164,7 @@
     <ClCompile Include="src\State.cpp" />
     <ClCompile Include="src\StateStack.cpp" />
     <ClCompile Include="src\Utility.cpp" />
+    <ClCompile Include="src\ZoomController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="src\StateIdentifiers.h" />
     <ClInclude Include="src\StateStack.h" />
     <ClInclude Include="src\Utility.h" />
+    <ClInclude Include="src\ZoomController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\ResourceHolder.inl" />

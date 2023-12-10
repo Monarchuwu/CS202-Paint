@@ -12,13 +12,12 @@ MainState::MainState(StateStack& stack, Context context)
                      sf::FloatRect(0, 210, 1600, 640),
                      sf::Vector2f(640, 480)),
       mControlTable(this, context, mPen, sf::FloatRect(0, 50, 1600, 160)),
+      mZoomController(mDrawingCanvas, mWindow, mTextures, mFonts),
       mHandleFileButton(mFonts, mTextures, Textures::Transparent70x40,
                                            Textures::Transparent70x40,
                                            Textures::Transparent70x40) {
 
     mBackground.setFillColor(sf::Color(26, 32, 49));
-
-    mDrawingCanvas.setZoom(200);
 
     mHandleFileButton.setPosition(10, 10);
     mHandleFileButton.setText("File");
@@ -32,6 +31,7 @@ void MainState::draw() {
 
     mDrawingCanvas.draw();
     mControlTable.draw();
+    mZoomController.draw();
     mWindow.draw(mHandleFileButton);
 }
 
@@ -50,9 +50,10 @@ bool MainState::handleEvent(const sf::Event& event) {
     if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
         requestStateClear();
 
+    if (mHandleFileButton.handleEvent(event)) return true;
+    if (mZoomController.handleEvent(event)) return true;
+    if (mControlTable.handleEvent(event)) return true;
     mDrawingCanvas.handleEvent(event);
-    mControlTable.handleEvent(event);
-    mHandleFileButton.handleEvent(event);
 
     // Game input handling
     //CommandQueue& commands = mWorld.getCommandQueue();

@@ -18,7 +18,9 @@ namespace GUI {
     }
 
     bool Container::handleEvent(const sf::Event& event) {
-        if (event.type == sf::Event::MouseButtonReleased) {
+        if (!isVisible()) return false;
+
+        if (event.type == sf::Event::MouseButtonPressed) {
             auto bounds = getWorldTransform().transformRect(mBackground.getGlobalBounds());
             if (bounds.contains(event.mouseButton.x, event.mouseButton.y)) {
                 for (auto& child : mChildren) {
@@ -32,6 +34,8 @@ namespace GUI {
     }
 
     void Container::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+        if (!isVisible()) return;
+
         states.transform *= getTransform();
         drawCurrent(target, states);
         drawChildren(target, states);

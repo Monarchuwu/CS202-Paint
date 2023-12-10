@@ -80,7 +80,7 @@ namespace GUI {
     bool Button::handleEvent(const sf::Event& event) {
         if (!isVisible()) return false;
 
-        if (event.type == sf::Event::MouseButtonReleased) {
+        if (event.type == sf::Event::MouseButtonPressed) {
             auto bounds = getWorldTransform().transformRect(mSprite.getGlobalBounds());
             if (bounds.contains(event.mouseButton.x, event.mouseButton.y)) {
 				activate();

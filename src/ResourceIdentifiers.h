@@ -51,6 +51,11 @@ namespace Textures {
         ButtonHistoryPanelSelected,
         ButtonHistoryPanelPressed = ButtonHistoryPanelSelected,
 
+        ButtonZoomOption,
+        ButtonZoomNormal,
+        ButtonZoomSelected,
+        ButtonZoomPressed = ButtonZoomSelected,
+
         BlackWhite2x2,
         Transparent70x40,
 

@@ -27,6 +27,7 @@ public:
 
 	sf::Vector2f getPositionCanvas() const;
 	const sf::FloatRect& getRenderArea() const;
+	const sf::FloatRect& getObjectArea() const;
 
 	friend void HistoryPanel::drawDirectedToCanvas(const sf::Texture& texture);
 

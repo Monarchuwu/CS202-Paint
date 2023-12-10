@@ -88,3 +88,7 @@ const sf::FloatRect& DrawingCanvas::getRenderArea() const {
     sf::Vector2f size = (sf::Vector2f)mRenderTexture.getSize();
     return sf::FloatRect(getPositionCanvas(), size);
 }
+
+const sf::FloatRect& DrawingCanvas::getObjectArea() const {
+	return mObjectArea;
+}

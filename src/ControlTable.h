@@ -16,7 +16,7 @@ public:
                  State::Context context, Pen& pen,
 		         const sf::FloatRect& objectArea);
 
-    void handleEvent(const sf::Event& event);
+    bool handleEvent(const sf::Event& event);
     void update();
     void draw();
 
