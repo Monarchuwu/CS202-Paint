@@ -17,7 +17,7 @@ public:
 				 State::Context context,
                  const sf::FloatRect& objectArea);
 
-	void handleEvent(const sf::Event& event);
+	bool handleEvent(const sf::Event& event);
 	void update();
 	void draw();
 	void drawTextures(sf::RenderTarget& target);

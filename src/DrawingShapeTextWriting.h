@@ -17,7 +17,7 @@ public:
     virtual void move(const sf::Vector2f& position);
 
     // I suppose that this function is called in DRAWED phase
-    virtual void handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor);
+    virtual bool handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor);
 
 private:
     void drawText(sf::FloatRect textBox);

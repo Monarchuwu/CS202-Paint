@@ -33,8 +33,9 @@ HistoryPanel::HistoryPanel(DrawingCanvas* drawingCanvas,
     }
 }
 
-void HistoryPanel::handleEvent(const sf::Event& event) {
-	mContainer.handleEvent(event);
+bool HistoryPanel::handleEvent(const sf::Event& event) {
+	if (mContainer.handleEvent(event)) return true;
+    return false;
 }
 
 void HistoryPanel::update() {

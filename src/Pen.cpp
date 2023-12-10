@@ -58,11 +58,12 @@ void Pen::addTexture(const sf::Texture& texture) {
 	mCanvas->addTexture(texture);
 }
 
-void Pen::handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor) {
+bool Pen::handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor) {
 	assert(mCanvas != nullptr);
 	assert(mDrawingShape != nullptr);
 
-	mDrawingShape->handleEvent(event, drawingCenter, zoomFactor);
+	if (mDrawingShape->handleEvent(event, drawingCenter, zoomFactor)) return true;
+	return false;
 }
 
 void Pen::draw() {

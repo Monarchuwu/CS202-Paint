@@ -53,7 +53,7 @@ bool MainState::handleEvent(const sf::Event& event) {
     if (mHandleFileButton.handleEvent(event)) return true;
     if (mZoomController.handleEvent(event)) return true;
     if (mControlTable.handleEvent(event)) return true;
-    mDrawingCanvas.handleEvent(event);
+    if (mDrawingCanvas.handleEvent(event)) return true;
 
     // Game input handling
     //CommandQueue& commands = mWorld.getCommandQueue();

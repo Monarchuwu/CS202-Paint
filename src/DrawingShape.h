@@ -25,7 +25,7 @@ public:
     virtual void move(const sf::Vector2f& position)         = 0;
     DrawingStatus getDrawingStatus() const;
 
-    virtual void handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor);
+    virtual bool handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);
     virtual void drawToWindow(sf::RenderWindow& window);
     void clear(const sf::Color& color = sf::Color::Transparent);

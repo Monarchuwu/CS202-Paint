@@ -37,10 +37,10 @@ void DrawingShapeTextWriting::move(const sf::Vector2f& position) {
     mCurrentPosition = position;
 }
 
-void DrawingShapeTextWriting::handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor) {
-    DrawingShape::handleEvent(event, drawingCenter, zoomFactor);
+bool DrawingShapeTextWriting::handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor) {
+    if (DrawingShape::handleEvent(event, drawingCenter, zoomFactor)) return true;
 
-    if (getDrawingStatus() != DrawingStatus::DRAWED) return;
+    if (getDrawingStatus() != DrawingStatus::DRAWED) return false;
     if (event.type == sf::Event::TextEntered) {
 		if (event.text.unicode == '\b') {
 			if (!mString.empty()) {
@@ -53,7 +53,10 @@ void DrawingShapeTextWriting::handleEvent(const sf::Event& event, const sf::Vect
 		}
 
         drawText(getBoundingBox());
+
+        return true;
 	}
+    return false;
 }
 
 void DrawingShapeTextWriting::drawText(sf::FloatRect textBox) {

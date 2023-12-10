@@ -33,9 +33,10 @@ DrawingCanvas::DrawingCanvas(State::Context context,
     mDrawingView.setViewport(viewArea);
 }
 
-void DrawingCanvas::handleEvent(const sf::Event& event) {
-    mPen.handleEvent(event, mDrawingView.getCenter(), mZoomFactor);
-    mHistoryPanel.handleEvent(event);
+bool DrawingCanvas::handleEvent(const sf::Event& event) {
+    if (mHistoryPanel.handleEvent(event)) return true;
+    if (mPen.handleEvent(event, mDrawingView.getCenter(), mZoomFactor)) return true;
+    return false;
 }
 
 void DrawingCanvas::update() {

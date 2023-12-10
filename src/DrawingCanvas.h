@@ -14,7 +14,7 @@ public:
 				  const sf::FloatRect& objectArea,
 				  const sf::Vector2f& renderArea);
 
-    void handleEvent(const sf::Event& event);
+    bool handleEvent(const sf::Event& event);
 	void update();
 	void draw();
 	void clear(const sf::Color& color = sf::Color::White);

@@ -7,7 +7,7 @@ namespace GUI {
     }
 
     bool ContainerOneActivate::handleEvent(const sf::Event& event) {
-        if (event.type == sf::Event::MouseButtonReleased) {
+        if (event.type == sf::Event::MouseButtonPressed) {
             auto bounds = getWorldTransform().transformRect(mBackground.getGlobalBounds());
             if (bounds.contains(event.mouseButton.x, event.mouseButton.y)) {
                 for (auto& child : mChildren) {

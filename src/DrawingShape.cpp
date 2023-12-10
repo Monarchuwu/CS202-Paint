@@ -32,7 +32,7 @@ sf::Vector2f DrawingShape::convertPointToDefaultView(const sf::Vector2f& point, 
     return (point - drawingCenter) * 100.f / (float)zoomFactor + drawingCenter;
 }
 
-void DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor) {
+bool DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor) {
     switch (mDrawingStatus) {
         case DrawingStatus::WAIT_TO_DRAW: {
             if (event.type == sf::Event::MouseButtonPressed) {
@@ -48,6 +48,7 @@ void DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawi
                     if (drawingArea.contains(mousePosition)) {
                         startDrawing(mousePosition - drawingArea.getPosition());
                         mDrawingStatus = DrawingStatus::DRAWING;
+                        return true;
                     }
                 }
             }
@@ -59,12 +60,14 @@ void DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawi
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     stopDrawing();
                     mDrawingStatus = DrawingStatus::DRAWED;
+                    return true;
                 }
             }
             else if (event.type == sf::Event::MouseMoved) {
                 sf::Vector2f mousePosition(event.mouseMove.x, event.mouseMove.y);
                 mousePosition = convertPointToDefaultView(mousePosition, drawingCenter, zoomFactor);
                 move(mousePosition - mSprite.getPosition());
+                return true;
             }
             break;
         }
@@ -78,7 +81,7 @@ void DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawi
 
                     if (checkHoldRotating(mousePosition - mSprite.getPosition())) {
                         isRotating = true;
-                        break;
+                        return true;
                     }
 
                     if (drawingArea.contains(mousePosition)) {
@@ -91,12 +94,14 @@ void DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawi
                             mousePosition = transformable.getInverseTransform().transformPoint(mousePosition - center) + center;
                         }
 
-                        if (boundingBox.contains(mousePosition)) {}
+                        if (boundingBox.contains(mousePosition)) {
+                            return true;
+                        }
                         else {
                             mPen.addTexture(getCanvas());
                             mDrawingStatus = DrawingStatus::WAIT_TO_DRAW;
                             mAngle         = 0;
-                            break;
+                            return true;
                         }
                     }
                 }
@@ -106,30 +111,36 @@ void DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawi
                     sf::Vector2f mousePosition(event.mouseMove.x, event.mouseMove.y);
                     mousePosition = convertPointToDefaultView(mousePosition, drawingCenter, zoomFactor);
                     mAngle        = calculateAngle(mousePosition);
-				}
+                    return true;
+                }
             }
             else if (event.type == sf::Event::MouseButtonReleased) {
 				if (event.mouseButton.button == sf::Mouse::Left) {
 					isRotating = false;
+                    return true;
 				}
 			}
             else if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Left) {
 					mAngle -= 90;
                     if (mAngle < -180) mAngle += 360;
+					return true;
 				}
 				else if (event.key.code == sf::Keyboard::Right) {
 					mAngle += 90;
 					if (mAngle > 180) mAngle -= 360;
+					return true;
 				}
 				else if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::Down) {
                     mAngle += 180;
                     if (mAngle > 180) mAngle -= 360;
+                    return true;
 				}
 			}
             break;
         }
     }
+    return false;
 }
 
 void DrawingShape::draw(sf::RenderTarget& target, sf::RenderStates states) {
