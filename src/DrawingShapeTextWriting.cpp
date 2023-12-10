@@ -37,8 +37,8 @@ void DrawingShapeTextWriting::move(const sf::Vector2f& position) {
     mCurrentPosition = position;
 }
 
-void DrawingShapeTextWriting::handleEvent(const sf::Event& event) {
-    DrawingShape::handleEvent(event);
+void DrawingShapeTextWriting::handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor) {
+    DrawingShape::handleEvent(event, drawingCenter, zoomFactor);
 
     if (getDrawingStatus() != DrawingStatus::DRAWED) return;
     if (event.type == sf::Event::TextEntered) {

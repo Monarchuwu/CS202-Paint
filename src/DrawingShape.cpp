@@ -27,12 +27,18 @@ DrawingShape::DrawingStatus DrawingShape::getDrawingStatus() const {
     return mDrawingStatus;
 }
 
-void DrawingShape::handleEvent(const sf::Event& event) {
+sf::Vector2f DrawingShape::convertPointToDefaultView(const sf::Vector2f& point, const sf::Vector2f& drawingCenter, unsigned int zoomFactor) {
+    // mousePosition = (mousePosition - drawingCenter) * 100.f / zoomFactor + drawingCenter
+    return (point - drawingCenter) * 100.f / (float)zoomFactor + drawingCenter;
+}
+
+void DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor) {
     switch (mDrawingStatus) {
         case DrawingStatus::WAIT_TO_DRAW: {
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
+                    mousePosition = convertPointToDefaultView(mousePosition, drawingCenter, zoomFactor);
                     sf::FloatRect drawingArea = mSprite.getGlobalBounds();
                     if (drawingArea.contains(mousePosition)) {
                         startDrawing(mousePosition - drawingArea.getPosition());
@@ -51,7 +57,9 @@ void DrawingShape::handleEvent(const sf::Event& event) {
                 }
             }
             else if (event.type == sf::Event::MouseMoved) {
-                move(sf::Vector2f(event.mouseMove.x, event.mouseMove.y) - mSprite.getPosition());
+                sf::Vector2f mousePosition(event.mouseMove.x, event.mouseMove.y);
+                mousePosition = convertPointToDefaultView(mousePosition, drawingCenter, zoomFactor);
+                move(mousePosition - mSprite.getPosition());
             }
             break;
         }
@@ -60,6 +68,7 @@ void DrawingShape::handleEvent(const sf::Event& event) {
             if (event.type == sf::Event::MouseButtonPressed) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
+                    mousePosition             = convertPointToDefaultView(mousePosition, drawingCenter, zoomFactor);
                     sf::FloatRect drawingArea = mSprite.getGlobalBounds();
 
                     if (checkHoldRotating(mousePosition - mSprite.getPosition())) {
@@ -69,6 +78,14 @@ void DrawingShape::handleEvent(const sf::Event& event) {
 
                     if (drawingArea.contains(mousePosition)) {
                         sf::FloatRect boundingBox = getBoundingBox();
+                        { // convert mousePosition according to the -mAngle
+                            sf::Vector2f center(boundingBox.left + boundingBox.width / 2,
+                                                boundingBox.top + boundingBox.height / 2);
+                            sf::Transformable transformable;
+                            transformable.rotate(mAngle);
+                            mousePosition = transformable.getInverseTransform().transformPoint(mousePosition - center) + center;
+                        }
+
                         if (boundingBox.contains(mousePosition)) {}
                         else {
                             mPen.addTexture(getCanvas());
@@ -81,7 +98,9 @@ void DrawingShape::handleEvent(const sf::Event& event) {
             }
             else if (event.type == sf::Event::MouseMoved) {
                 if (isRotating) {
-					mAngle = calculateAngle(sf::Vector2f(event.mouseMove.x, event.mouseMove.y));
+                    sf::Vector2f mousePosition(event.mouseMove.x, event.mouseMove.y);
+                    mousePosition = convertPointToDefaultView(mousePosition, drawingCenter, zoomFactor);
+                    mAngle        = calculateAngle(mousePosition);
 				}
             }
             else if (event.type == sf::Event::MouseButtonReleased) {

@@ -18,6 +18,8 @@ MainState::MainState(StateStack& stack, Context context)
 
     mBackground.setFillColor(sf::Color(26, 32, 49));
 
+    mDrawingCanvas.setZoom(200);
+
     mHandleFileButton.setPosition(10, 10);
     mHandleFileButton.setText("File");
     mHandleFileButton.setCallback([this] () {

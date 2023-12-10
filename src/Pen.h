@@ -31,7 +31,7 @@ public:
     // it should be in CommandQueue
     void addTexture(const sf::Texture& texture);
 
-    void handleEvent(const sf::Event& event);
+    void handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor);
     void draw();
 
     void setWidth(int width);

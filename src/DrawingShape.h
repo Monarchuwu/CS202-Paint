@@ -25,7 +25,7 @@ public:
     virtual void move(const sf::Vector2f& position)         = 0;
     DrawingStatus getDrawingStatus() const;
 
-    virtual void handleEvent(const sf::Event& event);
+    virtual void handleEvent(const sf::Event& event, const sf::Vector2f& drawingCenter, unsigned int zoomFactor);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states = sf::RenderStates::Default);
     virtual void drawToWindow(sf::RenderWindow& window);
     void clear(const sf::Color& color = sf::Color::Transparent);
@@ -48,6 +48,7 @@ protected:
 private:
     bool checkHoldRotating(const sf::Vector2f& position) const ;
     float calculateAngle(sf::Vector2f position) const;
+    sf::Vector2f convertPointToDefaultView(const sf::Vector2f& point, const sf::Vector2f& drawingCenter, unsigned int zoomFactor);
 
 protected:
     // bounding box

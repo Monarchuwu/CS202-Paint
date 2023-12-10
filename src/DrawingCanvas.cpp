@@ -9,6 +9,8 @@ DrawingCanvas::DrawingCanvas(State::Context context,
       mRenderTexturePermanently(),
       mRenderTexture(),
       mSprite(),
+      mDrawingView(sf::FloatRect(objectArea)),
+      mZoomFactor(100),
       mHistoryPanel(this, context, sf::FloatRect(1400, objectArea.top, 190, objectArea.height)),
       mPen(*(context.pen)) {
     mRenderTexturePermanently.create(renderArea.x, renderArea.y);
@@ -22,10 +24,17 @@ DrawingCanvas::DrawingCanvas(State::Context context,
     mSprite.setPosition(mObjectArea.left + mObjectArea.width / 2.f,
                         mObjectArea.top + mObjectArea.height / 2.f);
     adaptRenderArea(renderArea);
+
+    sf::FloatRect viewArea = objectArea;
+    viewArea.left /= 1600;
+    viewArea.top /= 900;
+    viewArea.width /= 1600;
+    viewArea.height /= 900;
+    mDrawingView.setViewport(viewArea);
 }
 
 void DrawingCanvas::handleEvent(const sf::Event& event) {
-    mPen.handleEvent(event);
+    mPen.handleEvent(event, mDrawingView.getCenter(), mZoomFactor);
     mHistoryPanel.handleEvent(event);
 }
 
@@ -40,14 +49,23 @@ void DrawingCanvas::draw() {
     mHistoryPanel.drawTextures(mRenderTexture);
 	mRenderTexture.display();
 
+    const sf::View currentView = mWindow.getView();
+    mWindow.setView(mDrawingView);
     mWindow.draw(mSprite);
 	mPen.draw();
+    mWindow.setView(currentView);
 
     mHistoryPanel.draw();
 }
 
 void DrawingCanvas::clear(const sf::Color& color) {
 	mRenderTexture.clear(color);
+}
+
+void DrawingCanvas::setZoom(unsigned int factor) {
+	mDrawingView.setSize(mObjectArea.width * 100.f / factor,
+	                     mObjectArea.height * 100.f / factor);
+    mZoomFactor = factor;
 }
 
 void DrawingCanvas::addTexture(const sf::Texture& texture) {

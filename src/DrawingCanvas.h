@@ -18,6 +18,8 @@ public:
 	void update();
 	void draw();
 	void clear(const sf::Color& color = sf::Color::White);
+	// percentage (factor = 100 -> zoom ratio = 100%)
+	void setZoom(unsigned int factor);
 
 	void addTexture(const sf::Texture& texture);
 
@@ -38,6 +40,9 @@ private:
 	sf::RenderTexture mRenderTexturePermanently;
 	sf::RenderTexture mRenderTexture;
 	sf::Sprite mSprite;
+
+	sf::View mDrawingView;
+	unsigned int mZoomFactor;
 
 	HistoryPanel mHistoryPanel;
 
