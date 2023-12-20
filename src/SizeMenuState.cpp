@@ -20,6 +20,7 @@ SizeMenuState::SizeMenuState(StateStack& stack, Context context)
     size1pxButton->setCallback([this, pen]() {
         pen->setWidth(1);
         requestStackPop();
+        quit();
     });
     size1pxButton->setPosition(3, 6);
     if (pen->getWidth() == 1) {
@@ -35,6 +36,7 @@ SizeMenuState::SizeMenuState(StateStack& stack, Context context)
     size3pxButton->setCallback([this, pen]() {
         pen->setWidth(3);
         requestStackPop();
+        quit();
     });
     size3pxButton->setPosition(3, 62);
     if (pen->getWidth() == 3) {
@@ -50,6 +52,7 @@ SizeMenuState::SizeMenuState(StateStack& stack, Context context)
     size5pxButton->setCallback([this, pen]() {
         pen->setWidth(5);
         requestStackPop();
+        quit();
     });
     size5pxButton->setPosition(3, 118);
     if (pen->getWidth() == 5) {
@@ -65,6 +68,7 @@ SizeMenuState::SizeMenuState(StateStack& stack, Context context)
     size8pxButton->setCallback([this, pen]() {
         pen->setWidth(8);
         requestStackPop();
+        quit();
     });
     size8pxButton->setPosition(3, 174);
     if (pen->getWidth() == 8) {
@@ -85,6 +89,18 @@ bool SizeMenuState::update(sf::Time) {
 }
 
 bool SizeMenuState::handleEvent(const sf::Event& event) {
-    mGUIContainer.handleEvent(event);
+    if (!isAvailable()) return false;
+
+    if (mGUIContainer.handleEvent(event)) return false;
+
+    // if cannot handle but the event is mouse click
+    // it means the user clicked outside of the menu
+    // pop the state
+    if (event.type == sf::Event::MouseButtonPressed) {
+        if (event.mouseButton.button == sf::Mouse::Left) {
+			requestStackPop();
+			quit();
+		}
+    }
     return false;
 }
