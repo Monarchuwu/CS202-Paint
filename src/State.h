@@ -35,7 +35,11 @@ protected:
 
     Context getContext() const;
 
+    void quit();
+    bool isAvailable() const;
+
 private:
     StateStack* mStack;
     Context mContext;
+    bool mIsAvailable;
 };

@@ -7,7 +7,7 @@ State::Context::Context(sf::RenderWindow& window, TextureHolder& textures, FontH
 }
 
 State::State(StateStack& stack, Context context)
-    : mStack(&stack), mContext(context) {
+    : mStack(&stack), mContext(context), mIsAvailable(true) {
 }
 
 State::~State() {
@@ -27,4 +27,12 @@ void State::requestStateClear() {
 
 State::Context State::getContext() const {
     return mContext;
+}
+
+void State::quit() {
+    mIsAvailable = false;
+}
+
+bool State::isAvailable() const {
+	return mIsAvailable;
 }

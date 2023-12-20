@@ -21,6 +21,7 @@ HandleFileState::HandleFileState(StateStack& stack, Context context)
     saveBMPButton->setCallback([this]() {
         saveFile("data/SaveImages/screen.bmp");
         requestStackPop();
+        quit();
     });
     saveBMPButton->setPosition(15, 0);
     mGUIContainer.pack(saveBMPButton);
@@ -34,6 +35,7 @@ HandleFileState::HandleFileState(StateStack& stack, Context context)
     savePNGButton->setCallback([this]() {
         saveFile("data/SaveImages/screen.png");
         requestStackPop();
+        quit();
     });
     savePNGButton->setPosition(15, 45);
     mGUIContainer.pack(savePNGButton);
@@ -47,6 +49,7 @@ HandleFileState::HandleFileState(StateStack& stack, Context context)
     saveJPGButton->setCallback([this]() {
         saveFile("data/SaveImages/screen.jpg");
         requestStackPop();
+        quit();
     });
     saveJPGButton->setPosition(15, 90);
     mGUIContainer.pack(saveJPGButton);
@@ -59,6 +62,7 @@ HandleFileState::HandleFileState(StateStack& stack, Context context)
     cancelButton->setText("Cancel");
     cancelButton->setCallback([this]() {
         requestStackPop();
+        quit();
     });
     cancelButton->setPosition(15, 135);
     mGUIContainer.pack(cancelButton);
@@ -76,9 +80,12 @@ bool HandleFileState::update(sf::Time) {
 }
 
 bool HandleFileState::handleEvent(const sf::Event& event) {
+    if (!isAvailable()) return false;
+
     if (event.type == sf::Event::KeyReleased) {
 		if (event.key.code == sf::Keyboard::Escape) {
 			requestStackPop();
+		    quit();
 		}
 	}
 
