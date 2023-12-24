@@ -14,7 +14,10 @@ ControlTable::ControlTable(MainState* mainState,
       mTextures(context.textures),
       mFonts(context.fonts),
       mPen(pen),
-      mObjectArea(objectArea) {
+      mObjectArea(objectArea),
+	  mGUIContainers(),
+      mColorDisplayer(),
+      mBackground() {
     mBackground.setSize(sf::Vector2f(mObjectArea.width, mObjectArea.height));
     mBackground.setPosition(mObjectArea.left, mObjectArea.top);
     mBackground.setFillColor(sf::Color(255, 255, 255, 15));
@@ -23,6 +26,7 @@ ControlTable::ControlTable(MainState* mainState,
 
     addSizeCategory(context);
     addShapeCategory(context);
+	addColorCategory(context);
 }
 
 bool ControlTable::handleEvent(const sf::Event& event) {
@@ -173,5 +177,95 @@ void ControlTable::addShapeCategory(State::Context& context) {
 	containerShape->pack(buttonShape);
 
 	/// add shape container to the main container
+	mGUIContainers.emplace_back(std::move(container));
+}
+
+void ControlTable::addColorCategory(State::Context& context) {
+	Pen* pen = context.pen;
+
+	GUI::Container::Ptr container(new GUI::Container(sf::Vector2f(600, 160)));
+	container->setPosition(220, 50);
+
+	GUI::Label::Ptr label(new GUI::Label("Colors", mFonts));
+	label->setPosition(300, 130);
+	container->pack(std::move(label));
+
+	mColorDisplayer.reset(new GUI::Button(context.fonts, context.textures,
+	                                      Textures::CircleWhite30x30,
+	                                      Textures::CircleWhite30x30,
+	                                      Textures::CircleWhite30x30));
+	mColorDisplayer->setPosition(25, 20);
+	container->pack(mColorDisplayer);
+
+	struct MyColor {
+		std::string name;
+		sf::Color color;
+		MyColor(const std::string& name, const sf::Color& color)
+		    : name(name), color(color) {}
+	};
+
+	// source for 28 colors
+	// https://csydes.miraheze.org/wiki/Default_Microsoft_Paint_Fill_Colours_-_95-2003
+    std::vector<MyColor> colorList = {
+	    MyColor("Black", sf::Color(0, 0, 0)),
+	    MyColor("Grey", sf::Color(128, 128, 128)),
+	    MyColor("Dark Red", sf::Color(128, 0, 0)),
+	    MyColor("Dark Yellow", sf::Color(128, 128, 0)),
+	    MyColor("Dark Green", sf::Color(0, 128, 0)),
+	    MyColor("Dark Teal", sf::Color(0, 128, 128)),
+	    MyColor("Dark Blue", sf::Color(0, 0, 128)),
+	    MyColor("Dark Purple", sf::Color(128, 0, 128)),
+	    MyColor("Brown", sf::Color(128, 128, 64)),
+	    MyColor("Dark Teal", sf::Color(0, 64, 64)),
+	    MyColor("Blue", sf::Color(0, 128, 255)),
+	    MyColor("Dark Blue", sf::Color(0, 64, 128)),
+	    MyColor("Purple", sf::Color(128, 0, 255)),
+	    MyColor("Brown", sf::Color(128, 64, 0)),
+		MyColor("White", sf::Color(255, 255, 255)),
+	    MyColor("Grey", sf::Color(192, 192, 192)),
+	    MyColor("Red", sf::Color(255, 0, 0)),
+	    MyColor("Yellow", sf::Color(255, 255, 0)),
+	    MyColor("Green", sf::Color(0, 255, 0)),
+	    MyColor("Aqua", sf::Color(0, 255, 255)),
+	    MyColor("Blue", sf::Color(0, 0, 255)),
+	    MyColor("Purple", sf::Color(255, 0, 255)),
+	    MyColor("Light Yellow", sf::Color(255, 255, 128)),
+	    MyColor("Green", sf::Color(0, 255, 128)),
+	    MyColor("Sky Blue", sf::Color(128, 255, 255)),
+	    MyColor("Light Blue", sf::Color(128, 128, 255)),
+	    MyColor("Pink", sf::Color(255, 0, 128)),
+	    MyColor("Orange", sf::Color(255, 128, 64)),
+	};
+
+	GUI::Button* colorDisplayer = mColorDisplayer.get();
+	for (size_t i = 0; i < colorList.size(); ++i) {
+		MyColor& myColor = colorList[i];
+
+		GUI::Button::Ptr button(new GUI::Button(context.fonts, context.textures,
+		                                        Textures::CircleWhite20x20,
+		                                        Textures::CircleWhite20x20,
+		                                        Textures::CircleWhite20x20));
+		button->setCallback([this, myColor, pen, colorDisplayer]() {
+			pen->setColor(myColor.color);
+			colorDisplayer->setColor(myColor.color);
+		});
+		button->setColor(myColor.color);
+		button->setPosition(90 + 30 * (i % 14), 20 + 30 * (i / 14));
+
+		if (i == 0) {
+			button->activate();
+		}
+
+		container->pack(std::move(button));
+    }
+
+	GUI::Button::Ptr buttonEditColor(new GUI::Button(context.fonts, context.textures,
+			                                        Textures::ButtonColorEditNormal,
+			                                        Textures::ButtonColorEditSelected,
+			                                        Textures::ButtonColorEditPressed));
+    buttonEditColor->setCallback([this]() {});
+	buttonEditColor->setPosition(520, 40);
+	container->pack(std::move(buttonEditColor));
+
 	mGUIContainers.emplace_back(std::move(container));
 }

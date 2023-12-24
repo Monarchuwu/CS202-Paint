@@ -2,6 +2,7 @@
 #include "State.h"
 #include "Pen.h"
 #include "Container.h"
+#include "Button.h"
 #include "DrawingShapeIdentifiers.h"
 
 #include <SFML/Graphics.hpp>
@@ -25,6 +26,7 @@ public:
 private:
     void addSizeCategory(State::Context& context);
     void addShapeCategory(State::Context& context);
+    void addColorCategory(State::Context& context);
 
 private:
     MainState* mMainState;
@@ -36,6 +38,9 @@ private:
 
     //CommandQueue mCommandQueue;
 	std::vector <GUI::Container::Ptr> mGUIContainers;
+
+    // Colors
+	GUI::Button::Ptr mColorDisplayer;
 
 	sf::RectangleShape mBackground;
 };

@@ -34,6 +34,10 @@ namespace GUI {
         mIsToggle = flag;
     }
 
+    void Button::setColor(const sf::Color& color) {
+		mSprite.setColor(color);
+	}
+
     bool Button::isSelectable() const {
         return true;
     }

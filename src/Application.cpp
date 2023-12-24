@@ -136,8 +136,12 @@ void Application::loadTextures() {
     mTextures->load(Textures::ButtonZoomNormal, "data/Textures/button-zoom-normal.png");
     mTextures->load(Textures::ButtonZoomSelected, "data/Textures/button-zoom-selected.png");
 
+    mTextures->load(Textures::ButtonColorEditNormal, "data/Textures/button-colors-editcolor.png");
+
     mTextures->load(Textures::BlackWhite2x2, "data/Textures/black-white-2x2.png");
     mTextures->get(Textures::BlackWhite2x2).setRepeated(true);
 
     mTextures->load(Textures::Transparent70x40, "data/Textures/transparent-70x40.png");
+    mTextures->load(Textures::CircleWhite20x20, "data/Textures/circle-white-20x20.png");
+    mTextures->load(Textures::CircleWhite30x30, "data/Textures/circle-white-30x30.png");
 }
