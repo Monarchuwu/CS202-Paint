@@ -141,6 +141,8 @@
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\Button.cpp" />
+    <ClCompile Include="src\ColorMenuState.cpp" />
+    <ClCompile Include="src\ColorTable.cpp" />
     <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\Container.cpp" />
     <ClCompile Include="src\ContainerOneActivate.cpp" />
@@ -165,11 +167,16 @@
     <ClCompile Include="src\State.cpp" />
     <ClCompile Include="src\StateStack.cpp" />
     <ClCompile Include="src\Utility.cpp" />
+    <ClCompile Include="src\VerticalScrollBar.cpp" />
     <ClCompile Include="src\ZoomController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\Button.h" />
+    <ClInclude Include="src\ColorEditingCenter.h" />
+    <ClInclude Include="src\ColorMenuState.h" />
+    <ClInclude Include="src\ColorParameterIdentifiers.h" />
+    <ClInclude Include="src\ColorTable.h" />
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\Container.h" />
     <ClInclude Include="src\ContainerOneActivate.h" />
@@ -200,6 +207,7 @@
     <ClInclude Include="src\StateIdentifiers.h" />
     <ClInclude Include="src\StateStack.h" />
     <ClInclude Include="src\Utility.h" />
+    <ClInclude Include="src\VerticalScrollBar.h" />
     <ClInclude Include="src\ZoomController.h" />
   </ItemGroup>
   <ItemGroup>

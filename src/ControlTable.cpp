@@ -263,7 +263,9 @@ void ControlTable::addColorCategory(State::Context& context) {
 			                                        Textures::ButtonColorEditNormal,
 			                                        Textures::ButtonColorEditSelected,
 			                                        Textures::ButtonColorEditPressed));
-    buttonEditColor->setCallback([this]() {});
+    buttonEditColor->setCallback([this]() {
+		mMainState->requestStackPush(States::ColorMenu);
+	});
 	buttonEditColor->setPosition(520, 40);
 	container->pack(std::move(buttonEditColor));
 

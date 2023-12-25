@@ -60,6 +60,8 @@ namespace Textures {
         ButtonColorEditSelected = ButtonColorEditNormal,
         ButtonColorEditPressed  = ButtonColorEditNormal,
 
+        ScrollBarColors,
+
         BlackWhite2x2,
         Transparent70x40,
         CircleWhite20x20,
