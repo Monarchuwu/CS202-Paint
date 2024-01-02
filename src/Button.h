@@ -29,6 +29,8 @@ namespace GUI {
         void setToggle(bool flag);
         void setColor(const sf::Color& color);
 
+        sf::FloatRect getWorldBounds() const;
+
         virtual bool isSelectable() const;
         virtual void select();
         virtual void deselect();

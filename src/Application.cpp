@@ -142,6 +142,9 @@ void Application::loadTextures() {
 
     mTextures->load(Textures::ScrollBarColors, "data/Textures/scrollbar-colors.png");
 
+    mTextures->load(Textures::InputBoxNormal, "data/Textures/inputbox-normal.png");
+    mTextures->load(Textures::InputBoxSelected, "data/Textures/inputbox-selected.png");
+
     mTextures->load(Textures::BlackWhite2x2, "data/Textures/black-white-2x2.png");
     mTextures->get(Textures::BlackWhite2x2).setRepeated(true);
 

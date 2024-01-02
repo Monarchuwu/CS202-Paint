@@ -6,6 +6,9 @@
 template <typename T>
 std::string toString(const T& value);
 
+template <typename T>
+std::string toStringHexaDecimal(T value);
+
 void centerOrigin(sf::Sprite& sprite);
 void centerOrigin(sf::Text& text);
 

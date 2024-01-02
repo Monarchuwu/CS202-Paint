@@ -3,6 +3,10 @@
 #include "ColorEditingCenter.h"
 #include "ColorTable.h"
 #include "VerticalScrollBar.h"
+#include "InputBox.h"
+#include "DecimalInputBox.h"
+#include "Container.h"
+#include "Label.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -22,6 +26,8 @@ public:
 private:
     void updateDisplay();
 
+    void setUp4InputBoxes(Context& context, sf::Vector2f position);
+
 private:
     float mScale;
     sf::Color mActualColor, mDisplayColor;
@@ -30,4 +36,7 @@ private:
     ColorTable mColorTable;
     sf::RectangleShape mDisplayColorRectangle;
     VerticalScrollBar mScaleScrollBar;
+    GUI::DecimalInputBox::Ptr mInputBoxR, mInputBoxG, mInputBoxB;
+    GUI::InputBox::Ptr mInputBoxHexaDecimal;
+    GUI::Container::Ptr mLabels;
 };

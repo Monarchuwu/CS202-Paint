@@ -147,6 +147,7 @@
     <ClCompile Include="src\Container.cpp" />
     <ClCompile Include="src\ContainerOneActivate.cpp" />
     <ClCompile Include="src\ControlTable.cpp" />
+    <ClCompile Include="src\DecimalInputBox.cpp" />
     <ClCompile Include="src\DrawingCanvas.cpp" />
     <ClCompile Include="src\DrawingShape.cpp" />
     <ClCompile Include="src\DrawingShapeLine.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="src\HandleFileState.cpp" />
     <ClCompile Include="src\HistoryPanel.cpp" />
     <ClCompile Include="src\HorizontalScrollBar.cpp" />
+    <ClCompile Include="src\InputBox.cpp" />
     <ClCompile Include="src\Label.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MainState.cpp" />
@@ -181,6 +183,7 @@
     <ClInclude Include="src\Container.h" />
     <ClInclude Include="src\ContainerOneActivate.h" />
     <ClInclude Include="src\ControlTable.h" />
+    <ClInclude Include="src\DecimalInputBox.h" />
     <ClInclude Include="src\DrawingCanvas.h" />
     <ClInclude Include="src\DrawingShape.h" />
     <ClInclude Include="src\DrawingShapeDiamond.h" />
@@ -197,6 +200,7 @@
     <ClInclude Include="src\HandleFileState.h" />
     <ClInclude Include="src\HistoryPanel.h" />
     <ClInclude Include="src\HorizontalScrollBar.h" />
+    <ClInclude Include="src\InputBox.h" />
     <ClInclude Include="src\Label.h" />
     <ClInclude Include="src\MainState.h" />
     <ClInclude Include="src\Pen.h" />

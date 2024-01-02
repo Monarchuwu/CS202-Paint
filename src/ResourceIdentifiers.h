@@ -60,6 +60,10 @@ namespace Textures {
         ButtonColorEditSelected = ButtonColorEditNormal,
         ButtonColorEditPressed  = ButtonColorEditNormal,
 
+        InputBoxNormal,
+        InputBoxSelected,
+        InputBoxPressed  = InputBoxSelected,
+
         ScrollBarColors,
 
         BlackWhite2x2,
