@@ -10,9 +10,11 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <functional>
+
 class ColorMenuState : public State, public ColorEditingCenter {
 public:
-    ColorMenuState(StateStack& stack, Context context);
+    ColorMenuState(StateStack& stack, Context context, sf::Color inputColor, std::function<void(sf::Color)> callback);
 
     virtual void draw();
     virtual bool update(sf::Time deltaTime);
@@ -27,8 +29,11 @@ private:
     void updateDisplay();
 
     void setUp4InputBoxes(Context& context, sf::Vector2f position);
+    void setUp2Buttons(Context& context, sf::Vector2f position);
 
 private:
+    std::function<void(sf::Color)> mOKCallback;
+
     float mScale;
     sf::Color mActualColor, mDisplayColor;
 
@@ -38,5 +43,5 @@ private:
     VerticalScrollBar mScaleScrollBar;
     GUI::DecimalInputBox::Ptr mInputBoxR, mInputBoxG, mInputBoxB;
     GUI::InputBox::Ptr mInputBoxHexaDecimal;
-    GUI::Container::Ptr mLabels;
+    GUI::Container::Ptr mLabels, mButtons;
 };

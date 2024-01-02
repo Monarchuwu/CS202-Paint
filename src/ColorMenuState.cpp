@@ -4,12 +4,13 @@
 #include <cassert>
 #include <string>
 
-ColorMenuState::ColorMenuState(StateStack& stack, Context context)
+ColorMenuState::ColorMenuState(StateStack& stack, Context context, sf::Color inputColor, std::function<void(sf::Color)> callback)
     : State(stack, context),
+      mOKCallback(callback),
       mScale(100),
-      mActualColor(sf::Color::Red),
-      mDisplayColor(sf::Color::Red),
-      mBackground(sf::Vector2f(610, 340)),
+      mActualColor(),
+      mDisplayColor(),
+      mBackground(sf::Vector2f(610, 390)),
       mColorTable(this, sf::FloatRect(400, 200, 320, 320)),
       mDisplayColorRectangle(sf::Vector2f(55, 320)),
       mScaleScrollBar(this, context.textures, Textures::ScrollBarColors, sf::Vector2f(815, 200), 100, 0),
@@ -17,15 +18,18 @@ ColorMenuState::ColorMenuState(StateStack& stack, Context context)
 	  mInputBoxG(),
       mInputBoxB(),
       mInputBoxHexaDecimal(),
-      mLabels(new GUI::Container(sf::Vector2f())) {
-	mBackground.setFillColor(sf::Color(38, 38, 38));
+      mLabels(new GUI::Container(sf::Vector2f())),
+      mButtons(new GUI::Container(sf::Vector2f(610, 60))) {
+	mBackground.setFillColor(sf::Color(32, 32, 32));
 	mBackground.setPosition(390, 190);
 
 	mDisplayColorRectangle.setPosition(745, 200);
 
 	setUp4InputBoxes(context, sf::Vector2f(840, 200));
+	setUp2Buttons(context, sf::Vector2f(400, 530));
 
-    updateDisplay();
+	updateDisplayColor(inputColor);
+	updateDisplay();
 }
 
 void ColorMenuState::draw() {
@@ -39,6 +43,7 @@ void ColorMenuState::draw() {
     window.draw(*mInputBoxG);
     window.draw(*mInputBoxB);
     window.draw(*mLabels);
+	window.draw(*mButtons);
 }
 
 bool ColorMenuState::update(sf::Time deltaTime) {
@@ -54,13 +59,8 @@ bool ColorMenuState::handleEvent(const sf::Event& event) {
 	if (mInputBoxG->handleEvent(event)) return false;
 	if (mInputBoxB->handleEvent(event)) return false;
 
-	if (event.type == sf::Event::KeyReleased) {
-		if (event.key.code == sf::Keyboard::Escape) {
-			requestStackPop();
-		    quit();
-			return false;		
-		}
-	}
+	if (mButtons->handleEvent(event)) return false;
+
 	return false;
 }
 
@@ -214,4 +214,34 @@ void ColorMenuState::setUp4InputBoxes(Context& context, sf::Vector2f position) {
 	mLabels->pack(mLabelR);
 	mLabels->pack(mLabelG);
 	mLabels->pack(mLabelB);
+}
+
+void ColorMenuState::setUp2Buttons(Context& context, sf::Vector2f position) {
+	mButtons->setPosition(position);
+	mButtons->setBackgroundColor(sf::Color::Transparent);
+
+	GUI::Button::Ptr mButtonOK(new GUI::Button(context.fonts, context.textures,
+	                                           Textures::ButtonOK290x40,
+	                                           Textures::ButtonOK290x40,
+	                                           Textures::ButtonOK290x40));
+	GUI::Button::Ptr mButtonCancel(new GUI::Button(context.fonts, context.textures,
+	                                               Textures::ButtonCancel290x40,
+	                                               Textures::ButtonCancel290x40,
+	                                               Textures::ButtonCancel290x40));
+
+	mButtonOK->setPosition(0, 0);
+	mButtonCancel->setPosition(300, 0);
+
+	mButtonOK->setCallback([this]() {
+	    if (mOKCallback) mOKCallback(mDisplayColor);
+	    requestStackPop();
+	    quit();
+	});
+	mButtonCancel->setCallback([this]() {
+	    requestStackPop();
+	    quit();
+	});
+
+	mButtons->pack(mButtonOK);
+	mButtons->pack(mButtonCancel);
 }

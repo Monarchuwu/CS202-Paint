@@ -2,6 +2,13 @@
 
 #include <cassert>
 
+template<>
+void StateStack::registerState<ColorMenuState>(States::ID stateID) {
+    mFactories[stateID] = [this](StateParameter parameter) {
+        return State::Ptr(new ColorMenuState(*this, mContext, parameter.colorMenu.inputColor, parameter.colorMenu.callback));
+    };
+}
+
 StateStack::StateStack(State::Context context)
     : mStack(), mPendingList(), mContext(context), mFactories() {
 }
@@ -31,7 +38,11 @@ void StateStack::handleEvent(const sf::Event& event) {
 }
 
 void StateStack::pushState(States::ID stateID) {
-    mPendingList.push_back(PendingChange(Push, stateID));
+    mPendingList.push_back(PendingChange(Push, stateID, StateParameter()));
+}
+
+void StateStack::pushState(States::ID stateID, StateParameter parameter) {
+    mPendingList.push_back(PendingChange(Push, stateID, parameter));
 }
 
 void StateStack::popState() {
@@ -46,17 +57,17 @@ bool StateStack::isEmpty() const {
     return mStack.empty();
 }
 
-State::Ptr StateStack::createState(States::ID stateID) {
+State::Ptr StateStack::createState(States::ID stateID, StateParameter parameter) {
     auto found = mFactories.find(stateID);
     assert(found != mFactories.end());
-    return found->second();
+    return found->second(parameter);
 }
 
 void StateStack::applyPendingChanges() {
     for (PendingChange change : mPendingList) {
         switch (change.action) {
             case Push:
-                mStack.push_back(createState(change.stateID));
+                mStack.push_back(createState(change.stateID, change.parameter));
                 break;
             case Pop:
                 mStack.pop_back();
@@ -69,6 +80,10 @@ void StateStack::applyPendingChanges() {
     mPendingList.clear();
 }
 
-StateStack::PendingChange::PendingChange(Action action, States::ID stateID)
-    : action(action), stateID(stateID) {
+StateStack::PendingChange::PendingChange(Action action)
+    : action(action), stateID(States::None), parameter() {
+}
+
+StateStack::PendingChange::PendingChange(Action action, States::ID stateID, StateParameter parameter)
+    : action(action), stateID(stateID), parameter(parameter) {
 }

@@ -209,6 +209,7 @@
     <ClInclude Include="src\SizeMenuState.h" />
     <ClInclude Include="src\State.h" />
     <ClInclude Include="src\StateIdentifiers.h" />
+    <ClInclude Include="src\StateParameter.h" />
     <ClInclude Include="src\StateStack.h" />
     <ClInclude Include="src\Utility.h" />
     <ClInclude Include="src\VerticalScrollBar.h" />

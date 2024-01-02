@@ -2,6 +2,9 @@
 #include "ResourceIdentifiers.h"
 #include "State.h"
 #include "StateIdentifiers.h"
+#include "StateParameter.h"
+
+#include "ColorMenuState.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -28,20 +31,23 @@ public:
     void handleEvent(const sf::Event& event);
 
     void pushState(States::ID stateID);
+    void pushState(States::ID stateID, StateParameter parameter);
     void popState();
     void clearStates();
 
     bool isEmpty() const;
 
 private:
-    State::Ptr createState(States::ID stateID);
+    State::Ptr createState(States::ID stateID, StateParameter parameter);
     void applyPendingChanges();
 
 private:
     struct PendingChange {
-        PendingChange(Action action, States::ID stateID = States::None);
+        PendingChange(Action action);
+        PendingChange(Action action, States::ID stateID, StateParameter parameter);
         Action action;
         States::ID stateID;
+        StateParameter parameter;
     };
 
 private:
@@ -49,12 +55,15 @@ private:
     std::vector<PendingChange> mPendingList;
 
     State::Context mContext;
-    std::map<States::ID, std::function<State::Ptr()>> mFactories;
+    std::map<States::ID, std::function<State::Ptr(StateParameter)>> mFactories;
 };
 
 template<typename T>
 void StateStack::registerState(States::ID stateID) {
-    mFactories[stateID] = [this]() {
+    mFactories[stateID] = [this](StateParameter) {
         return State::Ptr(new T(*this, mContext));
     };
 }
+
+template<>
+void StateStack::registerState<ColorMenuState>(States::ID stateID);

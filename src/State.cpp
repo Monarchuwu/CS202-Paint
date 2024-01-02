@@ -17,6 +17,10 @@ void State::requestStackPush(States::ID stateID) {
     mStack->pushState(stateID);
 }
 
+void State::requestStackPush(States::ID stateID, StateParameter parameter) {
+	mStack->pushState(stateID, parameter);
+}
+
 void State::requestStackPop() {
     mStack->popState();
 }

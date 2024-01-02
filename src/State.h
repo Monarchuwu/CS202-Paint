@@ -2,6 +2,7 @@
 #include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
 #include "StateIdentifiers.h"
+#include "StateParameter.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -30,6 +31,7 @@ public:
 
 protected:
     void requestStackPush(States::ID stateID);
+    void requestStackPush(States::ID stateID, StateParameter parameter);
     void requestStackPop();
     void requestStateClear();
 

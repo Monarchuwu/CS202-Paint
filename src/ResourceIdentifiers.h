@@ -70,6 +70,8 @@ namespace Textures {
         Transparent70x40,
         CircleWhite20x20,
         CircleWhite30x30,
+        ButtonOK290x40,
+        ButtonCancel290x40,
 
         TextureCount
     };

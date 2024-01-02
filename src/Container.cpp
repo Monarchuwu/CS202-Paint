@@ -34,6 +34,10 @@ namespace GUI {
         return false;
     }
 
+    void Container::setBackgroundColor(const sf::Color& color) {
+        mBackground.setFillColor(color);
+    }
+
     void Container::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         if (!isVisible()) return;
 

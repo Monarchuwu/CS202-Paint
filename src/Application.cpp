@@ -151,4 +151,6 @@ void Application::loadTextures() {
     mTextures->load(Textures::Transparent70x40, "data/Textures/transparent-70x40.png");
     mTextures->load(Textures::CircleWhite20x20, "data/Textures/circle-white-20x20.png");
     mTextures->load(Textures::CircleWhite30x30, "data/Textures/circle-white-30x30.png");
+    mTextures->load(Textures::ButtonOK290x40, "data/Textures/button-ok-290x40.png");
+    mTextures->load(Textures::ButtonCancel290x40, "data/Textures/button-cancel-290x40.png");
 }
