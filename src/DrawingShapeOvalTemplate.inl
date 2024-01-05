@@ -4,7 +4,7 @@
 template<std::size_t N>
 DrawingShapeOvalTemplate<N>::DrawingShapeOvalTemplate<N>(Pen& pen, TextureHolder* textures,
                                                          const sf::FloatRect& renderArea)
-    : DrawingShapeLineStrip(pen, textures, renderArea),
+    : DrawingShapeConvex(pen, textures, renderArea, N),
       mStartPosition(),
       mCurrentPosition() {
 }
@@ -43,12 +43,11 @@ void DrawingShapeOvalTemplate<N>::drawOval(int minX, int minY, int maxX, int max
     float centerX = (maxX + minX) / 2;
     float centerY = (maxY + minY) / 2;
 
-    std::vector<sf::Vector2f> points(N + 1);
+    std::vector<sf::Vector2f> points(N);
     for (int i = 0; i < N; ++i) {
         points[i].x = centerX + radiusX * cos(2 * pi * i / N - pi / 2);
         points[i].y = centerY + radiusY * sin(2 * pi * i / N - pi / 2);
     }
-    points[N] = points[0];
 
-    drawLineStrip(points);
+    drawConvex(points);
 }

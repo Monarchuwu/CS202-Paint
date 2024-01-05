@@ -4,7 +4,7 @@
 
 DrawingShapeLine::DrawingShapeLine(Pen& pen, TextureHolder* textures,
                                    const sf::FloatRect& renderArea)
-    : DrawingShapeLineStrip(pen, textures, renderArea),
+    : DrawingShapeConvex(pen, textures, renderArea, 2),
       mStartPosition(),
       mCurrentPosition() {
 }
@@ -23,7 +23,7 @@ void DrawingShapeLine::move(const sf::Vector2f& position) {
     // clear the render texture to draw a new shape
     clear();
 
-    drawLineStrip(std::vector<sf::Vector2f>{mStartPosition, position});
+    drawConvex(std::vector<sf::Vector2f>{mStartPosition, position});
 
     mCurrentPosition = position;
 }

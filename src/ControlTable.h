@@ -44,6 +44,7 @@ private:
     // Colors
     unsigned int mColorDisplayerIndex;
 	GUI::Button::Ptr mColorDisplayer[3];
+    sf::Color mGradientFirstColor, mGradientSecondColor;
 
 	sf::RectangleShape mBackground;
 };

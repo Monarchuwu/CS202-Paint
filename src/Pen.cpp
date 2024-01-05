@@ -25,6 +25,7 @@ Pen::Pen(sf::RenderWindow& window,
       mFonts(fonts),
       mCanvas(nullptr),
       mContext(context),
+      mGradientTexture(),
       mDrawingShape(nullptr) {
     registerShape<DrawingShapePencil>(DrawingShapes::Pencil);
     registerShape<DrawingShapeLine>(DrawingShapes::Line);
@@ -86,6 +87,31 @@ void Pen::setColor(const sf::Color& color) {
 
 const sf::Color& Pen::getColor() const {
 	return mContext.color;
+}
+
+void Pen::setGradientColor(const sf::Color& firstColor, const sf::Color& secondColor) {
+	int WIDTH = 256;
+	int r1 = firstColor.r;
+	int g1 = firstColor.g;
+	int b1 = firstColor.b;
+	int r2 = secondColor.r;
+	int g2 = secondColor.g;
+	int b2 = secondColor.b;
+
+	sf::Image image;
+	image.create(256, 1);
+	for (int i = 0; i < WIDTH; ++i) {
+	    sf::Color c;
+		c.r = static_cast<sf::Uint8>(r1 + (r2 - r1) * i / (WIDTH - 1));
+		c.g = static_cast<sf::Uint8>(g1 + (g2 - g1) * i / (WIDTH - 1));
+		c.b = static_cast<sf::Uint8>(b1 + (b2 - b1) * i / (WIDTH - 1));
+		image.setPixel(i, 0, c);
+	}
+	mGradientTexture.loadFromImage(image);
+}
+
+const sf::Texture& Pen::getGradientTexture() const {
+	return mGradientTexture;
 }
 
 void Pen::setShape(DrawingShapes::ID shapeID) {

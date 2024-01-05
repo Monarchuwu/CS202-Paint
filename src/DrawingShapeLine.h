@@ -1,8 +1,8 @@
 #pragma once
-#include "DrawingShapeLineStrip.h"
+#include "DrawingShapeConvex.h"
 #include "Pen.h"
 
-class DrawingShapeLine : public DrawingShapeLineStrip {
+class DrawingShapeLine : public DrawingShapeConvex {
 public:
     DrawingShapeLine(Pen& pen, TextureHolder* textures,
                      const sf::FloatRect& renderArea);

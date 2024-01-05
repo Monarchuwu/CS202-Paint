@@ -4,7 +4,7 @@
 
 DrawingShapeTriangle::DrawingShapeTriangle(Pen& pen, TextureHolder* textures,
                                            const sf::FloatRect& renderArea)
-    : DrawingShapeLineStrip(pen, textures, renderArea),
+    : DrawingShapeConvex(pen, textures, renderArea, 3),
       mStartPosition(),
       mCurrentPosition() {
 }
@@ -33,12 +33,11 @@ void DrawingShapeTriangle::move(const sf::Vector2f& position) {
 }
 
 void DrawingShapeTriangle::drawTriangle(int minX, int minY, int maxX, int maxY) {
-    std::vector<sf::Vector2f> points(4);
+    std::vector<sf::Vector2f> points(3);
 
     points[0] = sf::Vector2f(minX, maxY);
     points[1] = sf::Vector2f(maxX, maxY);
     points[2] = sf::Vector2f((minX + maxX) / 2, minY);
-    points[3] = points[0];
 
-    drawLineStrip(points);
+    drawConvex(points);
 }

@@ -41,6 +41,9 @@ public:
     void setColor(const sf::Color& color);
     const sf::Color& getColor() const;
 
+    void setGradientColor(const sf::Color& firstColor, const sf::Color& secondColor);
+    const sf::Texture& getGradientTexture() const;
+
     template<typename T>
     void registerShape(DrawingShapes::ID shapeID);
     template<typename T>
@@ -61,6 +64,7 @@ private:
 
     DrawingCanvas* mCanvas;
     Context mContext;
+    sf::Texture mGradientTexture;
     DrawingShape* mDrawingShape;
 
     std::map<DrawingShapes::ID, std::function<DrawingShape*()>> mShapeFactories;

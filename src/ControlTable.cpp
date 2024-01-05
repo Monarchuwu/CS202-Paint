@@ -18,6 +18,8 @@ ControlTable::ControlTable(MainState* mainState,
 	  mGUIContainers(),
       mColorDisplayerIndex(),
       mColorDisplayer(),
+      mGradientFirstColor(),
+	  mGradientSecondColor(),
       mBackground() {
     mBackground.setSize(sf::Vector2f(mObjectArea.width, mObjectArea.height));
     mBackground.setPosition(mObjectArea.left, mObjectArea.top);
@@ -202,7 +204,13 @@ void ControlTable::addColorCategory(State::Context& context) {
 		mColorDisplayer[i]->setPosition(25, 20 + 40 * i);
 		container->pack(mColorDisplayer[i]);
 	}
+	mColorDisplayer[2]->activate();
+	setColorOfColorDisplayer(sf::Color::White);
+	mColorDisplayer[1]->activate();
+	setColorOfColorDisplayer(sf::Color::White);
 	mColorDisplayer[0]->activate();
+	// set color of gradient to white-white
+	// and choose displayer 0 (pen color)
 
 	struct MyColor {
 		std::string name;
@@ -287,5 +295,18 @@ void ControlTable::setColorOfColorDisplayer(sf::Color color) {
 	mColorDisplayer[mColorDisplayerIndex]->setColor(color);
 	if (mColorDisplayerIndex == 0) {
 		mPen.setColor(color);
+	}
+	else {
+		if (mColorDisplayerIndex == 1) {
+			mGradientFirstColor = color;
+		}
+		else if (mColorDisplayerIndex == 2) {
+			mGradientSecondColor = color;
+		}
+		else {
+			assert(false);
+		}
+		// update the gradient color
+		mPen.setGradientColor(mGradientFirstColor, mGradientSecondColor);
 	}
 }

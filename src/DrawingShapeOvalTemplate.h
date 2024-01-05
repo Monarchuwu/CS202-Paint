@@ -1,9 +1,9 @@
 #pragma once
-#include "DrawingShapeLineStrip.h"
+#include "DrawingShapeConvex.h"
 #include "Pen.h"
 
 template<std::size_t N>
-class DrawingShapeOvalTemplate : public DrawingShapeLineStrip {
+class DrawingShapeOvalTemplate : public DrawingShapeConvex {
 public:
     DrawingShapeOvalTemplate(Pen& pen, TextureHolder* textures,
                      const sf::FloatRect& renderArea);

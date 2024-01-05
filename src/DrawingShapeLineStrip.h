@@ -4,8 +4,10 @@
 
 #include <vector>
 
+// this class is not used in the current version of the program
+// constructor scope is changed from protected to private
 class DrawingShapeLineStrip : public DrawingShape {
-protected:
+private:
     DrawingShapeLineStrip(Pen& pen, TextureHolder* textures,
                           const sf::FloatRect& renderArea);
 

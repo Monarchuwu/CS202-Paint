@@ -4,7 +4,7 @@
 
 DrawingShapeRectangle::DrawingShapeRectangle(Pen& pen, TextureHolder* textures,
                                              const sf::FloatRect& renderArea)
-    : DrawingShapeLineStrip(pen, textures, renderArea),
+    : DrawingShapeConvex(pen, textures, renderArea, 4),
       mStartPosition(),
       mCurrentPosition() {
 }
@@ -33,13 +33,12 @@ void DrawingShapeRectangle::move(const sf::Vector2f& position) {
 }
 
 void DrawingShapeRectangle::drawRectangle(int minX, int minY, int maxX, int maxY) {
-    std::vector<sf::Vector2f> points(5);
+    std::vector<sf::Vector2f> points(4);
 
     points[0] = sf::Vector2f(minX, minY);
     points[1] = sf::Vector2f(maxX, minY);
     points[2] = sf::Vector2f(maxX, maxY);
     points[3] = sf::Vector2f(minX, maxY);
-    points[4] = points[0];
 
-    drawLineStrip(points);
+    drawConvex(points);
 }
