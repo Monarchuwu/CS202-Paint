@@ -167,6 +167,7 @@
     <ClCompile Include="src\Pen.cpp" />
     <ClCompile Include="src\SizeMenuState.cpp" />
     <ClCompile Include="src\State.cpp" />
+    <ClCompile Include="src\StateParameter.cpp" />
     <ClCompile Include="src\StateStack.cpp" />
     <ClCompile Include="src\Utility.cpp" />
     <ClCompile Include="src\VerticalScrollBar.cpp" />
