@@ -28,6 +28,8 @@ private:
     void addShapeCategory(State::Context& context);
     void addColorCategory(State::Context& context);
 
+    void setColorOfColorDisplayer(sf::Color color);
+
 private:
     MainState* mMainState;
 	sf::RenderWindow& mWindow;
@@ -40,7 +42,8 @@ private:
 	std::vector <GUI::Container::Ptr> mGUIContainers;
 
     // Colors
-	GUI::Button::Ptr mColorDisplayer;
+    unsigned int mColorDisplayerIndex;
+	GUI::Button::Ptr mColorDisplayer[3];
 
 	sf::RectangleShape mBackground;
 };

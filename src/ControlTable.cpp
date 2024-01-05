@@ -16,6 +16,7 @@ ControlTable::ControlTable(MainState* mainState,
       mPen(pen),
       mObjectArea(objectArea),
 	  mGUIContainers(),
+      mColorDisplayerIndex(),
       mColorDisplayer(),
       mBackground() {
     mBackground.setSize(sf::Vector2f(mObjectArea.width, mObjectArea.height));
@@ -190,12 +191,18 @@ void ControlTable::addColorCategory(State::Context& context) {
 	label->setPosition(300, 130);
 	container->pack(std::move(label));
 
-	mColorDisplayer.reset(new GUI::Button(context.fonts, context.textures,
-	                                      Textures::CircleWhite30x30,
-	                                      Textures::CircleWhite30x30,
-	                                      Textures::CircleWhite30x30));
-	mColorDisplayer->setPosition(25, 20);
-	container->pack(mColorDisplayer);
+	for (int i = 0; i < 3; ++i) {
+		mColorDisplayer[i].reset(new GUI::Button(context.fonts, context.textures,
+		                                      Textures::CircleWhite30x30,
+		                                      Textures::CircleWhite30x30,
+		                                      Textures::CircleWhite30x30));
+		mColorDisplayer[i]->setCallback([this, i]() {
+			mColorDisplayerIndex = i;
+		});
+		mColorDisplayer[i]->setPosition(25, 20 + 40 * i);
+		container->pack(mColorDisplayer[i]);
+	}
+	mColorDisplayer[0]->activate();
 
 	struct MyColor {
 		std::string name;
@@ -237,7 +244,6 @@ void ControlTable::addColorCategory(State::Context& context) {
 	    MyColor("Orange", sf::Color(255, 128, 64)),
 	};
 
-	GUI::Button* colorDisplayer = mColorDisplayer.get();
 	for (size_t i = 0; i < colorList.size(); ++i) {
 		MyColor& myColor = colorList[i];
 
@@ -245,9 +251,8 @@ void ControlTable::addColorCategory(State::Context& context) {
 		                                        Textures::CircleWhite20x20,
 		                                        Textures::CircleWhite20x20,
 		                                        Textures::CircleWhite20x20));
-		button->setCallback([this, myColor, pen, colorDisplayer]() {
-			pen->setColor(myColor.color);
-			colorDisplayer->setColor(myColor.color);
+		button->setCallback([this, myColor]() {
+			setColorOfColorDisplayer(myColor.color);
 		});
 		button->setColor(myColor.color);
 		button->setPosition(90 + 30 * (i % 14), 20 + 30 * (i / 14));
@@ -264,9 +269,8 @@ void ControlTable::addColorCategory(State::Context& context) {
 			                                        Textures::ButtonColorEditSelected,
 			                                        Textures::ButtonColorEditPressed));
 	StateParameter stateParameter;
-	stateParameter.colorMenu.callback = [pen, colorDisplayer](sf::Color color) {
-	    pen->setColor(color);
-	    colorDisplayer->setColor(color);
+	stateParameter.colorMenu.callback = [this, pen](sf::Color color) {
+		setColorOfColorDisplayer(color);
 	};
     buttonEditColor->setCallback([this, stateParameter]() {
 		StateParameter parameter = stateParameter;
@@ -277,4 +281,11 @@ void ControlTable::addColorCategory(State::Context& context) {
 	container->pack(std::move(buttonEditColor));
 
 	mGUIContainers.emplace_back(std::move(container));
+}
+
+void ControlTable::setColorOfColorDisplayer(sf::Color color) {
+	mColorDisplayer[mColorDisplayerIndex]->setColor(color);
+	if (mColorDisplayerIndex == 0) {
+		mPen.setColor(color);
+	}
 }
