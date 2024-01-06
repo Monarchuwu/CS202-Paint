@@ -13,14 +13,14 @@ MainState::MainState(StateStack& stack, Context context)
                      sf::Vector2f(640, 480)),
       mControlTable(this, context, mPen, sf::FloatRect(0, 50, 1600, 160)),
       mZoomController(mDrawingCanvas, mWindow, mTextures, mFonts),
-      mHandleFileButton(mFonts, mTextures, Textures::Transparent70x40,
-                                           Textures::Transparent70x40,
-                                           Textures::Transparent70x40) {
+      mHandleFileButton(mFonts, mTextures, Textures::DarkGray100x40,
+                                           Textures::DarkGray100x40,
+                                           Textures::DarkGray100x40) {
 
     mBackground.setFillColor(sf::Color(26, 32, 49));
 
-    mHandleFileButton.setPosition(10, 10);
-    mHandleFileButton.setText("File");
+    mHandleFileButton.setPosition(10, 5);
+    mHandleFileButton.setText("Save File");
     mHandleFileButton.setCallback([this] () {
 		requestStackPush(States::HandleFile);
 	});

@@ -68,6 +68,7 @@ namespace Textures {
 
         BlackWhite2x2,
         Transparent70x40,
+        DarkGray100x40,
         CircleWhite20x20,
         CircleWhite30x30,
         ButtonOK290x40,

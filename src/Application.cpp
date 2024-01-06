@@ -17,7 +17,9 @@ Application::Application()
       mStateStack(State::Context(mWindow, *mTextures, *mFonts, mPen)),
       mStatisticsText(),
       mStatisticsUpdateTime(),
-      mStatisticsNumFrames(0) {
+      mStatisticsNumFrames(0),
+      mStatisticsRect(sf::Vector2f(120, 45)),
+      mShowStatistics(false) {
     mWindow.setKeyRepeatEnabled(false);
     mWindow.setPosition(sf::Vector2i(10, 10));
 
@@ -25,8 +27,11 @@ Application::Application()
     loadTextures();
 
     mStatisticsText.setFont(mFonts->get(Fonts::Sansation));
-    mStatisticsText.setPosition(5.f, 5.f);
+    mStatisticsText.setPosition(1600 - 120 + 5, 5);
     mStatisticsText.setCharacterSize(10u);
+
+    mStatisticsRect.setPosition(1600 - 120, 0);
+    mStatisticsRect.setFillColor(sf::Color(128, 128, 128));
 
     registerStates();
     mStateStack.pushState(States::Main);
@@ -61,6 +66,10 @@ void Application::processInput() {
     while (mWindow.pollEvent(event)) {
         mStateStack.handleEvent(event);
 
+        if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F2) {
+			mShowStatistics = !mShowStatistics;
+		}
+
         if (event.type == sf::Event::Closed)
             mWindow.close();
     }
@@ -76,7 +85,10 @@ void Application::render() {
     mStateStack.draw();
 
     mWindow.setView(mWindow.getDefaultView());
-    mWindow.draw(mStatisticsText);
+    if (mShowStatistics) {
+        mWindow.draw(mStatisticsRect);
+        mWindow.draw(mStatisticsText);
+    }
 
     mWindow.display();
 }
@@ -87,7 +99,9 @@ void Application::updateStatistics(sf::Time elapsedTime) {
 
     if (mStatisticsUpdateTime >= sf::seconds(1.0f)) {
         mStatisticsText.setString(
-            "Frames / Second = " + toString(mStatisticsNumFrames) + "\n" + "Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us");
+            "Frames / Second = " + toString(mStatisticsNumFrames) + "\n"
+            + "Time / Update = " + toString(mStatisticsUpdateTime.asMicroseconds() / mStatisticsNumFrames) + "us\n"
+            + "      (Press F2 to close)");
 
         mStatisticsUpdateTime -= sf::seconds(1.0f);
         mStatisticsNumFrames = 0;
@@ -149,6 +163,7 @@ void Application::loadTextures() {
     mTextures->get(Textures::BlackWhite2x2).setRepeated(true);
 
     mTextures->load(Textures::Transparent70x40, "data/Textures/transparent-70x40.png");
+    mTextures->load(Textures::DarkGray100x40, "data/Textures/dark-gray-100x40.png");
     mTextures->load(Textures::CircleWhite20x20, "data/Textures/circle-white-20x20.png");
     mTextures->load(Textures::CircleWhite30x30, "data/Textures/circle-white-30x30.png");
     mTextures->load(Textures::ButtonOK290x40, "data/Textures/button-ok-290x40.png");
