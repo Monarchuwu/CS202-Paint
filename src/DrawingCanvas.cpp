@@ -93,3 +93,7 @@ const sf::FloatRect& DrawingCanvas::getRenderArea() const {
 const sf::FloatRect& DrawingCanvas::getObjectArea() const {
 	return mObjectArea;
 }
+
+const sf::Texture& DrawingCanvas::getCanvasDisplay() const {
+	return mRenderTexture.getTexture();
+}

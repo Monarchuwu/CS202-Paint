@@ -4,8 +4,6 @@
 #include "StateIdentifiers.h"
 #include "StateParameter.h"
 
-#include "ColorMenuState.h"
-
 #include <SFML/Graphics.hpp>
 
 #include <functional>
@@ -65,5 +63,11 @@ void StateStack::registerState(States::ID stateID) {
     };
 }
 
+class ColorMenuState;
+class HandleFileState;
+
 template<>
 void StateStack::registerState<ColorMenuState>(States::ID stateID);
+
+template<>
+void StateStack::registerState<HandleFileState>(States::ID stateID);

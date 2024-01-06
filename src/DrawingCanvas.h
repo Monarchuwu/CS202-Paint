@@ -29,6 +29,8 @@ public:
 	const sf::FloatRect& getRenderArea() const;
 	const sf::FloatRect& getObjectArea() const;
 
+	const sf::Texture& getCanvasDisplay() const;
+
 	friend void HistoryPanel::drawDirectedToCanvas(const sf::Texture& texture);
 
 private:

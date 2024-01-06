@@ -1,4 +1,6 @@
 #include "StateStack.h"
+#include "ColorMenuState.h"
+#include "HandleFileState.h"
 
 #include <cassert>
 
@@ -7,6 +9,13 @@ void StateStack::registerState<ColorMenuState>(States::ID stateID) {
     mFactories[stateID] = [this](StateParameter parameter) {
         return State::Ptr(new ColorMenuState(*this, mContext, parameter.colorMenu.inputColor, parameter.colorMenu.callback));
     };
+}
+
+template<>
+void StateStack::registerState<HandleFileState>(States::ID stateID) {
+    mFactories[stateID] = [this](StateParameter parameter) {
+        return State::Ptr(new HandleFileState(*this, mContext, std::move(parameter.handleFile.saveTexture)));
+	};
 }
 
 StateStack::StateStack(State::Context context)
@@ -42,7 +51,7 @@ void StateStack::pushState(States::ID stateID) {
 }
 
 void StateStack::pushState(States::ID stateID, StateParameter parameter) {
-    mPendingList.push_back(PendingChange(Push, stateID, parameter));
+    mPendingList.push_back(PendingChange(Push, stateID, std::move(parameter)));
 }
 
 void StateStack::popState() {
@@ -60,14 +69,14 @@ bool StateStack::isEmpty() const {
 State::Ptr StateStack::createState(States::ID stateID, StateParameter parameter) {
     auto found = mFactories.find(stateID);
     assert(found != mFactories.end());
-    return found->second(parameter);
+    return found->second(std::move(parameter));
 }
 
 void StateStack::applyPendingChanges() {
-    for (PendingChange change : mPendingList) {
+    for (PendingChange& change : mPendingList) {
         switch (change.action) {
             case Push:
-                mStack.push_back(createState(change.stateID, change.parameter));
+                mStack.push_back(createState(change.stateID, std::move(change.parameter)));
                 break;
             case Pop:
                 mStack.pop_back();
@@ -85,5 +94,5 @@ StateStack::PendingChange::PendingChange(Action action)
 }
 
 StateStack::PendingChange::PendingChange(Action action, States::ID stateID, StateParameter parameter)
-    : action(action), stateID(stateID), parameter(parameter) {
+    : action(action), stateID(stateID), parameter(std::move(parameter)) {
 }

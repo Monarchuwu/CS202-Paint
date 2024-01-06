@@ -22,7 +22,9 @@ MainState::MainState(StateStack& stack, Context context)
     mHandleFileButton.setPosition(10, 5);
     mHandleFileButton.setText("Save File");
     mHandleFileButton.setCallback([this] () {
-		requestStackPush(States::HandleFile);
+        StateParameter parameter;
+        parameter.handleFile.saveTexture = &mDrawingCanvas.getCanvasDisplay();
+		requestStackPush(States::HandleFile, std::move(parameter));
 	});
 }
 

@@ -6,8 +6,9 @@
 
 #include <SFML/Graphics.hpp>
 
-HandleFileState::HandleFileState(StateStack& stack, Context context)
+HandleFileState::HandleFileState(StateStack& stack, Context context, const sf::Texture* saveTexture)
     : State(stack, context),
+      mSaveTexture(std::move(saveTexture)),
       mGUIContainer(sf::Vector2f(110, 185)) {
     mGUIContainer.setPosition(10, 50);
     mGUIContainer.setBackgroundColor(sf::Color(128, 128, 128));
@@ -89,9 +90,5 @@ bool HandleFileState::handleEvent(const sf::Event& event) {
 
 void HandleFileState::saveFile(const std::string& filename) {
     // The supported image formats are bmp, png, tga and jpg.
-	sf::RenderWindow& window = *getContext().window;
-	sf::Texture texture;
-	texture.create(window.getSize().x, window.getSize().y);
-	texture.update(window);
-	texture.copyToImage().saveToFile(filename);
+	mSaveTexture->copyToImage().saveToFile(filename);
 }
