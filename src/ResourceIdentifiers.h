@@ -71,6 +71,7 @@ namespace Textures {
         DarkGray100x40,
         CircleWhite20x20,
         CircleWhite30x30,
+        CircleWhite30x30_outline4,
         ButtonOK290x40,
         ButtonCancel290x40,
 

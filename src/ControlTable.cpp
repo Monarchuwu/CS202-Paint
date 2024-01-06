@@ -193,24 +193,33 @@ void ControlTable::addColorCategory(State::Context& context) {
 	label->setPosition(300, 130);
 	container->pack(std::move(label));
 
+	GUI::ContainerOneActivate::Ptr containerColorDisplayer(new GUI::ContainerOneActivate(sf::Vector2f(30, 110)));
+	containerColorDisplayer->setBackgroundColor(sf::Color::Transparent);
+	containerColorDisplayer->setPosition(25, 20);
 	for (int i = 0; i < 3; ++i) {
 		mColorDisplayer[i].reset(new GUI::Button(context.fonts, context.textures,
-		                                      Textures::CircleWhite30x30,
-		                                      Textures::CircleWhite30x30,
-		                                      Textures::CircleWhite30x30));
+		                                         Textures::CircleWhite30x30,
+		                                         Textures::CircleWhite30x30_outline4,
+		                                         Textures::CircleWhite30x30_outline4));
 		mColorDisplayer[i]->setCallback([this, i]() {
 			mColorDisplayerIndex = i;
 		});
-		mColorDisplayer[i]->setPosition(25, 20 + 40 * i);
-		container->pack(mColorDisplayer[i]);
+		mColorDisplayer[i]->setToggle(true);
+		mColorDisplayer[i]->setPosition(0, 40 * i);
+		containerColorDisplayer->pack(mColorDisplayer[i]);
 	}
+	container->pack(std::move(containerColorDisplayer));
+	// set gradient second color to white
 	mColorDisplayer[2]->activate();
 	setColorOfColorDisplayer(sf::Color::White);
+	mColorDisplayer[2]->deactivate();
+	// set gradient first color to white
 	mColorDisplayer[1]->activate();
 	setColorOfColorDisplayer(sf::Color::White);
-	mColorDisplayer[0]->activate();
+	mColorDisplayer[1]->deactivate();
 	// set color of gradient to white-white
-	// and choose displayer 0 (pen color)
+	// Choose displayer 0 (pen color)
+	mColorDisplayer[0]->activate();
 
 	struct MyColor {
 		std::string name;
