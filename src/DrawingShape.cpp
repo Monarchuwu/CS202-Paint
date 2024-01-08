@@ -152,6 +152,11 @@ bool DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawi
                     if (mAngle > 180) mAngle -= 360;
                     return true;
 				}
+				else if (event.key.code == sf::Keyboard::Delete) {
+					mDrawingStatus = DrawingStatus::WAIT_TO_DRAW;
+					mAngle         = 0;
+					return true;
+				}
 			}
             break;
         }
