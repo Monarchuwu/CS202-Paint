@@ -149,6 +149,7 @@
     <ClCompile Include="src\ControlTable.cpp" />
     <ClCompile Include="src\DecimalInputBox.cpp" />
     <ClCompile Include="src\DrawingCanvas.cpp" />
+    <ClCompile Include="src\DrawingFill.cpp" />
     <ClCompile Include="src\DrawingShape.cpp" />
     <ClCompile Include="src\DrawingShapeConvex.cpp" />
     <ClCompile Include="src\DrawingShapeLine.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="src\ControlTable.h" />
     <ClInclude Include="src\DecimalInputBox.h" />
     <ClInclude Include="src\DrawingCanvas.h" />
+    <ClInclude Include="src\DrawingFill.h" />
     <ClInclude Include="src\DrawingShape.h" />
     <ClInclude Include="src\DrawingShapeConvex.h" />
     <ClInclude Include="src\DrawingShapeDiamond.h" />

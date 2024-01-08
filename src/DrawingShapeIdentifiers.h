@@ -11,6 +11,7 @@ namespace DrawingShapes {
 		RightTriangle,
 		Diamond,
 		TextWriting,
+		Fill,
 		ShapeCount
 	};
 }

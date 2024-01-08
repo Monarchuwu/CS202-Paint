@@ -5,9 +5,9 @@
 
 DrawingShape::DrawingShape(Pen& pen, TextureHolder* textures,
                            const sf::FloatRect& drawingArea)
-    : mTop(0), mBottom(0), mLeft(0), mRight(0),
-      mRenderTexture(), mRenderTextureRotating(),
-      mDrawingStatus(DrawingStatus::WAIT_TO_DRAW),
+    : mTop(0), mBottom(0), mLeft(0), mRight(0), mRenderTexture(), mRenderTextureRotating(), mDrawingStatus(DrawingStatus::WAIT_TO_DRAW),
+      mStatusDRAWING(true),
+      mStatusDRAWED(true),
       mAngle(0),
       isRotating(false),
       mSprite(),
@@ -47,7 +47,17 @@ bool DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawi
                     sf::FloatRect drawingArea = mSprite.getGlobalBounds();
                     if (drawingArea.contains(mousePosition)) {
                         startDrawing(mousePosition - drawingArea.getPosition());
-                        mDrawingStatus = DrawingStatus::DRAWING;
+						if (mStatusDRAWING) {
+							mDrawingStatus = DrawingStatus::DRAWING;
+						}
+						else if (mStatusDRAWED) {
+                            mDrawingStatus = DrawingStatus::DRAWED;
+						}
+                        else {
+                            mRenderTexture.display();
+                            mPen.addTexture(getCanvas());
+                            mDrawingStatus = DrawingStatus::WAIT_TO_DRAW;
+                        }
                         return true;
                     }
                 }
@@ -59,7 +69,13 @@ bool DrawingShape::handleEvent(const sf::Event& event, const sf::Vector2f& drawi
             if (event.type == sf::Event::MouseButtonReleased) {
                 if (event.mouseButton.button == sf::Mouse::Left) {
                     stopDrawing();
-                    mDrawingStatus = DrawingStatus::DRAWED;
+                    if (mStatusDRAWED) {
+						mDrawingStatus = DrawingStatus::DRAWED;
+					}
+					else {
+						mPen.addTexture(getCanvas());
+						mDrawingStatus = DrawingStatus::WAIT_TO_DRAW;
+					}
                     return true;
                 }
             }
@@ -264,6 +280,14 @@ void DrawingShape::updateBoundingBox(const sf::Vector2f& position) {
 void DrawingShape::resetBoundingBox(const sf::Vector2f& position) {
 	mLeft = mRight = position.x;
 	mTop = mBottom = position.y;
+}
+
+void DrawingShape::turnStatusDRAWING(bool flag) {
+    mStatusDRAWING = flag;
+}
+
+void DrawingShape::turnStatusDRAWED(bool flag) {
+	mStatusDRAWED = flag;
 }
 
 bool DrawingShape::checkHoldRotating(const sf::Vector2f& mousePosition) const {

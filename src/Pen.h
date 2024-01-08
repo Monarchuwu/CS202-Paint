@@ -26,6 +26,7 @@ public:
         const Context& context);
 
     void setCanvas(DrawingCanvas& canvas);
+    const DrawingCanvas& getCanvas() const;
     const sf::FloatRect& getDrawingArea() const;
     const sf::FloatRect& getDisplayArea() const;
     // this method should not be here

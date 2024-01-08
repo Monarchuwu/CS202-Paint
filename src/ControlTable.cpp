@@ -103,33 +103,33 @@ void ControlTable::addShapeCategory(State::Context& context) {
 	containerShape->pack(buttonShape);
 	// shape: line
 	buttonShape = GUI::Button::Ptr(new GUI::Button(context.fonts, context.textures,
-			                                               Textures::ButtonShapeLineNormal,
-			                                               Textures::ButtonShapeLineSelected,
-			                                               Textures::ButtonShapeLinePressed));
+	                                               Textures::ButtonShapeLineNormal,
+	                                               Textures::ButtonShapeLineSelected,
+	                                               Textures::ButtonShapeLinePressed));
 	buttonShape->setCallback([this]() {
-		mPen.setShape(DrawingShapes::Line);
+	    mPen.setShape(DrawingShapes::Line);
 	});
 	buttonShape->setPosition(3, 3 + 28);
 	buttonShape->setToggle(true);
 	containerShape->pack(buttonShape);
 	// shape: rectangle
 	buttonShape = GUI::Button::Ptr(new GUI::Button(context.fonts, context.textures,
-					                                               Textures::ButtonShapeRectangleNormal,
-					                                               Textures::ButtonShapeRectangleSelected,
-					                                               Textures::ButtonShapeRectanglePressed));
+	                                               Textures::ButtonShapeRectangleNormal,
+	                                               Textures::ButtonShapeRectangleSelected,
+	                                               Textures::ButtonShapeRectanglePressed));
 	buttonShape->setCallback([this]() {
-		mPen.setShape(DrawingShapes::Rectangle);
+	    mPen.setShape(DrawingShapes::Rectangle);
 	});
 	buttonShape->setPosition(3, 3 + 28 + 28);
 	buttonShape->setToggle(true);
 	containerShape->pack(buttonShape);
 	// shape: oval
 	buttonShape = GUI::Button::Ptr(new GUI::Button(context.fonts, context.textures,
-							                                               Textures::ButtonShapeOvalNormal,
-							                                               Textures::ButtonShapeOvalSelected,
-							                                               Textures::ButtonShapeOvalPressed));
+	                                               Textures::ButtonShapeOvalNormal,
+	                                               Textures::ButtonShapeOvalSelected,
+	                                               Textures::ButtonShapeOvalPressed));
 	buttonShape->setCallback([this]() {
-		mPen.setShape(DrawingShapes::Oval);
+	    mPen.setShape(DrawingShapes::Oval);
 	});
 	buttonShape->setPosition(3 + 28, 3);
 	buttonShape->setToggle(true);
@@ -158,11 +158,11 @@ void ControlTable::addShapeCategory(State::Context& context) {
 	containerShape->pack(buttonShape);
 	// shape: diamond
 	buttonShape = GUI::Button::Ptr(new GUI::Button(context.fonts, context.textures,
-											                                               Textures::ButtonShapeDiamondNormal,
-											                                               Textures::ButtonShapeDiamondSelected,
-											                                               Textures::ButtonShapeDiamondPressed));
+	                                               Textures::ButtonShapeDiamondNormal,
+	                                               Textures::ButtonShapeDiamondSelected,
+	                                               Textures::ButtonShapeDiamondPressed));
 	buttonShape->setCallback([this]() {
-		mPen.setShape(DrawingShapes::Diamond);
+	    mPen.setShape(DrawingShapes::Diamond);
 	});
 	buttonShape->setPosition(3 + 28 + 28, 3);
 	buttonShape->setToggle(true);
@@ -173,9 +173,20 @@ void ControlTable::addShapeCategory(State::Context& context) {
 	                                               Textures::ButtonShapeTextWritingSelected,
 	                                               Textures::ButtonShapeTextWritingPressed));
 	buttonShape->setCallback([this]() {
-		mPen.setShape(DrawingShapes::TextWriting);
+	    mPen.setShape(DrawingShapes::TextWriting);
 	});
 	buttonShape->setPosition(3 + 28 + 28, 3 + 28);
+	buttonShape->setToggle(true);
+	containerShape->pack(buttonShape);
+	// shape: fill
+	buttonShape = GUI::Button::Ptr(new GUI::Button(context.fonts, context.textures,
+	                                               Textures::ButtonShapeFillNormal,
+	                                               Textures::ButtonShapeFillSelected,
+	                                               Textures::ButtonShapeFillPressed));
+	buttonShape->setCallback([this]() {
+	    mPen.setShape(DrawingShapes::Fill);
+	});
+	buttonShape->setPosition(3 + 28 + 28, 3 + 28 + 28);
 	buttonShape->setToggle(true);
 	containerShape->pack(buttonShape);
 

@@ -45,6 +45,11 @@ protected:
     void updateBoundingBox(const sf::Vector2f& position);
     void resetBoundingBox(const sf::Vector2f& position);
 
+    // by default, DRAWING status is available
+    void turnStatusDRAWING(bool flag);
+    // by default, DRAWED status is available
+    void turnStatusDRAWED(bool flag);
+
 private:
     bool checkHoldRotating(const sf::Vector2f& position) const ;
     float calculateAngle(sf::Vector2f position) const;
@@ -59,6 +64,7 @@ protected:
 
 private:
     DrawingStatus mDrawingStatus;
+    bool mStatusDRAWING, mStatusDRAWED;
 
     float mAngle; // in degree
     bool isRotating;

@@ -8,6 +8,7 @@
 #include "DrawingShapeRightTriangle.h"
 #include "DrawingShapeDiamond.h"
 #include "DrawingShapeTextWriting.h"
+#include "DrawingFill.h"
 
 #include <cassert>
 
@@ -35,10 +36,16 @@ Pen::Pen(sf::RenderWindow& window,
     registerShape<DrawingShapeRightTriangle>(DrawingShapes::RightTriangle);
     registerShape<DrawingShapeDiamond>(DrawingShapes::Diamond);
     registerShapeTextWriting<DrawingShapeTextWriting>(DrawingShapes::TextWriting);
+    registerShape<DrawingFill>(DrawingShapes::Fill);
 }
 
 void Pen::setCanvas(DrawingCanvas& canvas) {
 	mCanvas = &canvas;
+}
+
+const DrawingCanvas& Pen::getCanvas() const {
+	assert(mCanvas != nullptr);
+	return *mCanvas;
 }
 
 const sf::FloatRect& Pen::getDrawingArea() const {

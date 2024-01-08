@@ -42,6 +42,9 @@ namespace Textures {
         ButtonShapeDiamondNormal,
         ButtonShapeDiamondSelected,
         ButtonShapeDiamondPressed = ButtonShapeDiamondSelected,
+        ButtonShapeFillNormal,
+        ButtonShapeFillSelected,
+		ButtonShapeFillPressed = ButtonShapeFillSelected,
 
         ButtonShapeTextWritingNormal,
         ButtonShapeTextWritingSelected,
