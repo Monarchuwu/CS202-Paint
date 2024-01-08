@@ -12,6 +12,12 @@
 
 #include <cassert>
 
+template<>
+void Pen::registerShape<DrawingShapeTextWriting>(DrawingShapes::ID shapeID) {
+    mShapeFactories[shapeID] = [this]() {
+        return new DrawingShapeTextWriting(*this, mTextures, mFonts, mCanvas->getRenderArea());
+    };
+}
 Pen::Context::Context(const sf::Color& color, int width)
 	: color(color),
 	  width(width) {
@@ -35,7 +41,7 @@ Pen::Pen(sf::RenderWindow& window,
     registerShape<DrawingShapeTriangle>(DrawingShapes::Triangle);
     registerShape<DrawingShapeRightTriangle>(DrawingShapes::RightTriangle);
     registerShape<DrawingShapeDiamond>(DrawingShapes::Diamond);
-    registerShapeTextWriting<DrawingShapeTextWriting>(DrawingShapes::TextWriting);
+    registerShape<DrawingShapeTextWriting>(DrawingShapes::TextWriting);
     registerShape<DrawingFill>(DrawingShapes::Fill);
 }
 

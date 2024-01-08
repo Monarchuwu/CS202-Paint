@@ -47,8 +47,6 @@ public:
 
     template<typename T>
     void registerShape(DrawingShapes::ID shapeID);
-    template<typename T>
-    void registerShapeTextWriting(DrawingShapes::ID shapeID);
     void setShape(DrawingShapes::ID shapeID);
 
 private:
@@ -78,9 +76,7 @@ void Pen::registerShape(DrawingShapes::ID shapeID) {
     };
 }
 
-template<typename T>
-void Pen::registerShapeTextWriting(DrawingShapes::ID shapeID) {
-    mShapeFactories[shapeID] = [this]() {
-        return new T(*this, mTextures, mFonts, mCanvas->getRenderArea());
-    };
-}
+class DrawingShapeTextWriting;
+
+template<>
+void Pen::registerShape<DrawingShapeTextWriting>(DrawingShapes::ID shapeID);
